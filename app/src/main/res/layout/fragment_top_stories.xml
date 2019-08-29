@@ -10,7 +10,7 @@
     android:background="#EDD9CF">
 
     <TextView
-        android:id="@+id/fragment_page_topstories_title"
+        android:id="@+id/fragment_topstories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
@@ -18,4 +18,10 @@
         android:textStyle="bold"
         android:textColor="#fff"
         android:textAlignment="center" />
+
+
 </LinearLayout>
+
+
+
+
