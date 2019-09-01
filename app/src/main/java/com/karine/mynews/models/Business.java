@@ -1,6 +1,5 @@
 package com.karine.mynews.models;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -9,76 +8,78 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Business {
 
-        @SerializedName("section")
+        @SerializedName("rank")
         @Expose
-        private String section;
-        @SerializedName("subsection")
+        private Integer rank;
+        @SerializedName("subtype")
         @Expose
-        private String subsection;
-        @SerializedName("title")
+        private String subtype;
+        @SerializedName("caption")
         @Expose
-        private String title;
-        @SerializedName("abstract")
+        private Object caption;
+        @SerializedName("credit")
         @Expose
-        private String _abstract;
+        private Object credit;
+        @SerializedName("type")
+        @Expose
+        private String type;
         @SerializedName("url")
         @Expose
         private String url;
-        @SerializedName("byline")
+        @SerializedName("height")
         @Expose
-        private String byline;
-        @SerializedName("item_type")
+        private Integer height;
+        @SerializedName("width")
         @Expose
-        private String itemType;
-        @SerializedName("updated_date")
+        private Integer width;
+        @SerializedName("legacy")
         @Expose
-        private String updatedDate;
-        @SerializedName("created_date")
+        private Legacy legacy;
+        @SerializedName("subType")
         @Expose
-        private String createdDate;
-        @SerializedName("published_date")
+        private String subType;
+        @SerializedName("crop_name")
         @Expose
-        private String publishedDate;
-        @SerializedName("material_type_facet")
-        @Expose
-        private String materialTypeFacet;
-        @SerializedName("kicker")
-        @Expose
-        private String kicker;
-        @SerializedName("des_facet")
-        @Expose
-        private List<String> desFacet = null;
+        private String cropName;
 
-        public String getSection() {
-            return section;
+        public Integer getRank() {
+            return rank;
         }
 
-        public void setSection(String section) {
-            this.section = section;
+        public void setRank(Integer rank) {
+            this.rank = rank;
         }
 
-        public String getSubsection() {
-            return subsection;
+        public String getSubtype() {
+            return subtype;
         }
 
-        public void setSubsection(String subsection) {
-            this.subsection = subsection;
+        public void setSubtype(String subtype) {
+            this.subtype = subtype;
         }
 
-        public String getTitle() {
-            return title;
+        public Object getCaption() {
+            return caption;
         }
 
-        public void setTitle(String title) {
-            this.title = title;
+        public void setCaption(Object caption) {
+            this.caption = caption;
         }
 
-        public String getAbstract() {
-            return _abstract;
+        public Object getCredit() {
+            return credit;
         }
 
-        public void setAbstract(String _abstract) {
-            this._abstract = _abstract;
+        public void setCredit(Object credit) {
+            this.credit = credit;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
         }
 
         public String getUrl() {
@@ -89,68 +90,85 @@ public class Business {
             this.url = url;
         }
 
-        public String getByline() {
-            return byline;
+        public Integer getHeight() {
+            return height;
         }
 
-        public void setByline(String byline) {
-            this.byline = byline;
+        public void setHeight(Integer height) {
+            this.height = height;
         }
 
-        public String getItemType() {
-            return itemType;
+        public Integer getWidth() {
+            return width;
         }
 
-        public void setItemType(String itemType) {
-            this.itemType = itemType;
+        public void setWidth(Integer width) {
+            this.width = width;
         }
 
-        public String getUpdatedDate() {
-            return updatedDate;
+        public Legacy getLegacy() {
+            return legacy;
         }
 
-        public void setUpdatedDate(String updatedDate) {
-            this.updatedDate = updatedDate;
+        public void setLegacy(Legacy legacy) {
+            this.legacy = legacy;
         }
 
-        public String getCreatedDate() {
-            return createdDate;
+        public String getSubType() {
+            return subType;
         }
 
-        public void setCreatedDate(String createdDate) {
-            this.createdDate = createdDate;
+        public void setSubType(String subType) {
+            this.subType = subType;
         }
 
-        public String getPublishedDate() {
-            return publishedDate;
+        public String getCropName() {
+            return cropName;
         }
 
-        public void setPublishedDate(String publishedDate) {
-            this.publishedDate = publishedDate;
+        public void setCropName(String cropName) {
+            this.cropName = cropName;
         }
 
-        public String getMaterialTypeFacet() {
-            return materialTypeFacet;
+    }
+
+
+
+
+    class Legacy {
+
+        @SerializedName("widewidth")
+        @Expose
+        private Integer widewidth;
+        @SerializedName("wideheight")
+        @Expose
+        private Integer wideheight;
+        @SerializedName("wide")
+        @Expose
+        private String wide;
+
+        public Integer getWidewidth() {
+            return widewidth;
         }
 
-        public void setMaterialTypeFacet(String materialTypeFacet) {
-            this.materialTypeFacet = materialTypeFacet;
+        public void setWidewidth(Integer widewidth) {
+            this.widewidth = widewidth;
         }
 
-        public String getKicker() {
-            return kicker;
+        public Integer getWideheight() {
+            return wideheight;
         }
 
-        public void setKicker(String kicker) {
-            this.kicker = kicker;
+        public void setWideheight(Integer wideheight) {
+            this.wideheight = wideheight;
         }
 
-        public List<String> getDesFacet() {
-            return desFacet;
+        public String getWide() {
+            return wide;
         }
 
-        public void setDesFacet(List<String> desFacet) {
-            this.desFacet = desFacet;
+        public void setWide(String wide) {
+            this.wide = wide;
         }
 
     }
