@@ -3,8 +3,10 @@ package com.karine.mynews.controllers.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +14,8 @@ import android.widget.TextView;
 
 
 import com.karine.mynews.R;
+import com.karine.mynews.Utils.NYTCalls;
 import com.karine.mynews.Utils.NetworkAsyncTask;
-import com.karine.mynews.Utils.NytCalls;
 import com.karine.mynews.models.TopStories;
 import com.karine.mynews.views.TopStoriesAdapter;
 
@@ -26,35 +28,32 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TopStoriesFragment extends Fragment implements NetworkAsyncTask.Listeners, NytCalls.Callbacks {
+public class TopStoriesFragment extends Fragment implements NetworkAsyncTask.Listeners, NYTCalls.Callbacks {
 
     //declarations
     @BindView(R.id.fragment_rvtopstories) RecyclerView mRecyclerView;
-    @BindView(R.id.fragment_item) TextView mTextView;
+    @BindView(R.id.fragment_tvtopstories) TextView mTextView;
+
     //Declare top stories et Adapter
     private List<TopStories> mTopStories;
     private TopStoriesAdapter mAdapter;
 
-
     public TopStoriesFragment(){}
 
-     public static TopStoriesFragment newInstance() {
+    public static TopStoriesFragment newInstance() {
         return (new TopStoriesFragment());
-
-          }
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view =  inflater.inflate(R.layout.fragment_top_stories, container, false);
         ButterKnife.bind(this,view);
         this.configureRecyclerView();
+        this.executeHTTPRequest();
         this.executeHttpRequestWithRetrofit();
         return view;
     }
-
-        //Configuration Recycler View
-
-        //Configure RecyclerView, Adapter, LayoutManager & glue it
+    //Configuration Recycler View
+    //Configure RecyclerView, Adapter, LayoutManager & glue it
     private void configureRecyclerView() {
         //Reset List
         this.mTopStories = new ArrayList<>();
@@ -70,23 +69,20 @@ public class TopStoriesFragment extends Fragment implements NetworkAsyncTask.Lis
     // Execute HTTP request and update UI
     private void executeHttpRequestWithRetrofit(){
         this.updateUIWhenStartingHTTPRequest();
-        NytCalls.fetchUserTopStories(this, "TopStories");
-
+        NYTCalls.fetchTopStories(this, "section");
     }
     //Override callback methods
     @Override
     public void onResponseTopStories (List<TopStories> section) {
         if(section !=null) this.updateUIWithListTopStories(section);
     }
-
     @Override
     public void onFailureTopStories() {
         this.updateUIWhenStopingHTTPRequest("Error");
     }
-
-      //HTTP request
+    //HTTP request
     private void executeHTTPRequest() {
-        new NetworkAsyncTask(this).execute("https://api.nytimes.com/svc/topstories/v2/home.json");
+        new NetworkAsyncTask(this).execute("https://api.nytimes.com/svc/topstories/v2/home.json?api-key=qAZiSFmOLvMctKNYLABeqsR16AWAEz0R");
     }
     @Override
     public void onPreExecute() {
@@ -100,19 +96,18 @@ public class TopStoriesFragment extends Fragment implements NetworkAsyncTask.Lis
         this.updateUIWhenStopingHTTPRequest(json);
     }
     //Update UI
-
     private void updateUIWhenStartingHTTPRequest() {
         this.mTextView.setText("Downloading...");
     }
-
     private void updateUIWhenStopingHTTPRequest(String response) {
         this.mTextView.setText(response);
     }
-    private void updateUIWithListTopStories(List<TopStories> home) {
+    private void updateUIWithListTopStories(List<TopStories> section) {
         StringBuilder stringBuilder = new StringBuilder();
-        for(TopStories section : home) {
-            stringBuilder.append("-"+section.getSection()+"`\n");
+        for(TopStories result : section) {
+            stringBuilder.append("-"+result.getSection()+"\n");
+        }
+
             updateUIWhenStopingHTTPRequest(stringBuilder.toString());
         }
     }
-}
