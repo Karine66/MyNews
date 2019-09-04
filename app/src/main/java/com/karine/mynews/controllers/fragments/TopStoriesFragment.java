@@ -76,7 +76,7 @@ public class TopStoriesFragment extends Fragment implements NetworkAsyncTask.Lis
     }
     @Override
     public void onFailure() {
-        this.updateUIWhenStopingHTTPRequest("Error");
+     this.updateUIWhenStopingHTTPRequest("Error");
     }
     //HTTP request
     private void executeHTTPRequest() {
