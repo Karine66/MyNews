@@ -20,8 +20,8 @@ public class NYTCalls {
 
     // Create callback
     public interface Callbacks {
-        void onResponseTopStories(@Nullable List<TopStories> section);
-        void onFailureTopStories();
+        void onResponse(@Nullable List<TopStories> home);
+        void onFailure();
     }
     // fetch TopStories
     public static void fetchTopStories(Callbacks callbacks, String section){
@@ -35,12 +35,12 @@ public class NYTCalls {
         call.enqueue(new Callback<List<TopStories>>() {
             @Override
             public void onResponse(Call<List<TopStories>> call, Response<List<TopStories>> response) {
-                if (callbacksWeakReference.get() != null) callbacksWeakReference.get().onResponseTopStories(response.body());
+                if (callbacksWeakReference.get() != null) callbacksWeakReference.get().onResponse(response.body());
             }
             @Override
             public void onFailure(Call<List<TopStories>> call, Throwable t) {
                 // Call the proper callback used in controller (MainFragment)
-                if (callbacksWeakReference.get() != null) callbacksWeakReference.get().onFailureTopStories();
+                if (callbacksWeakReference.get() != null) callbacksWeakReference.get().onFailure();
             }
         });
     }

@@ -3,10 +3,8 @@ package com.karine.mynews.controllers.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,11 +71,11 @@ public class TopStoriesFragment extends Fragment implements NetworkAsyncTask.Lis
     }
     //Override callback methods
     @Override
-    public void onResponseTopStories (List<TopStories> section) {
+    public void onResponse (List<TopStories> section) {
         if(section !=null) this.updateUIWithListTopStories(section);
     }
     @Override
-    public void onFailureTopStories() {
+    public void onFailure() {
         this.updateUIWhenStopingHTTPRequest("Error");
     }
     //HTTP request

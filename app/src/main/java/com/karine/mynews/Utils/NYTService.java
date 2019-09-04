@@ -7,11 +7,9 @@ import com.karine.mynews.models.MostPopular;
 import com.karine.mynews.models.TopStories;
 
 import java.util.List;
-import java.util.Observable;
+
 
 import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
