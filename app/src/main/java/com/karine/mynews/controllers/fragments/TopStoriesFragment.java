@@ -71,12 +71,12 @@ public class TopStoriesFragment extends Fragment implements NetworkAsyncTask.Lis
     }
     //Override callback methods
     @Override
-    public void onResponse (List<TopStories> section) {
-        if(section !=null) this.updateUIWithListTopStories(section);
+    public void onResponse (List<TopStories> home) {
+        if(home !=null) this.updateUIWithListTopStories(home);
     }
     @Override
     public void onFailure() {
-     this.updateUIWhenStopingHTTPRequest("Error");
+        this.updateUIWhenStopingHTTPRequest("Error");
     }
     //HTTP request
     private void executeHTTPRequest() {
@@ -100,10 +100,10 @@ public class TopStoriesFragment extends Fragment implements NetworkAsyncTask.Lis
     private void updateUIWhenStopingHTTPRequest(String response) {
         this.mTextView.setText(response);
     }
-    private void updateUIWithListTopStories(List<TopStories> section) {
+    private void updateUIWithListTopStories(List<TopStories> home) {
         StringBuilder stringBuilder = new StringBuilder();
-        for(TopStories result : section) {
-            stringBuilder.append("-"+result.getSection()+"\n");
+        for(TopStories result : home) {
+            stringBuilder.append("-"+result.getResults()+"\n");
         }
 
             updateUIWhenStopingHTTPRequest(stringBuilder.toString());

@@ -10,6 +10,8 @@ import java.util.List;
 
 
 import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
@@ -29,7 +31,6 @@ public interface NYTService {
 
     @GET("svc/search/v2/articlessearch.json?q=business&" + API_KEY)
     Call<List<Business>> getBusiness(@Query("business") String section);
-
 
 
 }

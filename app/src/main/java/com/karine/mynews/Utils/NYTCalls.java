@@ -1,17 +1,20 @@
 package com.karine.mynews.Utils;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.karine.mynews.models.TopStories;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.karine.mynews.Utils.NYTRetrofitObject.retrofit;
+
 
 /**
  * Created by <Karine> on <DATE-DU-JOUR>.
@@ -39,9 +42,11 @@ public class NYTCalls {
             }
             @Override
             public void onFailure(Call<List<TopStories>> call, Throwable t) {
-                // Call the proper callback used in controller (MainFragment)
+                // Call the proper callback used in controller (TopStoriesFragment)
                 if (callbacksWeakReference.get() != null) callbacksWeakReference.get().onFailure();
+                Log.e("Test_onFailure","call"+Log.getStackTraceString(t));
             }
+
         });
     }
 }

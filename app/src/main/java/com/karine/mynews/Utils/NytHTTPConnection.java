@@ -14,6 +14,7 @@ import java.net.URL;
 class NytHTTPConnection {
 
     public static String startHttpRequest(String urlString) {
+
         StringBuilder stringBuilder = new StringBuilder();
 
         try {
@@ -35,4 +36,5 @@ class NytHTTPConnection {
         }
         return stringBuilder.toString();
     }
+
 }
