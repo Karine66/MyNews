@@ -6,7 +6,7 @@ import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
 
-@SuppressWarnings("unused")
+
 public class TopStories {
 
     @SerializedName("copyright")
