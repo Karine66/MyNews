@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.karine.mynews.R;
 import com.karine.mynews.Utils.NYTCalls;
 import com.karine.mynews.Utils.NetworkAsyncTask;
-import com.karine.mynews.models.TopStories;
+import com.karine.mynews.models.TopStoriesAPI.TopStories;
 import com.karine.mynews.views.TopStoriesAdapter;
 
 import java.util.ArrayList;
@@ -71,7 +71,7 @@ public class TopStoriesFragment extends Fragment implements NetworkAsyncTask.Lis
     }
     //Override callback methods
     @Override
-    public void onResponse (List<TopStories> home) {
+    public void onResponse (TopStories home) {
         if(home !=null) this.updateUIWithListTopStories(home);
     }
     @Override
@@ -100,12 +100,12 @@ public class TopStoriesFragment extends Fragment implements NetworkAsyncTask.Lis
     private void updateUIWhenStopingHTTPRequest(String response) {
         this.mTextView.setText(response);
     }
-    private void updateUIWithListTopStories(List<TopStories> home) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for(TopStories result : home) {
-            stringBuilder.append("-"+result.getResults()+"\n");
-        }
+    private void updateUIWithListTopStories(TopStories home) {
+//        StringBuilder stringBuilder = new StringBuilder();
+//        for(TopStories result : home) {
+//            stringBuilder.append("-"+result.getResults()+"\n");
 
-            updateUIWhenStopingHTTPRequest(stringBuilder.toString());
+
+            updateUIWhenStopingHTTPRequest(home.toString());
         }
     }

@@ -1,12 +1,10 @@
 package com.karine.mynews.Utils;
 
-import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.karine.mynews.models.TopStories;
+import com.karine.mynews.models.TopStoriesAPI.TopStories;
 
 import java.lang.ref.WeakReference;
-import java.util.List;
 
 
 import retrofit2.Call;
@@ -23,7 +21,7 @@ public class NYTCalls {
 
     // Create callback
     public interface Callbacks {
-        void onResponse(@Nullable List<TopStories> home);
+        void onResponse(TopStories home);
         void onFailure();
     }
     // fetch TopStories
@@ -33,18 +31,18 @@ public class NYTCalls {
         // Get a Retrofit instance
         NYTService mNYTService = retrofit.create(NYTService.class);
         // Create the call NYT API
-        Call<List<TopStories>> call = mNYTService.getTopStories(section);
+        Call<TopStories> call = mNYTService.getTopStories(section);
         // Start the call
-        call.enqueue(new Callback<List<TopStories>>() {
+        call.enqueue(new Callback<TopStories>() {
             @Override
-            public void onResponse(Call<List<TopStories>> call, Response<List<TopStories>> response) {
+            public void onResponse(Call<TopStories> call, Response<TopStories> response) {
                 if (callbacksWeakReference.get() != null) callbacksWeakReference.get().onResponse(response.body());
             }
             @Override
-            public void onFailure(Call<List<TopStories>> call, Throwable t) {
+            public void onFailure(Call<TopStories> call, Throwable t) {
                 // Call the proper callback used in controller (TopStoriesFragment)
                 if (callbacksWeakReference.get() != null) callbacksWeakReference.get().onFailure();
-                Log.e("Test_onFailure","call"+Log.getStackTraceString(t));
+                Log.d("Test_onFailure","call"+Log.getStackTraceString(t));
             }
 
         });

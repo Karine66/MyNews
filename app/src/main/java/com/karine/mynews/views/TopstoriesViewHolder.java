@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.karine.mynews.R;
-import com.karine.mynews.models.TopStories;
+import com.karine.mynews.models.TopStoriesAPI.TopStories;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

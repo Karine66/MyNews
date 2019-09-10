@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.karine.mynews.R;
-import com.karine.mynews.models.TopStories;
+import com.karine.mynews.models.TopStoriesAPI.TopStories;
 
 import java.util.List;
 
