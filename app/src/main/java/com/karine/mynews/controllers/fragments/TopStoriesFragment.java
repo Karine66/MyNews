@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 
 import com.karine.mynews.R;
-import com.karine.mynews.Utils.NYTCalls;
+import com.karine.mynews.Utils.NYTStreams;
 import com.karine.mynews.Utils.NetworkAsyncTask;
 import com.karine.mynews.models.TopStoriesAPI.TopStories;
 import com.karine.mynews.views.TopStoriesAdapter;
@@ -22,11 +22,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableObserver;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TopStoriesFragment extends Fragment implements NetworkAsyncTask.Listeners, NYTCalls.Callbacks {
+public class TopStoriesFragment extends Fragment {
 
     //declarations
     @BindView(R.id.fragment_rvtopstories) RecyclerView mRecyclerView;
@@ -36,20 +38,31 @@ public class TopStoriesFragment extends Fragment implements NetworkAsyncTask.Lis
     private List<TopStories> mTopStories;
     private TopStoriesAdapter mAdapter;
 
-    public TopStoriesFragment(){}
+    //For Data
+    private Disposable mDisposable;
+
+    public TopStoriesFragment() {
+    }
 
     public static TopStoriesFragment newInstance() {
         return (new TopStoriesFragment());
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_top_stories, container, false);
-        ButterKnife.bind(this,view);
+        View view = inflater.inflate(R.layout.fragment_top_stories, container, false);
+        ButterKnife.bind(this, view);
         this.configureRecyclerView();
-        this.executeHTTPRequest();
         this.executeHttpRequestWithRetrofit();
         return view;
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.disposeWhenDestroy();
+    }
+
     //Configuration Recycler View
     //Configure RecyclerView, Adapter, LayoutManager & glue it
     private void configureRecyclerView() {
@@ -63,49 +76,51 @@ public class TopStoriesFragment extends Fragment implements NetworkAsyncTask.Lis
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
-    //HTTP Retrofit
-    // Execute HTTP request and update UI
-    private void executeHttpRequestWithRetrofit(){
+    //HTTP RX Java
+    // Execute Stream
+    private void executeHttpRequestWithRetrofit() {
+        //Update UI
         this.updateUIWhenStartingHTTPRequest();
-        NYTCalls.fetchTopStories(this, "section");
-    }
-    //Override callback methods
-    @Override
-    public void onResponse (TopStories home) {
-        if(home !=null) this.updateUIWithListTopStories(home);
-    }
-    @Override
-    public void onFailure() {
-        this.updateUIWhenStopingHTTPRequest("Error");
-    }
-    //HTTP request
-    private void executeHTTPRequest() {
-        new NetworkAsyncTask(this).execute("https://api.nytimes.com/svc/topstories/v2/home.json?api-key=qAZiSFmOLvMctKNYLABeqsR16AWAEz0R");
-    }
-    @Override
-    public void onPreExecute() {
-        this.updateUIWhenStartingHTTPRequest();
-    }
-    @Override
-    public void doInBackground() {}
+        //Execute the stream subscribing to Observable
+        this.mDisposable = NYTStreams.streamFetchTopStories("home").subscribeWith(new DisposableObserver<TopStories>() {
+            @Override
+            public void onNext(TopStories home) {
+                updateUIWithListTopStories(home);
+            }
 
-    @Override
-    public void onPostExecute(String json) {
-        this.updateUIWhenStopingHTTPRequest(json);
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
+
+    private void disposeWhenDestroy() {
+        if (this.mDisposable != null && !this.mDisposable.isDisposed())
+            this.mDisposable.dispose();
+    }
+
     //Update UI
     private void updateUIWhenStartingHTTPRequest() {
         this.mTextView.setText("Downloading...");
     }
+
     private void updateUIWhenStopingHTTPRequest(String response) {
         this.mTextView.setText(response);
     }
+
     private void updateUIWithListTopStories(TopStories home) {
-//        StringBuilder stringBuilder = new StringBuilder();
-//        for(TopStories result : home) {
-//            stringBuilder.append("-"+result.getResults()+"\n");
+        StringBuilder stringBuilder = new StringBuilder();
+        for (TopStories result : mTopStories) {
+            stringBuilder.append("-" + result.getSection() + "\n");
 
 
             updateUIWhenStopingHTTPRequest(home.toString());
         }
     }
+}

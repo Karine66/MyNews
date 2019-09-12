@@ -18,7 +18,7 @@ public class Result {
     @SerializedName("des_facet")
     private List<String> mDesFacet;
     @SerializedName("geo_facet")
-    private List<String> mGeoFacet;
+    private List<Object> mGeoFacet;
     @SerializedName("item_type")
     private String mItemType;
     @SerializedName("kicker")
@@ -35,6 +35,8 @@ public class Result {
     private String mPublishedDate;
     @SerializedName("section")
     private String mSection;
+    @SerializedName("short_url")
+    private String mShortUrl;
     @SerializedName("subsection")
     private String mSubsection;
     @SerializedName("title")
@@ -44,10 +46,10 @@ public class Result {
     @SerializedName("url")
     private String mUrl;
 
-//    public String getAbstract() {
-//        return mAbstract;
-//    }
-//
+    public String getAbstract() {
+        return mAbstract;
+    }
+
 //    public void setAbstract(String abstract) {
 //        mAbstract = abstract;
 //    }
@@ -76,11 +78,11 @@ public class Result {
         mDesFacet = desFacet;
     }
 
-    public List<String> getGeoFacet() {
+    public List<Object> getGeoFacet() {
         return mGeoFacet;
     }
 
-    public void setGeoFacet(List<String> geoFacet) {
+    public void setGeoFacet(List<Object> geoFacet) {
         mGeoFacet = geoFacet;
     }
 
@@ -146,6 +148,14 @@ public class Result {
 
     public void setSection(String section) {
         mSection = section;
+    }
+
+    public String getShortUrl() {
+        return mShortUrl;
+    }
+
+    public void setShortUrl(String shortUrl) {
+        mShortUrl = shortUrl;
     }
 
     public String getSubsection() {

@@ -22,8 +22,8 @@ public class TopstoriesViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this.itemView);
     }
 
-    public void updateWithTopStories(TopStories topStories){
-        this.mTextView.setText(topStories.getSection());
+    public void updateWithTopStories(TopStories home){
+        this.mTextView.setText (home.getSection());
     }
 
 }
