@@ -2,6 +2,7 @@ package com.karine.mynews.views;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ public class TopStoriesAdapter extends RecyclerView.Adapter<TopstoriesViewHolder
     @Override
     public void onBindViewHolder(TopstoriesViewHolder viewHolder, int position) {
         viewHolder.updateWithTopStories(this.mTopStories.get(position));
+
     }
 
     //Return the total count of items in the list

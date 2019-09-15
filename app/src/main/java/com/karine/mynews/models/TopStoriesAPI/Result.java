@@ -50,9 +50,9 @@ public class Result {
         return mAbstract;
     }
 
-//    public void setAbstract(String abstract) {
-//        mAbstract = abstract;
-//    }
+    public void setAbstract(String _abstract) {
+        mAbstract = _abstract;
+    }
 
     public String getByline() {
         return mByline;
@@ -189,5 +189,4 @@ public class Result {
     public void setUrl(String url) {
         mUrl = url;
     }
-
 }

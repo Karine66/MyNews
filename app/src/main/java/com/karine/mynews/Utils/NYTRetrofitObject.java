@@ -21,7 +21,7 @@ public  class NYTRetrofitObject {
 
     //return retrofit object
     public static  Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("https://developer.nytimes.com/")
+            .baseUrl("https://api.nytimes.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build();

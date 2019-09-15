@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,6 @@ import android.widget.TextView;
 
 import com.karine.mynews.R;
 import com.karine.mynews.Utils.NYTStreams;
-import com.karine.mynews.Utils.NetworkAsyncTask;
 import com.karine.mynews.models.TopStoriesAPI.TopStories;
 import com.karine.mynews.views.TopStoriesAdapter;
 
@@ -82,20 +82,21 @@ public class TopStoriesFragment extends Fragment {
         //Update UI
         this.updateUIWhenStartingHTTPRequest();
         //Execute the stream subscribing to Observable
-        this.mDisposable = NYTStreams.streamFetchTopStories("home").subscribeWith(new DisposableObserver<TopStories>() {
+        this.mDisposable = NYTStreams.streamFetchTopStories("home").subscribeWith(new DisposableObserver <TopStories>() {
             @Override
             public void onNext(TopStories home) {
-                updateUIWithListTopStories(home);
+
+                updateUIWithTopStories(home);
             }
 
             @Override
             public void onError(Throwable e) {
-
+            Log.e("onError", Log.getStackTraceString(e));
             }
 
             @Override
             public void onComplete() {
-
+                Log.i("ON_Complete", "COUCOU !!!!");
             }
         });
     }
@@ -105,22 +106,27 @@ public class TopStoriesFragment extends Fragment {
             this.mDisposable.dispose();
     }
 
-    //Update UI
+     //Update UI
+
+
     private void updateUIWhenStartingHTTPRequest() {
-        this.mTextView.setText("Downloading...");
+
+       this.mTextView.setText("Downloading...");
     }
 
     private void updateUIWhenStopingHTTPRequest(String response) {
         this.mTextView.setText(response);
     }
 
-    private void updateUIWithListTopStories(TopStories home) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (TopStories result : mTopStories) {
-            stringBuilder.append("-" + result.getSection() + "\n");
+    private void updateUIWithTopStories(TopStories topStories) {
+//                 StringBuilder stringBuilder = new StringBuilder();
+//            for (TopStories result : mTopStories) {
+//                stringBuilder.append("-" + result.getSection() + "\n");
 
 
-            updateUIWhenStopingHTTPRequest(home.toString());
-        }
+            updateUIWhenStopingHTTPRequest(topStories.getResults().get(0).getTitle());
+
+
+      }
     }
-}
+

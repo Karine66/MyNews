@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import com.karine.mynews.models.TopStoriesAPI.TopStories;
 
 
+import java.util.List;
+
 import io.reactivex.Observable;
 import io.reactivex.observers.TestObserver;
 import retrofit2.Call;
