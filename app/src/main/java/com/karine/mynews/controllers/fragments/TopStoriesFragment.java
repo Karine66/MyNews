@@ -35,7 +35,7 @@ public class TopStoriesFragment extends Fragment {
     @BindView(R.id.fragment_tvtopstories) TextView mTextView;
 
     //Declare top stories et Adapter
-    private List<TopStories> mTopStories;
+    private TopStories mTopStories;
     private TopStoriesAdapter mAdapter;
 
     //For Data
@@ -67,7 +67,7 @@ public class TopStoriesFragment extends Fragment {
     //Configure RecyclerView, Adapter, LayoutManager & glue it
     private void configureRecyclerView() {
         //Reset List
-        this.mTopStories = new ArrayList<>();
+        this.mTopStories = new TopStories();
         //Create adapter
         this.mAdapter = new TopStoriesAdapter(this.mTopStories);
         // Attach the adapter to the recyclerview
@@ -96,7 +96,7 @@ public class TopStoriesFragment extends Fragment {
 
             @Override
             public void onComplete() {
-                Log.i("ON_Complete", "COUCOU !!!!");
+                Log.i("ON_Complete", "Test onComplete");
             }
         });
     }
@@ -124,7 +124,7 @@ public class TopStoriesFragment extends Fragment {
 //                stringBuilder.append("-" + result.getSection() + "\n");
 
 
-            updateUIWhenStopingHTTPRequest(topStories.getResults().get(0).getTitle());
+            updateUIWhenStopingHTTPRequest(topStories.getResults().toString());
 
 
       }

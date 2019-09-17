@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 public class TopstoriesViewHolder extends RecyclerView.ViewHolder {
 
   @BindView(R.id.fragment_rvtopstories) TextView mTextView;
-    private AbstractQueue<TopStories> mTopStories;
+    private TopStories mTopStories;
     private ArrayAdapter<Object> mAdapter;
 
     public TopstoriesViewHolder (View itemView) {
@@ -28,7 +28,7 @@ public class TopstoriesViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void updateWithTopStories(TopStories home){
-        this.mTextView.setText (home.getSection());
+        this.mTextView.setText (home.getResults().size());
     }
 
 }
