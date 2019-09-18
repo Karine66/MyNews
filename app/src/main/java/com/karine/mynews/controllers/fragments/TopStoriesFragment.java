@@ -15,10 +15,9 @@ import android.widget.TextView;
 import com.karine.mynews.R;
 import com.karine.mynews.Utils.NYTStreams;
 import com.karine.mynews.models.TopStoriesAPI.TopStories;
-import com.karine.mynews.views.TopStoriesAdapter;
+import com.karine.mynews.views.ArticlesAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,8 +34,8 @@ public class TopStoriesFragment extends Fragment {
     @BindView(R.id.fragment_tvtopstories) TextView mTextView;
 
     //Declare top stories et Adapter
-    private TopStories mTopStories;
-    private TopStoriesAdapter mAdapter;
+    private ArrayList mTopStories;
+    private ArticlesAdapter mAdapter;
 
     //For Data
     private Disposable mDisposable;
@@ -67,9 +66,9 @@ public class TopStoriesFragment extends Fragment {
     //Configure RecyclerView, Adapter, LayoutManager & glue it
     private void configureRecyclerView() {
         //Reset List
-        this.mTopStories = new TopStories();
+        this.mTopStories = new ArrayList<>();
         //Create adapter
-        this.mAdapter = new TopStoriesAdapter(this.mTopStories);
+        this.mAdapter = new ArticlesAdapter(this.mTopStories);
         // Attach the adapter to the recyclerview
         this.mRecyclerView.setAdapter(this.mAdapter);
         //Set Layout manager
@@ -87,6 +86,7 @@ public class TopStoriesFragment extends Fragment {
             public void onNext(TopStories home) {
 
                 updateUIWithTopStories(home);
+
             }
 
             @Override
@@ -96,7 +96,7 @@ public class TopStoriesFragment extends Fragment {
 
             @Override
             public void onComplete() {
-                Log.i("ON_Complete", "Test onComplete");
+                Log.e("ON_Complete", "Test onComplete");
             }
         });
     }
@@ -124,7 +124,7 @@ public class TopStoriesFragment extends Fragment {
 //                stringBuilder.append("-" + result.getSection() + "\n");
 
 
-            updateUIWhenStopingHTTPRequest(topStories.getResults().toString());
+            updateUIWhenStopingHTTPRequest(topStories.getResults().get(0).getTitle());
 
 
       }

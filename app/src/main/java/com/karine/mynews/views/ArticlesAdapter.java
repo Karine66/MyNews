@@ -7,33 +7,34 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.karine.mynews.R;
-import com.karine.mynews.models.TopStoriesAPI.TopStories;
+
+import java.util.ArrayList;
 
 
 /**
  * Created by <Karine> on <DATE-DU-JOUR>.
  */
-public  class TopStoriesAdapter extends RecyclerView.Adapter<TopstoriesViewHolder> {
+public  class ArticlesAdapter extends RecyclerView.Adapter<ArticlesViewHolder> {
 
-    private TopStories mTopStories;
+    private ArrayList mTopStories;
 
     //Constructor
-    public TopStoriesAdapter(TopStories topStories) {
+    public ArticlesAdapter(ArrayList topStories) {
         this.mTopStories = topStories;
     }
     //Create viewholder
     @Override
-    public TopstoriesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ArticlesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.fragment_item, parent, false);
 
-        return new TopstoriesViewHolder(view);
+        return new ArticlesViewHolder(view);
     }
 
     //Update view holder
     @Override
-    public void onBindViewHolder(TopstoriesViewHolder viewHolder, int position) {
+    public void onBindViewHolder(ArticlesViewHolder viewHolder, int position) {
         viewHolder.updateWithTopStories(this.mTopStories);
 
     }
@@ -41,6 +42,6 @@ public  class TopStoriesAdapter extends RecyclerView.Adapter<TopstoriesViewHolde
 
     @Override
     public int getItemCount() {
-        return this.mTopStories.getResults();
+        return this.mTopStories.size();
     }
 }
