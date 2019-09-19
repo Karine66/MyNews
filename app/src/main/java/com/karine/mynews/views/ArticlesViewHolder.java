@@ -32,4 +32,6 @@ public class ArticlesViewHolder extends RecyclerView.ViewHolder {
         this.mTextView.setText (home.size());
     }
 
-}
+    }
+
+

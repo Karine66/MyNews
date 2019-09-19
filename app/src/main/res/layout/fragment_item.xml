@@ -6,10 +6,43 @@
     android:layout_height="wrap_content"
     android:padding="20dp">
 
-    <TextView
+    <RelativeLayout
         android:id="@+id/fragment_item"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        />
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <TextView
+            android:id="@+id/fragment_item_date"
+            android:layout_width="wrap_content"
+            android:layout_height="9dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="2dp"
+            android:text="" />
+
+        <ImageView
+            android:id="@+id/fragment_item_photo"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="2dp"
+            android:layout_toEndOf="@id/fragment_item_date"/>
+
+        <TextView
+            android:id="@+id/fragment_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="9dp"
+            android:layout_marginTop="2dp"
+            android:layout_toEndOf="@+id/fragment_item_photo"/>
+
+        <TextView
+            android:id="@+id/fragment_item_article"
+            android:layout_width="322dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@+id/fragment_item_title"
+            android:ellipsize="end" />
+
+    </RelativeLayout>
 </LinearLayout>
