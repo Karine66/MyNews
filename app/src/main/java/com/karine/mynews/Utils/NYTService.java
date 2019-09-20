@@ -2,6 +2,8 @@ package com.karine.mynews.Utils;
 
 import android.app.AlertDialog;
 
+import com.karine.mynews.models.BusinessAPI.Business;
+import com.karine.mynews.models.MostPopularAPI.MostPopular;
 import com.karine.mynews.models.TopStoriesAPI.TopStories;
 
 
@@ -29,11 +31,11 @@ public interface NYTService {
     @GET("svc/topstories/v2/home.json?" + API_KEY)
     Observable<TopStories> getTopStories(@Query("section") String section);
 
-//    @GET("svc/mostpopular/v2/viewed/7.json?" + API_KEY)
-//    Call<List<MostPopular>> getMostPopular(@Query("viewed") String section);
-//
-//    @GET("svc/search/v2/articlessearch.json?q=business&" + API_KEY)
-//    Call<List<Business>> getBusiness(@Query("business") String section);
+    @GET("svc/mostpopular/v2/viewed/7.json?" + API_KEY)
+    Observable<List<MostPopular>> getMostPopular(@Query("viewed") String section);
+
+    @GET("svc/topstories/v2/business.json?" + API_KEY)
+    Observable<List<Business>> getBusiness(@Query("section") String section);
 
 
 }

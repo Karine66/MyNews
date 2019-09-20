@@ -4,9 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.karine.mynews.controllers.fragments.ArticlesFragment;
 import com.karine.mynews.controllers.fragments.BusinessFragment;
 import com.karine.mynews.controllers.fragments.MostPopularFragment;
-import com.karine.mynews.controllers.fragments.TopStoriesFragment;
 
 /**
  * Created by <Karine> on <DATE-DU-JOUR>.
@@ -26,7 +26,7 @@ public class PageAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0 :
-                return TopStoriesFragment.newInstance();
+                return ArticlesFragment.newInstance();
             case 1 :
                 return MostPopularFragment.newInstance();
             case 2 :

@@ -5,12 +5,12 @@
     android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/fragment_rvtopstories"
+        android:id="@+id/fragment_rvArticles"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
     <TextView
-        android:id="@+id/fragment_tvtopstories"
+        android:id="@+id/fragment_tvArticles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"

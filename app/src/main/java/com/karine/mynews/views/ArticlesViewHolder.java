@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
  */
 public class ArticlesViewHolder extends RecyclerView.ViewHolder {
 
-  @BindView(R.id.fragment_rvtopstories) TextView mTextView;
+  @BindView(R.id.fragment_tvArticles) TextView mTextView;
     private TopStories mTopStories;
     private ArrayAdapter<Object> mAdapter;
 

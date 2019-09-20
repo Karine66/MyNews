@@ -32,7 +32,7 @@ public class MostPopular {
         mNumResults = numResults;
     }
 
-    public List<Result> getResults() {
+    public List<com.karine.mynews.models.TopStoriesAPI.Result> getResults() {
         return mResults;
     }
 
