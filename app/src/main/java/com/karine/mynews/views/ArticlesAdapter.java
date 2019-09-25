@@ -7,8 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.karine.mynews.R;
+import com.karine.mynews.models.MostPopularAPI.MostPopular;
+import com.karine.mynews.models.TopStoriesAPI.Result;
+import com.karine.mynews.models.TopStoriesAPI.TopStories;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -16,11 +20,12 @@ import java.util.ArrayList;
  */
 public  class ArticlesAdapter extends RecyclerView.Adapter<ArticlesViewHolder> {
 
-    private ArrayList mTopStories;
+    //For Data
+    private ArrayList mArticles;
 
     //Constructor
-    public ArticlesAdapter(ArrayList topStories) {
-        this.mTopStories = topStories;
+    public ArticlesAdapter(ArrayList mArticles) {
+        this.mArticles = mArticles;
     }
     //Create viewholder
     @Override
@@ -35,13 +40,19 @@ public  class ArticlesAdapter extends RecyclerView.Adapter<ArticlesViewHolder> {
     //Update view holder
     @Override
     public void onBindViewHolder(ArticlesViewHolder viewHolder, int position) {
-        viewHolder.updateWithTopStories(this.mTopStories);
+        viewHolder.updateWithArticles((TopStories) this.mArticles.get(position));
 
     }
 
 
     @Override
     public int getItemCount() {
-        return this.mTopStories.size();
+        return this.mArticles.size();
+    }
+
+    public void updateData(List<Result> results) {
+        this.mArticles.addAll(results);
+        notifyDataSetChanged();
+
     }
 }

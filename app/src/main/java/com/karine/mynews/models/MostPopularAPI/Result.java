@@ -4,7 +4,6 @@ package com.karine.mynews.models.MostPopularAPI;
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
-
 @SuppressWarnings("unused")
 public class Result {
 
@@ -21,7 +20,7 @@ public class Result {
     @SerializedName("des_facet")
     private List<String> mDesFacet;
     @SerializedName("geo_facet")
-    private List<String> mGeoFacet;
+    private String mGeoFacet;
     @SerializedName("id")
     private Long mId;
     @SerializedName("media")
@@ -95,11 +94,11 @@ public class Result {
         mDesFacet = desFacet;
     }
 
-    public List<String> getGeoFacet() {
+    public String getGeoFacet() {
         return mGeoFacet;
     }
 
-    public void setGeoFacet(List<String> geoFacet) {
+    public void setGeoFacet(String geoFacet) {
         mGeoFacet = geoFacet;
     }
 

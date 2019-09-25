@@ -2,6 +2,7 @@ package com.karine.mynews.controllers.fragments;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,7 +26,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.observers.DefaultObserver;
+import io.reactivex.observers.DisposableObserver;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,8 +36,9 @@ public class ArticlesFragment extends Fragment {
     //declarations
     @BindView(R.id.fragment_rvArticles)
     RecyclerView mRecyclerView;
+
     @BindView(R.id.fragment_tvArticles)
-    TextView mTextView;
+     TextView mTextView;
 
     //Declare top stories et Adapter
     private ArrayList mArticles;
@@ -87,27 +89,21 @@ public class ArticlesFragment extends Fragment {
         //Update UI
         this.updateUIWhenStartingHTTPRequest();
 
-
         switch (position) {
 
             case 0:
                 topstoriesHome();
+
                 break;
-            case 1:
-                mostPopular();
-                break;
-            case 2:
-                business();
-                break;
+//            case 1:
+//                mostPopular();
+//                break;
+//            case 2:
+//                business();
+//                break;
         }
-////        //Execute the stream subscribing to Observable
-////        this.mDisposable = NYTStreams.streamFetchTopStories("home").subscribeWith(new DisposableObserver <TopStories>() {
-////            @Override
-////            public void onNext(TopStories home) {
-////
-////                updateUIWithTopStories(home);
-////
     }
+
     //Update UI
     private void updateUIWhenStartingHTTPRequest() {
         this.mTextView.setText("Downloading...");
@@ -115,63 +111,79 @@ public class ArticlesFragment extends Fragment {
 
     private void topstoriesHome() {
         this.mDisposable = NYTStreams.streamFetchTopStories("home")
-                .subscribeWith(new DefaultObserver<TopStories>() {
+                .subscribeWith(new DisposableObserver<TopStories>() {
                     @Override
                     public void onNext(TopStories home) {
                         updateUIWithTopStories(home);
+                       mAdapter.updateData(home.getResults());
+                       Log.d("Tag", "test onNext");
                     }
-                });
-    }
 
-    private void mostPopular() {
-        this.mDisposable = NYTStreams.streamFetchMostPopular("viewed")
-                .subscribeWith(new DefaultObserver<MostPopular>() {
                     @Override
-                    public void onNext(MostPopular viewed) {
-                        updateUIWithMostPopular(viewed);
+                    public void onComplete () {
+                        Log.e("ON_Complete", "Test onComplete");
                     }
-                });
-    }
 
-    private void business() {
-
-        this.mDisposable = NYTStreams.streamFetchBusiness("business")
-                .subscribeWith(new DefaultObserver<TopStories>() {
                     @Override
-                    public void onNext(TopStories business) {
-                        updateUIWithBusiness(business);
+                    public void onError (Throwable e){
+                        Log.e("onError", Log.getStackTraceString(e));
                     }
+
                 });
-        
     }
 
-
-
-
-    @Override
-    public void onComplete() {
-        Log.e("ON_Complete", "Test onComplete");
-    }
-
-
-    @Override
-       public void onError(Throwable e) {
-       Log.e("onError", Log.getStackTraceString(e));
-            }
+//        private void mostPopular () {
+//            this.mDisposable = NYTStreams.streamFetchMostPopular("viewed")
+//                    .subscribeWith(new DisposableObserver<MostPopular>() {
+//                        @Override
+//                        public void onNext(MostPopular viewed) {
+//                            updateUIWithMostPopular(viewed);
+//                        }
+//
+//                        @Override
+//                        public void onComplete() {
+//
+//                            Log.e("ON_Complete", "Test onComplete");
+//                        }
+//
+//                        @Override
+//                        public void onError(Throwable e) {
+//                            Log.e("onError", Log.getStackTraceString(e));
+//                        }
+//                    });
+//        }
+//
+//        private void business () {
+//
+//                this.mDisposable = NYTStreams.streamFetchBusiness("business")
+//                        .subscribeWith(new DisposableObserver<TopStories>() {
+//                            @Override
+//                            public void onNext(TopStories business) {
+//                               updateUIWithBusiness(business);
+//                            }
+//                            @Override
+//                            public void onComplete () {
+//                                Log.e("ON_Complete", "Test onComplete");
+//                            }
+//
+//                            @Override
+//                            public void onError (Throwable e){
+//                                Log.e("onError", Log.getStackTraceString(e));
+//                            }
+//                        });
+//            }
 
     private void updateUIWithTopStories(TopStories home) {
         updateUIWhenStopingHTTPRequest(home.getResults());
     }
 
-
-    private void updateUIWithMostPopular(MostPopular viewed) {
-        updateUIWhenStopingHTTPRequest(viewed.getResults());
-    }
-
-
-    private void updateUIWithBusiness(TopStories business) {
-        updateUIWhenStopingHTTPRequest(business.getResults());
-    }
+//    private void updateUIWithMostPopular(MostPopular viewed) {
+//        updateUIWhenStopingHTTPRequest(viewed.getResults());
+//    }
+//
+//    private void updateUIWithBusiness(TopStories business) {
+//        updateUIWhenStopingHTTPRequest(business.getResults());
+//    }
 
     private void disposeWhenDestroy() {
         if (this.mDisposable != null && !this.mDisposable.isDisposed())
@@ -182,9 +194,6 @@ public class ArticlesFragment extends Fragment {
         return results;
     }
 
-//    private void updateUIWhenStopingHTTPRequest(String response) {
-//        this.mTextView.setText(response);
-//    }
 
 
     }

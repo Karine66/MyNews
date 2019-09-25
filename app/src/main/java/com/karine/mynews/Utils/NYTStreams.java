@@ -1,7 +1,6 @@
 package com.karine.mynews.Utils;
 
 
-import com.karine.mynews.models.BusinessAPI.Business;
 import com.karine.mynews.models.MostPopularAPI.MostPopular;
 import com.karine.mynews.models.TopStoriesAPI.TopStories;
 
@@ -29,17 +28,17 @@ public class NYTStreams {
     }
 
     //Create stream MostPopular
-    public static Observable<List<MostPopular>> streamFetchMostPopular(String viewed) {
+    public static Observable<MostPopular> streamFetchMostPopular(String viewed) {
         NYTService mNYTService = NYTRetrofitObject.retrofit.create(NYTService.class);
         return mNYTService.getMostPopular(viewed)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .timeout(10, TimeUnit.SECONDS);
     }
-    //Create stream TopStories
-    public static Observable<List<Business>> streamFetchBusiness(String business) {
+    //Create stream TopStories Business
+    public static Observable<TopStories> streamFetchBusiness(String business) {
         NYTService mNYTService = NYTRetrofitObject.retrofit.create(NYTService.class);
-        return mNYTService.getBusiness(business)
+        return mNYTService.getTopStories(business)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .timeout(10, TimeUnit.SECONDS);

@@ -4,6 +4,7 @@ package com.karine.mynews.models.MostPopularAPI;
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
+
 @SuppressWarnings("unused")
 public class MostPopular {
 
@@ -32,7 +33,7 @@ public class MostPopular {
         mNumResults = numResults;
     }
 
-    public List<com.karine.mynews.models.TopStoriesAPI.Result> getResults() {
+    public List<Result> getResults() {
         return mResults;
     }
 

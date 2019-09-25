@@ -19,19 +19,28 @@ import butterknife.ButterKnife;
  */
 public class ArticlesViewHolder extends RecyclerView.ViewHolder {
 
-  @BindView(R.id.fragment_tvArticles) TextView mTextView;
+    @BindView(R.id.fragment_tvArticles)
+    TextView mTextView;
     private TopStories mTopStories;
     private ArrayAdapter<Object> mAdapter;
 
     public ArticlesViewHolder(View itemView) {
         super(itemView);
-        ButterKnife.bind(this.itemView);
+        ButterKnife.bind(this, itemView);
     }
 
-    public void updateWithTopStories(ArrayList home){
-        this.mTextView.setText (home.size());
+    public void updateWithArticles(TopStories home) {
+        this.mTextView.setText(home.getResults().size());
     }
+}
 
-    }
+//    public void updateWithBusiness(ArrayList business) {
+//        this.mTextView.setText(business.size());
+//    }
+//    public void updateWithMostPopular (ArrayList viewed) {
+//        this.mTextView.setText(viewed.size());
+//    }
+//
+//    }
 
 
