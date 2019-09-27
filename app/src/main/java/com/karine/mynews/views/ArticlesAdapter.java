@@ -1,17 +1,19 @@
 package com.karine.mynews.views;
 
 import android.content.Context;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.RequestManager;
 import com.karine.mynews.R;
-import com.karine.mynews.models.MostPopularAPI.MostPopular;
 import com.karine.mynews.models.TopStoriesAPI.Result;
-import com.karine.mynews.models.TopStoriesAPI.TopStories;
+
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -22,10 +24,14 @@ public  class ArticlesAdapter extends RecyclerView.Adapter<ArticlesViewHolder> {
 
     //For Data
     private ArrayList mArticles;
+    //Declaring a Glide object
+    private RequestManager glide;
 
     //Constructor
-    public ArticlesAdapter(ArrayList mArticles) {
+    public ArticlesAdapter(ArrayList mArticles, RequestManager glide) {
+
         this.mArticles = mArticles;
+        this.glide = glide;
     }
     //Create viewholder
     @Override
@@ -40,7 +46,7 @@ public  class ArticlesAdapter extends RecyclerView.Adapter<ArticlesViewHolder> {
     //Update view holder
     @Override
     public void onBindViewHolder(ArticlesViewHolder viewHolder, int position) {
-        viewHolder.updateWithArticles((TopStories) this.mArticles.get(position));
+        viewHolder.updateWithArticles((Result) this.mArticles.get(position), this.glide);
 
     }
 
@@ -50,9 +56,9 @@ public  class ArticlesAdapter extends RecyclerView.Adapter<ArticlesViewHolder> {
         return this.mArticles.size();
     }
 
-    public void updateData(List<Result> results) {
-        this.mArticles.addAll(results);
-        notifyDataSetChanged();
 
-    }
+
+
+
+
 }

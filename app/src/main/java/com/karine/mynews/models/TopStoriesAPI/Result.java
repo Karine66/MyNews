@@ -2,7 +2,6 @@
 package com.karine.mynews.models.TopStoriesAPI;
 
 import java.util.List;
-
 import com.google.gson.annotations.SerializedName;
 
 
@@ -18,7 +17,7 @@ public class Result {
     @SerializedName("des_facet")
     private List<String> mDesFacet;
     @SerializedName("geo_facet")
-    private List<Object> mGeoFacet;
+    private List<String> mGeoFacet;
     @SerializedName("item_type")
     private String mItemType;
     @SerializedName("kicker")
@@ -26,9 +25,9 @@ public class Result {
     @SerializedName("material_type_facet")
     private String mMaterialTypeFacet;
     @SerializedName("multimedia")
-    private List<Multimedium> mMultimedia;
+    private List<Object> mMultimedia;
     @SerializedName("org_facet")
-    private List<Object> mOrgFacet;
+    private List<String> mOrgFacet;
     @SerializedName("per_facet")
     private List<String> mPerFacet;
     @SerializedName("published_date")
@@ -78,11 +77,11 @@ public class Result {
         mDesFacet = desFacet;
     }
 
-    public List<Object> getGeoFacet() {
+    public List<String> getGeoFacet() {
         return mGeoFacet;
     }
 
-    public void setGeoFacet(List<Object> geoFacet) {
+    public void setGeoFacet(List<String> geoFacet) {
         mGeoFacet = geoFacet;
     }
 
@@ -110,19 +109,19 @@ public class Result {
         mMaterialTypeFacet = materialTypeFacet;
     }
 
-    public List<Multimedium> getMultimedia() {
+    public List<Object> getMultimedia() {
         return mMultimedia;
     }
 
-    public void setMultimedia(List<Multimedium> multimedia) {
+    public void setMultimedia(List<Object> multimedia) {
         mMultimedia = multimedia;
     }
 
-    public List<Object> getOrgFacet() {
+    public List<String> getOrgFacet() {
         return mOrgFacet;
     }
 
-    public void setOrgFacet(List<Object> orgFacet) {
+    public void setOrgFacet(List<String> orgFacet) {
         mOrgFacet = orgFacet;
     }
 
@@ -189,4 +188,5 @@ public class Result {
     public void setUrl(String url) {
         mUrl = url;
     }
+
 }

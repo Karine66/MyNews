@@ -2,7 +2,6 @@
 package com.karine.mynews.models.TopStoriesAPI;
 
 import java.util.List;
-
 import com.google.gson.annotations.SerializedName;
 
 

@@ -1,6 +1,7 @@
 
 package com.karine.mynews.models.MostPopularAPI;
 
+
 import com.google.gson.annotations.SerializedName;
 
 
