@@ -1,5 +1,6 @@
 package com.karine.mynews.views;
 
+import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -17,7 +18,6 @@ import com.karine.mynews.models.TopStoriesAPI.TopStories;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -40,25 +40,32 @@ public class ArticlesViewHolder extends RecyclerView.ViewHolder {
     private ArrayAdapter<Object> mAdapter;
     private Object date;
 
+
     public ArticlesViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
 
+    @SuppressLint("SetTextI18n")
     public void updateWithArticles(Result result, RequestManager glide) {
 
 
             this.mdate.setText(dateFormat(result.getPublishedDate()));
-            this.mSection.setText(result.getSection());
-            this.mSection.setText(result.getSubsection());//getSection??
             this.mTitle.setText(result.getTitle());
-
-
+            //get subsection if exist
+            if((result.getSubsection() !=null)&&(!result.getSubsection().isEmpty())) {
+                this.mSection.setText(result.getSection() + " > " + result.getSubsection());
+            }else{
+                this.mSection.setText(result.getSection());
+            }
 
             glide.load(result.getMultimedia()).apply(RequestOptions.centerCropTransform()).into(mImageView);
 
 }
 
+
+
+    //Convert dates in dd/MM/yyy
     private String dateFormat (String dateString) {
     List<String> strings = Arrays.asList("yyyy-MM-dd", "yyyy-MM-dd'T'HH:mm:ssZ");
 
@@ -76,15 +83,7 @@ public class ArticlesViewHolder extends RecyclerView.ViewHolder {
         }
     }
         return "";
-    }
-}
-//    public void updateWithBusiness(ArrayList business) {
-//        this.mTextView.setText(business.size());
-//    }
-//    public void updateWithMostPopular (ArrayList viewed) {
-//        this.mTextView.setText(viewed.size());
-//    }
-//
-//    }
+    }}
+
 
 

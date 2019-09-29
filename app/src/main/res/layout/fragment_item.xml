@@ -16,8 +16,8 @@
 
         <ImageView
             android:id="@+id/fragment_item_photo"
-            android:layout_width="88dp"
-            android:layout_height="78dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:layout_marginStart="2dp" />
 
         <TextView
@@ -29,8 +29,7 @@
             android:layout_marginTop="2dp"
             android:text=""
             android:textColor="#0124AF"
-
-            android:textStyle="bold" />
+            android:textStyle="bold|italic" />
 
         <TextView
             android:id="@+id/fragment_item_section"
@@ -40,7 +39,7 @@
             android:layout_marginTop="18dp"
             android:layout_toEndOf="@+id/fragment_item_photo"
             android:textColor="#110000"
-            android:textStyle="bold" />
+            android:textStyle="bold|italic" />
 
         <TextView
             android:id="@+id/fragment_item_title"
@@ -50,6 +49,7 @@
             android:layout_marginStart="0dp"
             android:layout_marginTop="65dp"
             android:layout_marginBottom="13dp"
+            android:ellipsize="end"
             android:layout_toEndOf="@+id/fragment_item_photo" />
 
     </RelativeLayout>

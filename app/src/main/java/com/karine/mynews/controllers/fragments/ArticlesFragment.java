@@ -1,7 +1,9 @@
 package com.karine.mynews.controllers.fragments;
 
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +25,7 @@ import com.karine.mynews.views.ArticlesAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -41,7 +44,7 @@ public class ArticlesFragment extends Fragment {
     RecyclerView mRecyclerView;
 
     @BindView(R.id.fragment_tvArticles)
-     TextView mTextView;
+    TextView mTextView;
 
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -53,6 +56,7 @@ public class ArticlesFragment extends Fragment {
     //For Data
     private Disposable mDisposable;
     private int position;
+
 
     public ArticlesFragment() {
     }
@@ -70,7 +74,6 @@ public class ArticlesFragment extends Fragment {
         this.executeHttpRequestWithRetrofit();
         return view;
     }
-
 
 
     @Override
@@ -120,10 +123,10 @@ public class ArticlesFragment extends Fragment {
 //            case 2:
 //                business();
 //                break;
-       }
+        }
     }
 
-//    Update UI
+    //    Update UI
     private void updateUIWhenStartingHTTPRequest() {
 //        this.mTextView.setText("Downloading...");
     }
@@ -133,18 +136,18 @@ public class ArticlesFragment extends Fragment {
                 .subscribeWith(new DisposableObserver<TopStories>() {
                     @Override
                     public void onNext(TopStories home) {
-                      // updateUIWithArticles(home);
-                       updateUI(home.getResults());
-                       Log.d("Tag", "test onNext");
+                        // updateUIWithArticles(home);
+                        updateUI(home.getResults());
+                        Log.d("Tag", "test onNext");
                     }
 
                     @Override
-                    public void onComplete () {
+                    public void onComplete() {
                         Log.e("ON_Complete", "Test onComplete");
                     }
 
                     @Override
-                    public void onError (Throwable e){
+                    public void onError(Throwable e) {
                         Log.e("onError", Log.getStackTraceString(e));
                     }
 
@@ -155,8 +158,8 @@ public class ArticlesFragment extends Fragment {
 //            this.mDisposable = NYTStreams.streamFetchMostPopular("viewed")
 //                    .subscribeWith(new DisposableObserver<MostPopular>() {
 //                        @Override
-//                        public void onNext(MostPopular viewed) {
-//                            updateUI(viewed.getResults());
+//                        public void onNext(MostPopular mostPopular) {
+//                            updateUI(mostPopular.getResults());
 //                        }
 //
 //                        @Override
@@ -171,7 +174,7 @@ public class ArticlesFragment extends Fragment {
 //                        }
 //                    });
 //        }
-
+//
 //        private void business () {
 //
 //                this.mDisposable = NYTStreams.streamFetchBusiness("business")
@@ -185,36 +188,38 @@ public class ArticlesFragment extends Fragment {
 //                                Log.e("ON_Complete", "Test onComplete");
 //                            }
 //
-//                            @Override
-//                            public void onError (Throwable e){
-//                                Log.e("onError", Log.getStackTraceString(e));
-//                            }
-//                        });
-//            }
-
+//                        @Override
+//                        public void onError(Throwable e) {
+//                            Log.e("onError", Log.getStackTraceString(e));
+//                        }
+//                    });
+//        }
 
     public void updateUI(List<Result> result) {
 
-
-        this.mArticles.clear();
-        this.mArticles.addAll(result);
-        mAdapter.notifyDataSetChanged();
         mSwipeRefreshLayout.setRefreshing(false);
-
-
+        switch (position) {
+            case 0: case 1: case 2:
+                mArticles.clear();
+                mArticles.addAll(result);
+                sortArticles(mArticles);
+                break;
+        }
+        mAdapter.notifyDataSetChanged();
     }
 
     private void disposeWhenDestroy() {
         if (this.mDisposable != null && !this.mDisposable.isDisposed())
             this.mDisposable.dispose();
     }
-
-//    private List<Result> updateUIWhenStopingHTTPRequest(List<Result> result) {
-//
-//        return result;
-//    }
-
-
-
+    //Sort Articles in RecyclerView by descending order
+    public void sortArticles(ArrayList mArticles) {
+        Collections.sort(mArticles, (Comparator<Result>) (o1, o2) -> o1.getPublishedDate().compareTo(o2.getPublishedDate()));
+        Collections.reverse(mArticles);
     }
+}
+
+
+
+
 
