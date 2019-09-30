@@ -19,28 +19,28 @@ import io.reactivex.schedulers.Schedulers;
 public class NYTStreams {
 
     //Create stream TopStories
-    public static Observable<TopStories> streamFetchTopStories(String home) {
+    public static Observable<TopStories> streamFetchTopStories(String section) {
         NYTService mNYTService = NYTRetrofitObject.retrofit.create(NYTService.class);
-        return mNYTService.getTopStories(home)
+        return mNYTService.getTopStories(section)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .timeout(10, TimeUnit.SECONDS);
     }
 
     //Create stream MostPopular
-    public static Observable<MostPopular> streamFetchMostPopular(String viewed) {
+    public static Observable<MostPopular> streamFetchMostPopular(String section) {
         NYTService mNYTService = NYTRetrofitObject.retrofit.create(NYTService.class);
-        return mNYTService.getMostPopular(viewed)
+        return mNYTService.getMostPopular(section)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .timeout(10, TimeUnit.SECONDS);
     }
-    //Create stream TopStories Business
-    public static Observable<TopStories> streamFetchBusiness(String business) {
-        NYTService mNYTService = NYTRetrofitObject.retrofit.create(NYTService.class);
-        return mNYTService.getTopStories(business)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .timeout(10, TimeUnit.SECONDS);
-    }
+//    //Create stream TopStories Business
+//    public static Observable<TopStories> streamFetchBusiness(String business) {
+//        NYTService mNYTService = NYTRetrofitObject.retrofit.create(NYTService.class);
+//        return mNYTService.getBusiness(business)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .timeout(10, TimeUnit.SECONDS);
+//    }
 }

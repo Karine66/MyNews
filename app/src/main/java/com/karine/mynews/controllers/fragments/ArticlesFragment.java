@@ -109,7 +109,7 @@ public class ArticlesFragment extends Fragment {
 //     Execute Stream
     private void executeHttpRequestWithRetrofit() {
 //        Update UI
-        this.updateUIWhenStartingHTTPRequest();
+//        this.updateUIWhenStartingHTTPRequest();
 
         switch (position) {
 
@@ -120,24 +120,24 @@ public class ArticlesFragment extends Fragment {
 //            case 1:
 //                mostPopular();
 //                break;
-//            case 2:
-//                business();
-//                break;
+            case 2:
+                business();
+                break;
         }
     }
 
     //    Update UI
-    private void updateUIWhenStartingHTTPRequest() {
-//        this.mTextView.setText("Downloading...");
-    }
+//    private void updateUIWhenStartingHTTPRequest() {
+////        this.mTextView.setText("Downloading...");
+//    }
 
     private void topstoriesHome() {
         this.mDisposable = NYTStreams.streamFetchTopStories("home")
                 .subscribeWith(new DisposableObserver<TopStories>() {
                     @Override
-                    public void onNext(TopStories home) {
+                    public void onNext(TopStories section) {
                         // updateUIWithArticles(home);
-                        updateUI(home.getResults());
+                        updateUI(section.getResults());
                         Log.d("Tag", "test onNext");
                     }
 
@@ -158,8 +158,8 @@ public class ArticlesFragment extends Fragment {
 //            this.mDisposable = NYTStreams.streamFetchMostPopular("viewed")
 //                    .subscribeWith(new DisposableObserver<MostPopular>() {
 //                        @Override
-//                        public void onNext(MostPopular mostPopular) {
-//                            updateUI(mostPopular.getResults());
+//                        public void onNext(MostPopular section) {
+//                            updateUI(section.getResults());
 //                        }
 //
 //                        @Override
@@ -174,34 +174,34 @@ public class ArticlesFragment extends Fragment {
 //                        }
 //                    });
 //        }
-//
-//        private void business () {
-//
-//                this.mDisposable = NYTStreams.streamFetchBusiness("business")
-//                        .subscribeWith(new DisposableObserver<TopStories>() {
-//                            @Override
-//                            public void onNext(TopStories business) {
-//                            updateUI(business.getResults());
-//                            }
-//                            @Override
-//                            public void onComplete () {
-//                                Log.e("ON_Complete", "Test onComplete");
-//                            }
-//
-//                        @Override
-//                        public void onError(Throwable e) {
-//                            Log.e("onError", Log.getStackTraceString(e));
-//                        }
-//                    });
-//        }
 
-    public void updateUI(List<Result> result) {
+        private void business () {
+
+                this.mDisposable = NYTStreams.streamFetchTopStories("business")
+                        .subscribeWith(new DisposableObserver<TopStories>() {
+                            @Override
+                            public void onNext(TopStories section) {
+                            updateUI(section.getResults());
+                            }
+                            @Override
+                            public void onComplete () {
+                                Log.e("ON_Complete", "Test onComplete");
+                            }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.e("onError", Log.getStackTraceString(e));
+                        }
+                    });
+        }
+
+    public void updateUI(List<Result> results) {
 
         mSwipeRefreshLayout.setRefreshing(false);
         switch (position) {
-            case 0: case 1: case 2:
+            case 0:  case 1: case 2:
                 mArticles.clear();
-                mArticles.addAll(result);
+                mArticles.addAll(results);
                 sortArticles(mArticles);
                 break;
         }

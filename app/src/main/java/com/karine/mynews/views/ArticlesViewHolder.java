@@ -11,9 +11,7 @@ import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.karine.mynews.R;
 import com.karine.mynews.models.TopStoriesAPI.Result;
-
 import com.karine.mynews.models.TopStoriesAPI.TopStories;
-
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -59,7 +57,7 @@ public class ArticlesViewHolder extends RecyclerView.ViewHolder {
                 this.mSection.setText(result.getSection());
             }
 
-            glide.load(result.getMultimedia()).apply(RequestOptions.centerCropTransform()).into(mImageView);
+            glide.load(result.getMultimedia().get(0)).apply(RequestOptions.centerCropTransform()).into(mImageView);
 
 }
 

@@ -22,11 +22,11 @@ public interface NYTService {
     @GET("svc/topstories/v2/{section}.json?" + API_KEY)
     Observable<TopStories> getTopStories(@Path("section") String section);
 
-    @GET("svc/mostpopular/v2/viewed/7.json?" + API_KEY)
-    Observable<MostPopular> getMostPopular(@Query("viewed") String section);
+    @GET("svc/mostpopular/v2/{section}/7.json?" + API_KEY)
+    Observable<MostPopular> getMostPopular(@Path("section") String section);
 
 //    @GET("svc/topstories/v2/business.json?" + API_KEY)
-//    Observable<List<Business>> getBusiness(@Query("section") String section);
+//    Observable<List<TopStories>> getBusiness(@Path("section") String section);
 
 
 }
