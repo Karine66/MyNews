@@ -1,7 +1,6 @@
 package com.karine.mynews.views;
 
 import android.content.Context;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,14 +8,11 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.RequestManager;
 import com.karine.mynews.R;
-import com.karine.mynews.controllers.fragments.ArticlesFragment;
 import com.karine.mynews.models.TopStoriesAPI.Result;
-import com.karine.mynews.models.TopStoriesAPI.TopStories;
+
 
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 
 /**

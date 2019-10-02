@@ -61,17 +61,25 @@ public class ArticlesFragment extends Fragment {
     public ArticlesFragment() {
     }
 
-    public static ArticlesFragment newInstance() {
-        return (new ArticlesFragment());
+
+    public static ArticlesFragment newInstance(int position) {
+        ArticlesFragment fragment = new ArticlesFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("position", position);
+        fragment.setArguments(bundle);
+        return fragment;
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_articles, container, false);
         ButterKnife.bind(this, view);
+        this.position = getArguments().getInt("position");
         this.configureRecyclerView();
         this.configureSwipeRefreshLayout();
         this.executeHttpRequestWithRetrofit();
+
         return view;
     }
 
@@ -97,19 +105,12 @@ public class ArticlesFragment extends Fragment {
     }
 
     private void configureSwipeRefreshLayout() {
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                executeHttpRequestWithRetrofit();
-            }
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(() -> executeHttpRequestWithRetrofit());
     }
 
     //    HTTP RX Java
 //     Execute Stream
     private void executeHttpRequestWithRetrofit() {
-//        Update UI
-//        this.updateUIWhenStartingHTTPRequest();
 
         switch (position) {
 
@@ -126,18 +127,13 @@ public class ArticlesFragment extends Fragment {
         }
     }
 
-    //    Update UI
-//    private void updateUIWhenStartingHTTPRequest() {
-////        this.mTextView.setText("Downloading...");
-//    }
-
     private void topstoriesHome() {
         this.mDisposable = NYTStreams.streamFetchTopStories("home")
                 .subscribeWith(new DisposableObserver<TopStories>() {
                     @Override
-                    public void onNext(TopStories section) {
+                    public void onNext(TopStories home) {
                         // updateUIWithArticles(home);
-                        updateUI(section.getResults());
+                        updateUI(home.getResults());
                         Log.d("Tag", "test onNext");
                     }
 
@@ -158,8 +154,8 @@ public class ArticlesFragment extends Fragment {
 //            this.mDisposable = NYTStreams.streamFetchMostPopular("viewed")
 //                    .subscribeWith(new DisposableObserver<MostPopular>() {
 //                        @Override
-//                        public void onNext(MostPopular section) {
-//                            updateUI(section.getResults());
+//                        public void onNext(MostPopular viewed) {
+//                            updateUI(viewed.getResults());
 //                        }
 //
 //                        @Override
@@ -180,8 +176,8 @@ public class ArticlesFragment extends Fragment {
                 this.mDisposable = NYTStreams.streamFetchTopStories("business")
                         .subscribeWith(new DisposableObserver<TopStories>() {
                             @Override
-                            public void onNext(TopStories section) {
-                            updateUI(section.getResults());
+                            public void onNext(TopStories business) {
+                            updateUI(business.getResults());
                             }
                             @Override
                             public void onComplete () {
@@ -198,13 +194,11 @@ public class ArticlesFragment extends Fragment {
     public void updateUI(List<Result> results) {
 
         mSwipeRefreshLayout.setRefreshing(false);
-        switch (position) {
-            case 0:  case 1: case 2:
+
                 mArticles.clear();
                 mArticles.addAll(results);
                 sortArticles(mArticles);
-                break;
-        }
+
         mAdapter.notifyDataSetChanged();
     }
 
@@ -214,8 +208,7 @@ public class ArticlesFragment extends Fragment {
     }
     //Sort Articles in RecyclerView by descending order
     public void sortArticles(ArrayList mArticles) {
-        Collections.sort(mArticles, (Comparator<Result>) (o1, o2) -> o1.getPublishedDate().compareTo(o2.getPublishedDate()));
-        Collections.reverse(mArticles);
+        Collections.sort(mArticles, (Comparator<Result>) (o1, o2) -> o2.getPublishedDate().compareTo(o1.getPublishedDate()));
     }
 }
 

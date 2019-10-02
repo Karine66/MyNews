@@ -1,15 +1,20 @@
 package com.karine.mynews.views;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.request.Request;
 import com.bumptech.glide.request.RequestOptions;
 import com.karine.mynews.R;
+import com.karine.mynews.controllers.fragments.ArticlesFragment;
 import com.karine.mynews.models.TopStoriesAPI.Result;
 import com.karine.mynews.models.TopStoriesAPI.TopStories;
 
@@ -36,7 +41,8 @@ public class ArticlesViewHolder extends RecyclerView.ViewHolder {
 
     private TopStories mTopStories;
     private ArrayAdapter<Object> mAdapter;
-    private Object date;
+
+
 
 
     public ArticlesViewHolder(View itemView) {
@@ -56,8 +62,12 @@ public class ArticlesViewHolder extends RecyclerView.ViewHolder {
             }else{
                 this.mSection.setText(result.getSection());
             }
+            if(result.getMultimedia() != null && !result.getMultimedia().isEmpty()) {
+                glide.load(result.getMultimedia().get(0).getUrl()).apply(RequestOptions.centerCropTransform()).into(mImageView);
+            }else{
+                mImageView.setImageResource(R.drawable.nyt);
+            }
 
-            glide.load(result.getMultimedia().get(0)).apply(RequestOptions.centerCropTransform()).into(mImageView);
 
 }
 

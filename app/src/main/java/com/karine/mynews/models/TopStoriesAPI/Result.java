@@ -25,7 +25,7 @@ public class Result {
     @SerializedName("material_type_facet")
     private String mMaterialTypeFacet;
     @SerializedName("multimedia")
-    private List<Object> mMultimedia;
+    private List<Multimedium> mMultimedia;
     @SerializedName("org_facet")
     private List<String> mOrgFacet;
     @SerializedName("per_facet")
@@ -109,11 +109,11 @@ public class Result {
         mMaterialTypeFacet = materialTypeFacet;
     }
 
-    public List<Object> getMultimedia() {
+    public List<Multimedium> getMultimedia() {
         return mMultimedia;
     }
 
-    public void setMultimedia(List<Object> multimedia) {
+    public void setMultimedia(List<Multimedium> multimedia) {
         mMultimedia = multimedia;
     }
 

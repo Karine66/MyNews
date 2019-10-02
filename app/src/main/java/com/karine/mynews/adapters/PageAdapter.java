@@ -24,11 +24,11 @@ public class PageAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0 :
-                return ArticlesFragment.newInstance();
+                return ArticlesFragment.newInstance(0);
             case 1 :
-                return ArticlesFragment.newInstance();
+                return ArticlesFragment.newInstance(1);
             case 2 :
-                return ArticlesFragment.newInstance();
+                return ArticlesFragment.newInstance(2);
             default:
                 return null;
         }
