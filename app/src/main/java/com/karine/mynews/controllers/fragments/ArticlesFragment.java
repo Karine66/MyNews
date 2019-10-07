@@ -1,9 +1,7 @@
 package com.karine.mynews.controllers.fragments;
 
 
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 
@@ -23,6 +20,7 @@ import com.karine.mynews.R;
 import com.karine.mynews.Utils.ItemClickSupport;
 import com.karine.mynews.Utils.NYTStreams;
 
+import com.karine.mynews.models.MostPopularAPI.MostPopular;
 import com.karine.mynews.models.NYTResultsAPI;
 
 
@@ -33,7 +31,6 @@ import com.karine.mynews.views.ArticlesAdapter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 
 import butterknife.BindView;
@@ -118,7 +115,7 @@ public class ArticlesFragment extends Fragment {
             .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                 @Override
                 public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                   
+
                 }
             });
         }
@@ -138,9 +135,9 @@ public class ArticlesFragment extends Fragment {
                 topstoriesHome();
 
                 break;
-//            case 1:
-//                mostPopular();
-//                break;
+            case 1:
+                mostPopular();
+                break;
             case 2:
                 business();
                 break;
@@ -151,9 +148,9 @@ public class ArticlesFragment extends Fragment {
         this.mDisposable = NYTStreams.streamFetchTopStories("home")
                 .subscribeWith(new DisposableObserver<TopStories>() {
                     @Override
-                    public void onNext(TopStories home) {
+                    public void onNext(NYTResultsAPI nytResultsAPI) {
                         // updateUIWithArticles(home);
-                        updateUI(home.getResults());
+                        updateUI(nytResultsAPI);
                         Log.d("Tag", "test onNext");
                     }
 
@@ -170,40 +167,41 @@ public class ArticlesFragment extends Fragment {
                 });
     }
 
-//        private void mostPopular () {
-//            this.mDisposable = NYTStreams.streamFetchMostPopular("viewed")
-//                    .subscribeWith(new DisposableObserver<MostPopular>() {
-//                        @Override
-//                        public void onNext(MostPopular viewed) {
-//                            updateUI(viewed.getResults());
-//                        }
-//
-//                        @Override
-//                        public void onComplete() {
-//
-//                            Log.e("ON_Complete", "Test onComplete");
-//                        }
-//
-//                        @Override
-//                        public void onError(Throwable e) {
-//                            Log.e("onError", Log.getStackTraceString(e));
-//                        }
-//                    });
-//        }
+        private void mostPopular () {
+            this.mDisposable = NYTStreams.streamFetchMostPopular("viewed")
+                    .subscribeWith(new DisposableObserver<MostPopular>() {
+                        @Override
+                        public void onNext(NYTResultsAPI nytResultsAPI) {
+                            updateUI(nytResultsAPI);
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                            Log.e("ON_Complete", "Test onComplete");
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.e("onError", Log.getStackTraceString(e));
+                        }
+                    });
+        }
 
     private void business() {
 
         this.mDisposable = NYTStreams.streamFetchTopStories("business")
                 .subscribeWith(new DisposableObserver<TopStories>() {
                     @Override
-                    public void onNext(TopStories business) {
-                        updateUI(business.getResults());
+                    public void onNext(NYTResultsAPI nytResultsAPI) {
+                        updateUI(nytResultsAPI);
                     }
 
                     @Override
                     public void onComplete() {
                         Log.e("ON_Complete", "Test onComplete");
                     }
+
 
                     @Override
                     public void onError(Throwable e) {
@@ -212,12 +210,12 @@ public class ArticlesFragment extends Fragment {
                 });
     }
 
-    public void updateUI(List<Result> results) {
+    public void updateUI(NYTResultsAPI nytResultsAPI) {
 
         mSwipeRefreshLayout.setRefreshing(false);
 
         mArticles.clear();
-        mArticles.addAll(results);
+        mArticles.addAll(nytResultsAPI.getResult());
         sortArticles(mArticles);
 
         mAdapter.notifyDataSetChanged();

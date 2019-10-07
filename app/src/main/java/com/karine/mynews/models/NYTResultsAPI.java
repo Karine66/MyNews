@@ -15,8 +15,8 @@ import java.util.List;
 public class NYTResultsAPI {
     @SerializedName("results")
     @Expose
-    private List<Result> mResults =null;
-    public  List<Result> getResults() {
-        return mResults;
+    private List<Result> mResult =null;
+    public  List<Result> getResult() {
+        return mResult;
     }
 }
