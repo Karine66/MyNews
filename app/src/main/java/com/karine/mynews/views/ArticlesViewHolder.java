@@ -2,6 +2,7 @@ package com.karine.mynews.views;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.Request;
 import com.bumptech.glide.request.RequestOptions;
 import com.karine.mynews.R;
+import com.karine.mynews.controllers.activities.WebViewActivity;
 import com.karine.mynews.controllers.fragments.ArticlesFragment;
 import com.karine.mynews.models.TopStoriesAPI.Result;
 import com.karine.mynews.models.TopStoriesAPI.TopStories;
@@ -48,6 +50,8 @@ public class ArticlesViewHolder extends RecyclerView.ViewHolder {
     public ArticlesViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+
+
     }
 
     @SuppressLint("SetTextI18n")

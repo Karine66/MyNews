@@ -1,11 +1,13 @@
 package com.karine.mynews.controllers.activities;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.View;
 
 import com.karine.mynews.R;
 import com.karine.mynews.adapters.PageAdapter;
@@ -19,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
         //Configure ViewPager
         this.configureViewPagerAndTabs();
         this.configureToolbar();
+
+
     }
 
     @Override

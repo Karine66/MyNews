@@ -4,12 +4,9 @@ package com.karine.mynews.Utils;
 import com.karine.mynews.models.MostPopularAPI.MostPopular;
 import com.karine.mynews.models.TopStoriesAPI.TopStories;
 
-
-import java.util.List;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 /**
  * Created by <Karine> on <DATE-DU-JOUR>.

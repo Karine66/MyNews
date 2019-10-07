@@ -12,13 +12,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 
 import com.bumptech.glide.Glide;
 import com.karine.mynews.R;
+
+
+import com.karine.mynews.Utils.ItemClickSupport;
 import com.karine.mynews.Utils.NYTStreams;
-import com.karine.mynews.models.MostPopularAPI.MostPopular;
+
+import com.karine.mynews.models.NYTResultsAPI;
+
+
 import com.karine.mynews.models.TopStoriesAPI.Result;
 import com.karine.mynews.models.TopStoriesAPI.TopStories;
 import com.karine.mynews.views.ArticlesAdapter;
@@ -79,6 +86,7 @@ public class ArticlesFragment extends Fragment {
         this.configureRecyclerView();
         this.configureSwipeRefreshLayout();
         this.executeHttpRequestWithRetrofit();
+        this.configureOnClickRecyclerView();
 
         return view;
     }
@@ -103,6 +111,18 @@ public class ArticlesFragment extends Fragment {
         //Set Layout manager
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
+
+    //Configure item click on RecyclerView
+    private void configureOnClickRecyclerView() {
+       ItemClickSupport.addTo(mRecyclerView, R.layout.fragment_item)
+            .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+                @Override
+                public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                   
+                }
+            });
+        }
+
 
     private void configureSwipeRefreshLayout() {
         mSwipeRefreshLayout.setOnRefreshListener(() -> executeHttpRequestWithRetrofit());
@@ -171,33 +191,34 @@ public class ArticlesFragment extends Fragment {
 //                    });
 //        }
 
-        private void business () {
+    private void business() {
 
-                this.mDisposable = NYTStreams.streamFetchTopStories("business")
-                        .subscribeWith(new DisposableObserver<TopStories>() {
-                            @Override
-                            public void onNext(TopStories business) {
-                            updateUI(business.getResults());
-                            }
-                            @Override
-                            public void onComplete () {
-                                Log.e("ON_Complete", "Test onComplete");
-                            }
+        this.mDisposable = NYTStreams.streamFetchTopStories("business")
+                .subscribeWith(new DisposableObserver<TopStories>() {
+                    @Override
+                    public void onNext(TopStories business) {
+                        updateUI(business.getResults());
+                    }
 
-                        @Override
-                        public void onError(Throwable e) {
-                            Log.e("onError", Log.getStackTraceString(e));
-                        }
-                    });
-        }
+                    @Override
+                    public void onComplete() {
+                        Log.e("ON_Complete", "Test onComplete");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("onError", Log.getStackTraceString(e));
+                    }
+                });
+    }
 
     public void updateUI(List<Result> results) {
 
         mSwipeRefreshLayout.setRefreshing(false);
 
-                mArticles.clear();
-                mArticles.addAll(results);
-                sortArticles(mArticles);
+        mArticles.clear();
+        mArticles.addAll(results);
+        sortArticles(mArticles);
 
         mAdapter.notifyDataSetChanged();
     }
@@ -206,10 +227,17 @@ public class ArticlesFragment extends Fragment {
         if (this.mDisposable != null && !this.mDisposable.isDisposed())
             this.mDisposable.dispose();
     }
+
     //Sort Articles in RecyclerView by descending order
     public void sortArticles(ArrayList mArticles) {
         Collections.sort(mArticles, (Comparator<Result>) (o1, o2) -> o2.getPublishedDate().compareTo(o1.getPublishedDate()));
     }
+
+//    public void resultArticles() {
+//        NYTResultsAPI resultArticles = new NYTResultsAPI();
+//
+//}
+
 }
 
 

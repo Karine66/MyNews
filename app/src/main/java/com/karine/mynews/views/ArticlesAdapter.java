@@ -10,8 +10,6 @@ import com.bumptech.glide.RequestManager;
 import com.karine.mynews.R;
 import com.karine.mynews.models.TopStoriesAPI.Result;
 
-
-
 import java.util.ArrayList;
 
 
@@ -24,6 +22,8 @@ public  class ArticlesAdapter extends RecyclerView.Adapter<ArticlesViewHolder> {
     private ArrayList mArticles;
     //Declaring a Glide object
     private RequestManager glide;
+
+
 
     //Constructor
     public ArticlesAdapter(ArrayList mArticles, RequestManager glide) {
@@ -53,4 +53,6 @@ public  class ArticlesAdapter extends RecyclerView.Adapter<ArticlesViewHolder> {
     public int getItemCount() {
         return this.mArticles.size();
     }
+
+
 }
