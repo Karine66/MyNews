@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
 @SuppressWarnings("unused")
 public class Result {
 
+
     @SerializedName("abstract")
     private String mAbstract;
     @SerializedName("adx_keywords")

@@ -21,8 +21,10 @@ import com.karine.mynews.Utils.ItemClickSupport;
 import com.karine.mynews.Utils.NYTStreams;
 
 import com.karine.mynews.models.MostPopularAPI.MostPopular;
+import com.karine.mynews.models.NYTArticle;
+import com.karine.mynews.models.NYTArticleMP;
 import com.karine.mynews.models.NYTResultsAPI;
-
+import com.karine.mynews.models.NYTResultsMP;
 
 import com.karine.mynews.models.TopStoriesAPI.Result;
 import com.karine.mynews.models.TopStoriesAPI.TopStories;
@@ -54,7 +56,8 @@ public class ArticlesFragment extends Fragment {
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     //Declare top stories et Adapter
-    private ArrayList mArticles;
+    private ArrayList <NYTArticle>mArticles;
+    private ArrayList<NYTArticleMP> mNYTArticleMP;
     private ArticlesAdapter mAdapter;
 
     //For Data
@@ -148,8 +151,8 @@ public class ArticlesFragment extends Fragment {
         this.mDisposable = NYTStreams.streamFetchTopStories("home")
                 .subscribeWith(new DisposableObserver<TopStories>() {
                     @Override
-                    public void onNext(NYTResultsAPI nytResultsAPI) {
-                        // updateUIWithArticles(home);
+                    public void onNext(TopStories section) {
+                        NYTResultsAPI nytResultsAPI = NYTResultsAPI.createNYTResultsApiFromTopStories(section);
                         updateUI(nytResultsAPI);
                         Log.d("Tag", "test onNext");
                     }
@@ -171,8 +174,9 @@ public class ArticlesFragment extends Fragment {
             this.mDisposable = NYTStreams.streamFetchMostPopular("viewed")
                     .subscribeWith(new DisposableObserver<MostPopular>() {
                         @Override
-                        public void onNext(NYTResultsAPI nytResultsAPI) {
-                            updateUI(nytResultsAPI);
+                        public void onNext(MostPopular section) {
+                            NYTResultsMP nytResultsMP = NYTResultsMP.createResultsApiFromMostPopular(section);
+                            updateUI(nytResultsMP);
                         }
 
                         @Override
@@ -193,7 +197,8 @@ public class ArticlesFragment extends Fragment {
         this.mDisposable = NYTStreams.streamFetchTopStories("business")
                 .subscribeWith(new DisposableObserver<TopStories>() {
                     @Override
-                    public void onNext(NYTResultsAPI nytResultsAPI) {
+                    public void onNext(TopStories section) {
+                        NYTResultsAPI nytResultsAPI = NYTResultsAPI.createNYTResultsApiFromTopStories(section);
                         updateUI(nytResultsAPI);
                     }
 
@@ -210,13 +215,23 @@ public class ArticlesFragment extends Fragment {
                 });
     }
 
-    public void updateUI(NYTResultsAPI nytResultsAPI) {
+    public void updateUI(NYTResultsAPI nytResultsAPI {
 
         mSwipeRefreshLayout.setRefreshing(false);
-
-        mArticles.clear();
-        mArticles.addAll(nytResultsAPI.getResult());
-        sortArticles(mArticles);
+        switch (position) {
+            case 0 :
+                mArticles.clear();
+                mArticles.addAll(nytResultsAPI.getNYTArticles());
+                break;
+            case 1 :
+                mArticles.clear();
+                mArticles.addAll(nytResultsMP.getNYTArticlesMP());
+                break;
+            case 2 :
+                mArticles.clear();
+                mArticles.addAll(nytResultsAPI.getNYTArticles());
+        }
+       // sortArticles(mArticles);
 
         mAdapter.notifyDataSetChanged();
     }

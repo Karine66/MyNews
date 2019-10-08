@@ -17,8 +17,9 @@ import com.bumptech.glide.request.RequestOptions;
 import com.karine.mynews.R;
 import com.karine.mynews.controllers.activities.WebViewActivity;
 import com.karine.mynews.controllers.fragments.ArticlesFragment;
+import com.karine.mynews.models.NYTArticle;
 import com.karine.mynews.models.TopStoriesAPI.Result;
-import com.karine.mynews.models.TopStoriesAPI.TopStories;
+
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,8 +42,7 @@ public class ArticlesViewHolder extends RecyclerView.ViewHolder {
     //ImageView
     @BindView(R.id.fragment_item_photo) ImageView mImageView;
 
-    private TopStories mTopStories;
-    private ArrayAdapter<Object> mAdapter;
+
 
 
 
@@ -55,7 +55,7 @@ public class ArticlesViewHolder extends RecyclerView.ViewHolder {
     }
 
     @SuppressLint("SetTextI18n")
-    public void updateWithArticles(Result result, RequestManager glide) {
+    public void updateWithArticles(NYTArticle result, RequestManager glide) {
 
 
             this.mdate.setText(dateFormat(result.getPublishedDate()));
@@ -66,8 +66,8 @@ public class ArticlesViewHolder extends RecyclerView.ViewHolder {
             }else{
                 this.mSection.setText(result.getSection());
             }
-            if(result.getMultimedia() != null && !result.getMultimedia().isEmpty()) {
-                glide.load(result.getMultimedia().get(0).getUrl()).apply(RequestOptions.centerCropTransform()).into(mImageView);
+            if(result.getMultimediaURL() != null && !result.getMultimediaURL().isEmpty()) {
+                glide.load(result.getMultimediaURL()).apply(RequestOptions.centerCropTransform()).into(mImageView);
             }else{
                 mImageView.setImageResource(R.drawable.nyt);
             }

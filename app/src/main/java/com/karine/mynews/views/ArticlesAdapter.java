@@ -8,7 +8,8 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.RequestManager;
 import com.karine.mynews.R;
-import com.karine.mynews.models.TopStoriesAPI.Result;
+import com.karine.mynews.models.NYTArticle;
+
 
 import java.util.ArrayList;
 
@@ -19,14 +20,15 @@ import java.util.ArrayList;
 public  class ArticlesAdapter extends RecyclerView.Adapter<ArticlesViewHolder> {
 
     //For Data
-    private ArrayList mArticles;
+    private ArrayList <NYTArticle>mArticles;
+
     //Declaring a Glide object
     private RequestManager glide;
 
 
 
     //Constructor
-    public ArticlesAdapter(ArrayList mArticles, RequestManager glide) {
+    public ArticlesAdapter(ArrayList <NYTArticle> mArticles, RequestManager glide) {
 
         this.mArticles = mArticles;
         this.glide = glide;
@@ -44,7 +46,7 @@ public  class ArticlesAdapter extends RecyclerView.Adapter<ArticlesViewHolder> {
     //Update view holder
     @Override
     public void onBindViewHolder(ArticlesViewHolder viewHolder, int position) {
-        viewHolder.updateWithArticles((Result) this.mArticles.get(position), this.glide);
+        viewHolder.updateWithArticles((NYTArticle) this.mArticles.get(position), this.glide);
 
     }
 
