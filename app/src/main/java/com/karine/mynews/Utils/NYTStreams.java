@@ -4,7 +4,6 @@ package com.karine.mynews.Utils;
 import com.karine.mynews.models.MostPopularAPI.MostPopular;
 import com.karine.mynews.models.TopStoriesAPI.TopStories;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -35,12 +34,4 @@ public class NYTStreams {
                 .observeOn(AndroidSchedulers.mainThread())
                 .timeout(10, TimeUnit.SECONDS);
     }
-//    //Create stream TopStories Business
-//    public static Observable<TopStories> streamFetchBusiness(String business) {
-//        NYTService mNYTService = NYTRetrofitObject.retrofit.create(NYTService.class);
-//        return mNYTService.getBusiness(business)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .timeout(10, TimeUnit.SECONDS);
-//    }
 }

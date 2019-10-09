@@ -60,7 +60,7 @@ public class ArticlesViewHolder extends RecyclerView.ViewHolder {
 
             this.mdate.setText(dateFormat(result.getPublishedDate()));
             this.mTitle.setText(result.getTitle());
-            //get subsection if exist
+//            get subsection if exist
             if((result.getSubsection() !=null)&&(!result.getSubsection().isEmpty())) {
                 this.mSection.setText(result.getSection() + " > " + result.getSubsection());
             }else{

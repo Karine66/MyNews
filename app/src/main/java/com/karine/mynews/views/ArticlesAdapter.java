@@ -2,6 +2,7 @@ package com.karine.mynews.views;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import com.karine.mynews.models.NYTArticle;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -54,6 +56,12 @@ public  class ArticlesAdapter extends RecyclerView.Adapter<ArticlesViewHolder> {
     @Override
     public int getItemCount() {
         return this.mArticles.size();
+    }
+
+    public NYTArticle getUrlArticles (int position) {
+        List<NYTArticle> articles = mArticles;
+        return articles.get(position);
+
     }
 
 

@@ -13,10 +13,11 @@ public class NYTArticle {
     private String mMultimediaURL;
 
 
-    public NYTArticle (String publishedDate, String section, String subsection, String title, String url) {
+
+
+    public NYTArticle (String publishedDate, String section, String title, String url) {
         mPublishedDate = publishedDate;
         mSection = section;
-        mSubsection = subsection;
         mTitle = title;
         mUrl = url;
         mMultimediaURL = null;
