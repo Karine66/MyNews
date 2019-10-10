@@ -69,7 +69,7 @@ public class WebViewActivity extends AppCompatActivity {
             WebSettings webSettings = mWebView.getSettings();
             // Access to dom to avoid the bug, in the webview activity
             webSettings.setDomStorageEnabled(true);
-            // Enable Javascript
+//             Enable Javascript
             webSettings.setJavaScriptEnabled(true);
 
             // Force links and redirects to open in the WebView instead of in a browser

@@ -235,7 +235,7 @@ public class ArticlesFragment extends Fragment {
                 mArticles.clear();
                 mArticles.addAll(nytResultsAPI.getNYTArticles());
 
-               //sortArticles(mArticles);
+             //  sortArticles(mArticles);
 
         mAdapter.notifyDataSetChanged();
     }
@@ -244,13 +244,13 @@ public class ArticlesFragment extends Fragment {
         if (this.mDisposable != null && !this.mDisposable.isDisposed())
             this.mDisposable.dispose();
     }
+    //Sort Articles in RecyclerView
+//    public void sortArticles(ArrayList mArticles) {
+//        Collections.sort(mArticles, (Comparator<Result>) (o1, o2) -> o2.getPublishedDate().compareTo(o1.getPublishedDate()));
+//    }
 
-    //Sort Articles in RecyclerView by descending order
-    public void sortArticles(ArrayList mArticles) {
-        Collections.sort(mArticles, (Comparator<Result>) (o1, o2) -> o2.getPublishedDate().compareTo(o1.getPublishedDate()));
+
     }
-
-}
 
 
 

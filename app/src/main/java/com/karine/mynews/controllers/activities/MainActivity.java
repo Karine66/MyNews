@@ -1,11 +1,14 @@
 package com.karine.mynews.controllers.activities;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
+
 
 
 import com.karine.mynews.R;
@@ -19,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.activity_main_viewpager) ViewPager pager;
     @BindView(R.id.activity_main_tabs) TabLayout tabs;
     @BindView(R.id.activity_main_toolbar) Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,4 +56,24 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
-}
+    //Switching on different menu items
+    @Override
+    public boolean onOptionsItemSelected (MenuItem item) {
+        //Handle actions on menu items
+        switch (item.getItemId()) {
+            case R.id.menu_search:
+                    Intent searchIntent = new Intent(this, SearchActivity.class);
+                    startActivity(searchIntent);
+                    return true;
+
+                    case R.id.menu_params:
+                   //a faire ensuite
+                    default :
+                        return super.onOptionsItemSelected(item);
+                }
+            }
+        }
+
+
+
+
