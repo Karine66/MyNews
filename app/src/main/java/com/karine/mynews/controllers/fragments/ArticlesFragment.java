@@ -125,18 +125,15 @@ public class ArticlesFragment extends Fragment {
     //Configure item click on RecyclerView
     private void configureOnClickRecyclerView() {
        ItemClickSupport.addTo(mRecyclerView, R.layout.fragment_item)
-            .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-                @Override
-                public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+            .setOnItemClickListener((recyclerView, position, v) -> {
 
-                Log.d("Item", "Position : " + position);
+            Log.d("Item", "Position : " + position);
 
-                NYTArticle mAdapterUrlArticles= mAdapter.getUrlArticles(position);
-                 Intent intent = new Intent(getActivity(),WebViewActivity.class);
-                 intent.putExtra(URL, mAdapterUrlArticles.getUrl());
-                 startActivity(intent);
+             NYTArticle mAdapterUrlArticles= mAdapter.getUrlArticles(position);
+             Intent intent = new Intent(getActivity(),WebViewActivity.class);
+             intent.putExtra(URL, mAdapterUrlArticles.getUrl());
+             startActivity(intent);
 
-                }
             });
         }
 

@@ -1,27 +1,33 @@
 package com.karine.mynews.controllers.activities;
 
-import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.View;
+
 
 import com.karine.mynews.R;
 import com.karine.mynews.adapters.PageAdapter;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
+
+    @BindView(R.id.activity_main_viewpager) ViewPager pager;
+    @BindView(R.id.activity_main_tabs) TabLayout tabs;
+    @BindView(R.id.activity_main_toolbar) Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         //Configure ViewPager
         this.configureViewPagerAndTabs();
         this.configureToolbar();
-
 
     }
 
@@ -33,12 +39,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void configureViewPagerAndTabs() {
-        //Get ViewPager from layout
-        ViewPager pager = (ViewPager)findViewById(R.id.activity_main_viewpager);
         //Set Adapter PageAdapter
         pager.setAdapter(new PageAdapter(getSupportFragmentManager()));
-        //Get TabLayout from layout
-        TabLayout tabs = (TabLayout)findViewById(R.id.activity_main_tabs);
         //Join TabLayout and viewPager together
         tabs.setupWithViewPager(pager);
         //Tabs have the same width
@@ -46,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void configureToolbar() {
-        //Get Toolbar inside activity layout
-        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
         //Set Toolbar
         setSupportActionBar(toolbar);
     }
