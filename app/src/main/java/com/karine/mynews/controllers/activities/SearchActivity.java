@@ -33,7 +33,7 @@ public class SearchActivity extends AppCompatActivity {
        //Enable the Up button
        assert actionBar != null;
        actionBar.setDisplayHomeAsUpEnabled(true);
-       getSupportActionBar().setTitle("Search Articles");
+       actionBar.setTitle("Search Articles");
 
    }
 

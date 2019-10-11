@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <CheckBox
+        android:id="@+id/checkbox_arts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="250dp"
+        android:text="@string/arts" />
+
+    <CheckBox
+        android:id="@+id/checkbox_politics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/checkbox_arts"
+        android:layout_marginStart="200dp"
+        android:text="@string/politics" />
+
+    <CheckBox
+        android:id="@+id/checkbox_business"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="310dp"
+        android:text="@string/business" />
+
+    <CheckBox
+        android:id="@+id/checkbox_sports"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/checkbox_business"
+        android:layout_marginStart="200dp"
+        android:text="@string/sports" />
+
+    <CheckBox
+        android:id="@+id/checkbox_entrepreneurs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="370dp"
+        android:text="@string/entrepreneurs" />
+
+    <CheckBox
+        android:id="@+id/checkbox_travel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/checkbox_entrepreneurs"
+        android:layout_marginStart="200dp"
+        android:text="@string/travel" />
+
+</RelativeLayout>
+
+

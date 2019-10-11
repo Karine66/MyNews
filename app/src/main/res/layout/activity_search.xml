@@ -6,6 +6,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#CFCFCF"
+    android:orientation="vertical"
+
     tools:context=".controllers.activities.SearchActivity">
 
     <!-- Declare Toolbar>-->
@@ -17,34 +20,86 @@
         android:minHeight="?attr/actionBarSize"
         app:titleTextColor="@android:color/white" />
 
-    <EditText
-        android:id="@+id/editText_Search"
+    <!-- Declare search-->
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_searchLayout"
+        style="@style/TextInputLayoutStyle"
+        app:boxBackgroundColor="#EBE7E7"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="80dp">
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/editText_Search"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/search_query_term"
+            android:inputType="text"
+            android:singleLine="true" />
+    </android.support.design.widget.TextInputLayout>
+
+    <!--Declare begin and end dates-->
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_dateLayout"
+        style="@style/TextInputLayoutStyle"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        app:boxBackgroundColor="#EBE7E7"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="150dp">
+
+    <android.support.design.widget.TextInputEditText
+        android:id="@+id/et_beginDate"
         android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:hint="@string/begin_date"
+        android:textSize="14sp"
+        android:drawableEnd="@drawable/baseline_date_range_black_18"
+        android:inputType="date"/>
+
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_dateLayout2"
+        style="@style/TextInputLayoutStyle"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        app:boxBackgroundColor="#EBE7E7"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="150dp">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/et_endDate"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:hint="@string/end_date"
+            android:textSize="14sp"
+            android:drawableEnd="@drawable/baseline_date_range_black_18"
+            android:inputType="date" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <include
+        layout="@layout/checkbox"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <android.support.design.button.MaterialButton
+        android:id="@+id/search_btn"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="20dp"
-        android:hint="@string/search_query_term"
-        android:inputType="text"
-        android:singleLine="true"
-        android:textSize="18sp"
-        android:backgroundTint="#26C6DA"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="450dp"
+        android:textStyle="bold"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:text="@string/button_search" />
 
-    <TextView
-        android:id="@+id/tv_beginDate"
-        android:layout_width="84dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="160dp"
-        android:text="@string/begin_date" />
-
-    <TextView
-        android:id="@+id/tv_endDate"
-        android:layout_width="84dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="160dp"
-        android:text="@string/end_date" />
 
 </RelativeLayout>
+
+
+
+
+
