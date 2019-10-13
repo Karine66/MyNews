@@ -2,10 +2,9 @@
 package com.karine.mynews.models.SearchAPI;
 
 import java.util.List;
-import javax.annotation.Generated;
 import com.google.gson.annotations.SerializedName;
 
-@Generated("net.hexar.json2pojo")
+
 @SuppressWarnings("unused")
 public class Doc {
 
@@ -48,8 +47,8 @@ public class Doc {
         return mAbstract;
     }
 
-    public void setAbstract(String abstract) {
-        mAbstract = abstract;
+    public void setAbstract(String _abstract) {
+        mAbstract = _abstract;
     }
 
     public Byline getByline() {

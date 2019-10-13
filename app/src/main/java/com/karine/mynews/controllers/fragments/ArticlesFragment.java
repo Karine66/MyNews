@@ -177,7 +177,7 @@ public class ArticlesFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("onError", Log.getStackTraceString(e));
+                        Log.e("onErrorHome", Log.getStackTraceString(e));
                     }
 
                 });
@@ -200,7 +200,7 @@ public class ArticlesFragment extends Fragment {
 
                         @Override
                         public void onError(Throwable e) {
-                            Log.e("onError", Log.getStackTraceString(e));
+                            Log.e("onErrorMP", Log.getStackTraceString(e));
                         }
                     });
         }
@@ -223,7 +223,7 @@ public class ArticlesFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("onError", Log.getStackTraceString(e));
+                        Log.e("onErrorBusiness", Log.getStackTraceString(e));
                     }
                 });
     }

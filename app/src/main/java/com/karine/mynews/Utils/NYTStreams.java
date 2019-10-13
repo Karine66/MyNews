@@ -2,6 +2,7 @@ package com.karine.mynews.Utils;
 
 
 import com.karine.mynews.models.MostPopularAPI.MostPopular;
+import com.karine.mynews.models.SearchAPI.Search;
 import com.karine.mynews.models.TopStoriesAPI.TopStories;
 
 import java.util.concurrent.TimeUnit;
@@ -34,4 +35,7 @@ public class NYTStreams {
                 .observeOn(AndroidSchedulers.mainThread())
                 .timeout(10, TimeUnit.SECONDS);
     }
+
+//    //Create stream Search
+//    public static Observable<Search> streamFetchSearch(String)
 }
