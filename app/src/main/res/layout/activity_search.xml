@@ -33,7 +33,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="@string/search_query_term"
-            android:inputType="text"
+           android:nextFocusDown="@id/et_beginDate"
             android:singleLine="true" />
     </android.support.design.widget.TextInputLayout>
 
@@ -51,6 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="38dp"
         android:hint="@string/begin_date"
+        android:nextFocusRight="@id/et_endDate"
         android:textSize="14sp"
         android:drawableEnd="@drawable/baseline_date_range_black_18" />
 

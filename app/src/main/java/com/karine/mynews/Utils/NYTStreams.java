@@ -5,6 +5,7 @@ import com.karine.mynews.models.MostPopularAPI.MostPopular;
 import com.karine.mynews.models.SearchAPI.Search;
 import com.karine.mynews.models.TopStoriesAPI.TopStories;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -36,6 +37,12 @@ public class NYTStreams {
                 .timeout(10, TimeUnit.SECONDS);
     }
 
-//    //Create stream Search
-//    public static Observable<Search> streamFetchSearch(String)
+    //Create stream Search
+    public static Observable<Search> streamFetchSearch(String search, List<String> filterQuery, String beginDate, String endDate ) {
+        NYTService mNYTService = NYTRetrofitObject.retrofit.create(NYTService.class);
+        return  mNYTService.getSearch(search, filterQuery, beginDate, endDate)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .timeout(10, TimeUnit.SECONDS);
+    }
 }
