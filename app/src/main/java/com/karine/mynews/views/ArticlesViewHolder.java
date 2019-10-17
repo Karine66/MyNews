@@ -75,8 +75,6 @@ public class ArticlesViewHolder extends RecyclerView.ViewHolder {
 
 }
 
-
-
     //Convert dates in dd/MM/yyy
     private String dateFormat (String dateString) {
     List<String> strings = Arrays.asList("yyyy-MM-dd", "yyyy-MM-dd'T'HH:mm:ssZ");

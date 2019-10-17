@@ -19,18 +19,10 @@ public class Result {
     private String mByline;
     @SerializedName("column")
     private Object mColumn;
-    @SerializedName("des_facet")
-    private List<String> mDesFacet;
-    @SerializedName("geo_facet")
-    private String mGeoFacet;
     @SerializedName("id")
     private Long mId;
     @SerializedName("media")
     private List<Medium> mMedia;
-    @SerializedName("org_facet")
-    private List<String> mOrgFacet;
-    @SerializedName("per_facet")
-    private List<String> mPerFacet;
     @SerializedName("published_date")
     private String mPublishedDate;
     @SerializedName("section")
@@ -88,22 +80,6 @@ public class Result {
         mColumn = column;
     }
 
-    public List<String> getDesFacet() {
-        return mDesFacet;
-    }
-
-    public void setDesFacet(List<String> desFacet) {
-        mDesFacet = desFacet;
-    }
-
-    public String getGeoFacet() {
-        return mGeoFacet;
-    }
-
-    public void setGeoFacet(String geoFacet) {
-        mGeoFacet = geoFacet;
-    }
-
     public Long getId() {
         return mId;
     }
@@ -118,22 +94,6 @@ public class Result {
 
     public void setMedia(List<Medium> media) {
         mMedia = media;
-    }
-
-    public List<String> getOrgFacet() {
-        return mOrgFacet;
-    }
-
-    public void setOrgFacet(List<String> orgFacet) {
-        mOrgFacet = orgFacet;
-    }
-
-    public List<String> getPerFacet() {
-        return mPerFacet;
-    }
-
-    public void setPerFacet(List<String> perFacet) {
-        mPerFacet = perFacet;
     }
 
     public String getPublishedDate() {

@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-      <!--  <activity android:name=".controllers.activities.SearchActivity"></activity>-->
+<!--        <activity android:name=".controllers.activities.SearchResultActivity"></activity>-->
+
         <activity android:name=".controllers.activities.WebViewActivity" />
         <activity android:name=".controllers.activities.MainActivity">
             <intent-filter>
@@ -20,11 +21,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    <!-- A child of the main activity-->
-        <activity android:name=".controllers.activities.SearchActivity"
+        <!-- A child of the main activity for up arrow-->
+        <activity
+            android:name=".controllers.activities.SearchActivity"
             android:label="Search"
-            android:parentActivityName=".controllers.activities.MainActivity">
-        </activity>
+            android:parentActivityName=".controllers.activities.MainActivity"></activity>
+        <!-- A child of the search activity for up arrow-->
+        <activity
+            android:name=".controllers.activities.SearchResultActivity"
+            android:label="SearchResult"
+            android:parentActivityName=".controllers.activities.SearchActivity"></activity>
     </application>
 
 </manifest>

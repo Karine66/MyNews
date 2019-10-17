@@ -8,7 +8,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
     tools:context=".controllers.activities.SearchActivity">
 
     <!-- Declare Toolbar>-->
@@ -27,13 +26,17 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="80dp">
+        android:layout_marginTop="80dp"
+        app:helperText="Field can't be empty"
+        app:errorEnabled="true">
+
         <android.support.design.widget.TextInputEditText
             android:id="@+id/editText_Search"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="@string/search_query_term"
            android:nextFocusDown="@id/et_beginDate"
+            android:inputType="textAutoCorrect"
             android:singleLine="true" />
     </android.support.design.widget.TextInputLayout>
 
@@ -44,7 +47,8 @@
         android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="150dp">
+        android:layout_marginTop="150dp"
+        app:helperText="optional">
 
     <android.support.design.widget.TextInputEditText
         android:id="@+id/et_beginDate"
@@ -63,7 +67,8 @@
         android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="200dp"
-        android:layout_marginTop="150dp">
+        android:layout_marginTop="150dp"
+        app:helperText="optional">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/et_endDate"
@@ -89,7 +94,9 @@
         android:layout_marginTop="450dp"
         android:textStyle="bold"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:text="@string/button_search" />
+        android:text="@string/button_search"
+       />
+
 
 
 </RelativeLayout>

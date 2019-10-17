@@ -21,7 +21,6 @@ public class NYTArticle {
         mTitle = title;
         mUrl = url;
         mMultimediaURL = null;
-        //for MostPopular
     }
 
     public String getPublishedDate() {

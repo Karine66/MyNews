@@ -1,6 +1,8 @@
 package com.karine.mynews.models;
 
 import com.karine.mynews.models.MostPopularAPI.MostPopular;
+import com.karine.mynews.models.SearchAPI.Response;
+import com.karine.mynews.models.SearchAPI.Search;
 import com.karine.mynews.models.TopStoriesAPI.Result;
 
 import com.karine.mynews.models.TopStoriesAPI.TopStories;
@@ -56,6 +58,4 @@ public class NYTResultsAPI {
         return new NYTResultsAPI(nytArticles);
 
     }
-
-
 }
