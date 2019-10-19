@@ -1,6 +1,7 @@
 package com.karine.mynews.models;
 
 import com.karine.mynews.models.MostPopularAPI.MostPopular;
+import com.karine.mynews.models.SearchAPI.Doc;
 import com.karine.mynews.models.SearchAPI.Response;
 import com.karine.mynews.models.SearchAPI.Search;
 import com.karine.mynews.models.TopStoriesAPI.Result;
@@ -57,5 +58,18 @@ public class NYTResultsAPI {
         }
         return new NYTResultsAPI(nytArticles);
 
+    }
+
+    public static NYTResultsAPI createResultsAPIFromSearch (Search response) {
+       List<NYTArticle> nytArticles = new ArrayList<>();
+
+       for(Doc result : response.getResponse().getDocs()) {
+           NYTArticle nytArticle = new NYTArticle(result.getPubDate(), result.getSectionName(),
+                   result.getMultimedia(), result.getWebUrl());
+           if(result.getMultimedia().size()>0)
+               nytArticle.setMultimediaURL(result.getMultimedia().get(0).getUrl());
+           nytArticles.add(nytArticle);
+       }
+       return new NYTResultsAPI(nytArticles);
     }
 }

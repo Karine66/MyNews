@@ -1,9 +1,15 @@
 package com.karine.mynews.models;
 
+import com.karine.mynews.models.SearchAPI.Multimedium;
+import com.karine.mynews.models.SearchAPI.Response;
+
+import java.util.List;
+
 /**
  * Created by <Karine> on <DATE-DU-JOUR>.
  */
 public class NYTArticle {
+
 
     private String mPublishedDate;
     private String mSection;
@@ -11,7 +17,11 @@ public class NYTArticle {
     private String mTitle;
     private String mUrl;
     private String mMultimediaURL;
-
+    //For search
+    private String mPubDate;
+    private String mSectionName;
+    private List mMultimedia;
+    private String mWebUrl;
 
 
 
@@ -21,7 +31,17 @@ public class NYTArticle {
         mTitle = title;
         mUrl = url;
         mMultimediaURL = null;
+
     }
+    //For Search
+    public NYTArticle(String pubDate, String sectionName, List<Multimedium> multimedia, String webUrl) {
+
+        mPubDate = pubDate;
+        mSectionName = sectionName;
+        mMultimedia = multimedia;
+        mWebUrl = webUrl;
+    }
+
 
     public String getPublishedDate() {
         return mPublishedDate;
@@ -69,6 +89,8 @@ public class NYTArticle {
     public void setMultimediaURL(String multimediaURL) {
         mMultimediaURL = multimediaURL;
     }
+
+
 
 
 }

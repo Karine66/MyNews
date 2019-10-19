@@ -23,13 +23,16 @@ import com.karine.mynews.R;
 import com.karine.mynews.models.SearchAPI.Search;
 
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 
 public class SearchActivity extends AppCompatActivity implements OnClickListener {
 
@@ -65,7 +68,12 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
     List<CheckBox> mCheckBoxList;
     @BindView(R.id.search_btn)
     Button mBtnSearch;
-    private CheckBox resultBox;
+    private String resultBox;
+    private int m;
+    private String date1;
+    private String date2;
+    private Date fromDate;
+    private Date toDate;
 
 
     @Override
@@ -79,6 +87,9 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         this.setDateField();
        this.addListenerButton();
        this.confirmSearch();
+
+
+
 
     }
 
@@ -110,9 +121,47 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         }
     }
 
+
+    //Verify field dates format & if begin is not after enddate
+
+    public boolean validDate(String date1, String date2) {
+
+//        if(mBeginDate!=null && mEndDate!=null) {
+
+            date1 = mBeginDate.getText().toString();
+            date2 = mEndDate.getText().toString();
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            dateFormat.setLenient(false);
+            Date fromDate = null;
+            Date toDate = null;
+            try {
+                fromDate = dateFormat.parse(date1.trim());
+                toDate = dateFormat.parse(date2.trim());
+                Log.d("Date parsée", fromDate.toString());
+                Log.d("Date parsée", toDate.toString());
+
+                if(fromDate.after(toDate)) {
+                    Toast.makeText(getApplicationContext(), "BeginDate can't be after EndDate", Toast.LENGTH_SHORT).show();
+                    Log.d("TestDates","La date debut ne peut être après la date de fin");
+                    return false;
+
+                }
+
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "Invalid date format", Toast.LENGTH_SHORT).show();
+                Log.e("TestErreurDate", "Format de date invalide");
+                return false;
+            }
+            return true;
+        }
+//        return true;
+//    }
+
+
+
 //    Verify checked box and field search
 public void addListenerButton() {
-
 
     mBtnSearch.setOnClickListener(new OnClickListener() {
 
@@ -120,39 +169,18 @@ public void addListenerButton() {
         public void onClick(View v) {
 
             confirmSearch();
+            validDate(date1, date2);
             testCheckBox();
 
-            switch (v.getId()) {
-                case R.id.checkbox_arts:
-                    if (mBoxArts.isChecked())
-                        //call category
-                        break;
-                case R.id.checkbox_business:
-                    if (mBoxBusiness.isChecked())
-
-                        break;
-                case R.id.checkbox_entrepreneurs:
-                    if (mBoxEntrepreneurs.isChecked())
-
-                        break;
-                case R.id.checkbox_politics:
-                    if (mBoxPolitics.isChecked())
-
-                        break;
-                case R.id.checkbox_sports:
-                    if (mBoxSports.isChecked())
-
-                        break;
-                case R.id.checkbox_travel:
-                    if (mBoxTravel.isChecked())
-
-                        break;
-
-            }
-          //  Toast.makeText(getApplicationContext(), "A least one category must be checked", Toast.LENGTH_SHORT).show();
-            }
+        }
     });
 }
+
+//@OnCheckedChanged({R.id.checkbox_arts, R.id.checkbox_travel, R.id.checkbox_business, R.id.checkbox_sports, R.id.checkbox_entrepreneurs, R.id.checkbox_politics})
+//void onChecked(boolean checked) {
+//        Log.d("TestChecked", checked ? "Checked":"Unchecked");
+////      Toast.makeText(this, checked? "Checked" :"Unchecked", Toast.LENGTH_SHORT).show();
+//}
 
 private void testCheckBox () {
     StringBuilder resultBox = new StringBuilder();
@@ -168,14 +196,17 @@ private void testCheckBox () {
 
 }
 
-//    Click on button search verify required
+//    Click on button search verify required/ toast if one checkbox is not checked
     public void confirmSearch() {
+
         if (!validateSearch()) {
             return;
-
-
-            } else {
+        }
+        if (!mBoxTravel.isChecked() && !mBoxPolitics.isChecked() && !mBoxSports.isChecked() &&
+                !mBoxBusiness.isChecked() && !mBoxEntrepreneurs.isChecked() && !mBoxArts.isChecked()) {
             Toast.makeText(getApplicationContext(), "A least one category must be checked", Toast.LENGTH_SHORT).show();
+
+        } else {
             Intent searchResultIntent = new Intent(this, SearchResultActivity.class);
             startActivity(searchResultIntent);
         }
