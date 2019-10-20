@@ -18,4 +18,5 @@
     <string name="notifications">Notifications</string>
     <string name="help">Help</string>
     <string name="about">About</string>
+    <string name="switch_notif">Switch</string>
 </resources>

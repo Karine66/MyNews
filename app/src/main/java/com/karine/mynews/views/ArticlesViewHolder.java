@@ -19,6 +19,7 @@ import com.karine.mynews.controllers.activities.WebViewActivity;
 import com.karine.mynews.controllers.fragments.ArticlesFragment;
 import com.karine.mynews.models.NYTArticle;
 import com.karine.mynews.models.TopStoriesAPI.Result;
+import com.karine.mynews.models.TopStoriesAPI.TopStories;
 
 
 import java.text.ParseException;

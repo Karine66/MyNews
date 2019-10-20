@@ -3,6 +3,7 @@ package com.karine.mynews.controllers.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -32,6 +33,8 @@ public class SearchResultsFragment extends Fragment {
     //For Design déclare recycler view
     @BindView(R.id.fragment_rvSearchResults)
     RecyclerView mRecyclerView;
+    @BindView(R.id.swipe_container)
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     private ArrayList<NYTArticle> mArticles;
     private ArticlesAdapter mAdapter;
@@ -50,9 +53,21 @@ public class SearchResultsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search_results, container, false);
         ButterKnife.bind(this, view);
         this.configureRecyclerView();
-       this.executeHttpRequestWithRetrofit();
+        this.executeHttpRequestWithRetrofit();
+        this.configureSwipeRefreshLayout();
         return view;
     }
+
+    //configure SwipeRefresh Layout
+    private void configureSwipeRefreshLayout() {
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                executeHttpRequestWithRetrofit();
+            }
+        });
+    }
+
     //Dispose subscription
     @Override
     public void onDestroy() {
@@ -84,6 +99,7 @@ public class SearchResultsFragment extends Fragment {
                         updateUI(nytResultsAPI);
 
                     }
+
                     @Override
                     public void onComplete() {
                         Log.d("ON_Complete", "Test onComplete");
@@ -102,8 +118,10 @@ public class SearchResultsFragment extends Fragment {
             this.mDisposable.dispose();
 
     }
+
     public void updateUI(NYTResultsAPI nytResultsAPI) {
 
+        mSwipeRefreshLayout.setRefreshing(false);
 
         mArticles.clear();
         mArticles.addAll(nytResultsAPI.getNYTArticles());

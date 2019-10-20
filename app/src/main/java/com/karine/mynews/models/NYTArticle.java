@@ -90,7 +90,38 @@ public class NYTArticle {
         mMultimediaURL = multimediaURL;
     }
 
+    //For Search
+    public String getPubDate() {
+        return mPubDate;
+    }
 
+    public void setPubDate(String pubDate) {
+        mPubDate = pubDate;
+    }
+
+    public String getSectionName() {
+        return mSectionName;
+    }
+
+    public void setSectionName(String sectionName) {
+        mSectionName = sectionName;
+    }
+
+    public List<Multimedium> getMultimedia() {
+        return mMultimedia;
+    }
+
+    public void setMultimedia(List<Multimedium> multimedia) {
+        mMultimedia = multimedia;
+    }
+
+    public String getWebUrl() {
+        return mWebUrl;
+    }
+
+    public void setWebUrl(String webUrl) {
+        mWebUrl = webUrl;
+    }
 
 
 }

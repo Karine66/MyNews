@@ -116,7 +116,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
     //Verify field dates format & if begin is not after enddate
     public boolean validDate(String date1, String date2) {
 
-//        if(mBeginDate!=null && mEndDate!=null) {
+
 
         date1 = mBeginDate.getText().toString();
         date2 = mEndDate.getText().toString();
@@ -190,7 +190,8 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         if (!mBoxTravel.isChecked() && !mBoxPolitics.isChecked() && !mBoxSports.isChecked() &&
                 !mBoxBusiness.isChecked() && !mBoxEntrepreneurs.isChecked() && !mBoxArts.isChecked()) {
             Toast.makeText(getApplicationContext(), "A least one category must be checked", Toast.LENGTH_SHORT).show();
-
+        }if(!validDate(date1, date2)){
+            return;
         } else {
             Intent searchResultIntent = new Intent(this, SearchResultActivity.class);
             startActivity(searchResultIntent);

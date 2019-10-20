@@ -72,7 +72,8 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(searchIntent);
                     return true;
             case R.id.notif:
-                Toast.makeText(this, "notif", Toast.LENGTH_SHORT).show();
+                Intent notifIntent = new Intent(this, NotificationsActivity.class);
+                startActivity(notifIntent);
                 return true;
             case R.id.help :
                 Toast.makeText(this, "If you need help contact us : mynews@nyt.com",Toast.LENGTH_SHORT).show();
