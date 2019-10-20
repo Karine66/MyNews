@@ -50,14 +50,14 @@ public class SearchResultsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search_results, container, false);
         ButterKnife.bind(this, view);
         this.configureRecyclerView();
-       // this.executeHttpRequestWithRetrofit();
+       this.executeHttpRequestWithRetrofit();
         return view;
     }
     //Dispose subscription
     @Override
     public void onDestroy() {
         super.onDestroy();
-       // this.disposeWhenDestroy();
+        this.disposeWhenDestroy();
     }
 
     //Configure RecyclerView, Adapter, LayoutManager & glue it
@@ -73,44 +73,42 @@ public class SearchResultsFragment extends Fragment {
     }
 
 
-//    private void executeHttpRequestWithRetrofit() {
-//
-//        this.mDisposable = NYTStreams.streamFetchSearch("search", "fq", "begin_date", "end_Date")
-//                .subscribeWith(new DisposableObserver<Search>() {
-//
-//                    @Override
-//                    public void onNext(Search search) {
-//
-//                        updateUI();
-//
-//
-//                    }
-//                    @Override
-//                    public void onComplete() {
-//                        Log.e("ON_Complete", "Test onComplete");
-//                    }
-//
-//
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Log.e("onErrorHome", Log.getStackTraceString(e));
-//                    }
-//
-//                });
-//    }
-//
-//    private void disposeWhenDestroy() {
-//        if (this.mDisposable != null && !this.mDisposable.isDisposed())
-//            this.mDisposable.dispose();
-//
-//    }
-//    public void updateUI(NYTResultsAPI nytResultsAPI) {
-//
-//
-//        mArticles.clear();
-//        mArticles.addAll(nytResultsAPI.getNYTArticles());
-//        mAdapter.notifyDataSetChanged();
-//    }
+    private void executeHttpRequestWithRetrofit() {
+
+        this.mDisposable = NYTStreams.streamFetchSearch("search", "fq", "begin_date", "end_Date")
+                .subscribeWith(new DisposableObserver<Search>() {
+
+                    @Override
+                    public void onNext(Search response) {
+                        NYTResultsAPI nytResultsAPI = NYTResultsAPI.createResultsAPIFromSearch(response);
+                        updateUI(nytResultsAPI);
+
+                    }
+                    @Override
+                    public void onComplete() {
+                        Log.d("ON_Complete", "Test onComplete");
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("onErrorHome", Log.getStackTraceString(e));
+                    }
+                });
+    }
+
+    private void disposeWhenDestroy() {
+        if (this.mDisposable != null && !this.mDisposable.isDisposed())
+            this.mDisposable.dispose();
+
+    }
+    public void updateUI(NYTResultsAPI nytResultsAPI) {
+
+
+        mArticles.clear();
+        mArticles.addAll(nytResultsAPI.getNYTArticles());
+        mAdapter.notifyDataSetChanged();
+
+    }
 
 }

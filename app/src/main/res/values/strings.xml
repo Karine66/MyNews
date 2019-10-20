@@ -15,4 +15,7 @@
     <string name="entrepreneurs">Entrepreneurs</string>
     <string name="travel">Travel</string>
     <string name="button_search">Search</string>
+    <string name="notifications">Notifications</string>
+    <string name="help">Help</string>
+    <string name="about">About</string>
 </resources>

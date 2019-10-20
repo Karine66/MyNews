@@ -6,12 +6,22 @@
         android:id="@+id/menu_search"
         android:icon="@drawable/baseline_search_white_48"
         app:showAsAction="ifRoom"
-        android:title="Search">
+        android:title="@string/search">
     </item>
+
     <item
-        android:id="@+id/menu_params"
-        android:icon="@drawable/baseline_more_vert_white_48"
-        app:showAsAction="ifRoom"
-        android:title="Params">
-    </item>
+        android:id="@+id/notif"
+        android:title="@string/notifications"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/help"
+        android:title="@string/help"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/about"
+        android:title="@string/about"
+        app:showAsAction="never"/>
+
 </menu>

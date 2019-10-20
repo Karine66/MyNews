@@ -3,11 +3,10 @@ package com.karine.mynews.controllers.activities;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
-import android.support.annotation.NonNull;
+import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
@@ -20,10 +19,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.karine.mynews.R;
-import com.karine.mynews.models.SearchAPI.Search;
 
-
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -32,7 +28,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
-import butterknife.OnCheckedChanged;
 
 public class SearchActivity extends AppCompatActivity implements OnClickListener {
 
@@ -85,11 +80,8 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         this.configureToolbar();
         this.focusDates();
         this.setDateField();
-       this.addListenerButton();
-       this.confirmSearch();
-
-
-
+        this.addListenerButton();
+        this.confirmSearch();
 
     }
 
@@ -121,82 +113,75 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         }
     }
 
-
     //Verify field dates format & if begin is not after enddate
-
     public boolean validDate(String date1, String date2) {
 
 //        if(mBeginDate!=null && mEndDate!=null) {
 
-            date1 = mBeginDate.getText().toString();
-            date2 = mEndDate.getText().toString();
+        date1 = mBeginDate.getText().toString();
+        date2 = mEndDate.getText().toString();
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            dateFormat.setLenient(false);
-            Date fromDate = null;
-            Date toDate = null;
-            try {
-                fromDate = dateFormat.parse(date1.trim());
-                toDate = dateFormat.parse(date2.trim());
-                Log.d("Date parsée", fromDate.toString());
-                Log.d("Date parsée", toDate.toString());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        dateFormat.setLenient(false);
+        Date fromDate = null;
+        Date toDate = null;
+        try {
+            fromDate = dateFormat.parse(date1.trim());
+            toDate = dateFormat.parse(date2.trim());
+            Log.d("Date parsée", fromDate.toString());
+            Log.d("Date parsée", toDate.toString());
 
-                if(fromDate.after(toDate)) {
-                    Toast.makeText(getApplicationContext(), "BeginDate can't be after EndDate", Toast.LENGTH_SHORT).show();
-                    Log.d("TestDates","La date debut ne peut être après la date de fin");
-                    return false;
-
-                }
-
-            } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), "Invalid date format", Toast.LENGTH_SHORT).show();
-                Log.e("TestErreurDate", "Format de date invalide");
+            if (fromDate.after(toDate)) {
+                Toast.makeText(getApplicationContext(), "BeginDate can't be after EndDate", Toast.LENGTH_SHORT).show();
+                Log.d("TestDates", "La date debut ne peut être après la date de fin");
                 return false;
             }
-            return true;
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Invalid date format", Toast.LENGTH_SHORT).show();
+            Log.e("TestErreurDate", "Format de date invalide");
+            return false;
         }
+        return true;
+    }
 //        return true;
 //    }
 
+    private void testCheckBox() {
+        StringBuilder resultBox = new StringBuilder();
 
+        resultBox.append("Arts check :").append(mBoxArts.isChecked());
+        resultBox.append("Business check :").append(mBoxBusiness.isChecked());
+        resultBox.append("Entrepreneurs check :").append(mBoxEntrepreneurs.isChecked());
+        resultBox.append("Politics check :").append(mBoxPolitics.isChecked());
+        resultBox.append("Sports check :").append(mBoxSports.isChecked());
+        resultBox.append("Travel check :").append(mBoxTravel.isChecked());
 
-//    Verify checked box and field search
-public void addListenerButton() {
+        Log.d("TestCheckBox", resultBox.toString());
 
-    mBtnSearch.setOnClickListener(new OnClickListener() {
-
-        @Override
-        public void onClick(View v) {
-
-            confirmSearch();
-            validDate(date1, date2);
-            testCheckBox();
-
-        }
-    });
-}
-
-//@OnCheckedChanged({R.id.checkbox_arts, R.id.checkbox_travel, R.id.checkbox_business, R.id.checkbox_sports, R.id.checkbox_entrepreneurs, R.id.checkbox_politics})
+    }
+    //Trial with butterKnife checkbox
+    //@OnCheckedChanged({R.id.checkbox_arts, R.id.checkbox_travel, R.id.checkbox_business, R.id.checkbox_sports, R.id.checkbox_entrepreneurs, R.id.checkbox_politics})
 //void onChecked(boolean checked) {
 //        Log.d("TestChecked", checked ? "Checked":"Unchecked");
 ////      Toast.makeText(this, checked? "Checked" :"Unchecked", Toast.LENGTH_SHORT).show();
 //}
 
-private void testCheckBox () {
-    StringBuilder resultBox = new StringBuilder();
+    //    Verify checked box and field search
+    public void addListenerButton() {
 
-    resultBox.append("Arts check :").append(mBoxArts.isChecked());
-    resultBox.append("Business check :").append(mBoxBusiness.isChecked());
-    resultBox.append("Entrepreneurs check :").append(mBoxEntrepreneurs.isChecked());
-    resultBox.append("Politics check :").append(mBoxPolitics.isChecked());
-    resultBox.append("Sports check :").append(mBoxSports.isChecked());
-    resultBox.append("Travel check :").append(mBoxTravel.isChecked());
+        mBtnSearch.setOnClickListener(new OnClickListener() {
 
-    Log.d("TestCheckBox", resultBox.toString());
+            @Override
+            public void onClick(View v) {
 
-}
+                confirmSearch();
+                validDate(date1, date2);
+                testCheckBox();
+            }
+        });
+    }
 
-//    Click on button search verify required/ toast if one checkbox is not checked
+    //    Click on button search verify required/ toast if one checkbox is not checked
     public void confirmSearch() {
 
         if (!validateSearch()) {
@@ -210,49 +195,49 @@ private void testCheckBox () {
             Intent searchResultIntent = new Intent(this, SearchResultActivity.class);
             startActivity(searchResultIntent);
         }
-
     }
 
     //for input
-
-   private void focusDates() {
+    private void focusDates() {
         mBeginDate.setInputType(InputType.TYPE_NULL);
         mEndDate.setInputType(InputType.TYPE_NULL);
-   }
-   //For clickListeners Edittext and datePicker
-   private void setDateField() {
+    }
+
+    //For clickListeners Edittext and datePicker
+    private void setDateField() {
         mBeginDate.setOnClickListener(this);
         mEndDate.setOnClickListener(this);
 
         //For BeginDate
-       Calendar newCalendar = Calendar.getInstance();
-       mBeginDateDialog = new DatePickerDialog(this, new OnDateSetListener(){
+        Calendar newCalendar = Calendar.getInstance();
+        mBeginDateDialog = new DatePickerDialog(this, new OnDateSetListener() {
 
-           public void onDateSet (DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-               Calendar newDate = Calendar.getInstance();
-               newDate.set(year, monthOfYear, dayOfMonth);
-               mBeginDate.setText(mDateFormat.format(newDate.getTime()));
-           }
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                mBeginDate.setText(mDateFormat.format(newDate.getTime()));
+            }
 
-       }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-       mEndDateDialog = new DatePickerDialog(this, new OnDateSetListener(){
-        //For EndDate
-           public void onDateSet (DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-               Calendar newDate = Calendar.getInstance();
-               newDate.set(year, monthOfYear, dayOfMonth);
-               mEndDate.setText(mDateFormat.format(newDate.getTime()));
-           }
-       }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-   }
-        //Click on Calendar
-        @Override
-        public void onClick (View view) {
-        if(view == mBeginDate) {
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+        mEndDateDialog = new DatePickerDialog(this, new OnDateSetListener() {
+            //For EndDate
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                mEndDate.setText(mDateFormat.format(newDate.getTime()));
+            }
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+    }
+
+    //Click on Calendar
+    @Override
+    public void onClick(View view) {
+        if (view == mBeginDate) {
             mBeginDateDialog.show();
-        }else if(view == mEndDate) {
+        } else if (view == mEndDate) {
             mEndDateDialog.show();
         }
-        }
+    }
 
 
 }

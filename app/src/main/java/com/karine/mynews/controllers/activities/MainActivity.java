@@ -1,5 +1,6 @@
 package com.karine.mynews.controllers.activities;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -8,7 +9,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Toast;
 
 
 import com.karine.mynews.R;
@@ -22,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.activity_main_viewpager) ViewPager pager;
     @BindView(R.id.activity_main_tabs) TabLayout tabs;
     @BindView(R.id.activity_main_toolbar) Toolbar toolbar;
+
 
 
     @Override
@@ -54,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private void configureToolbar() {
         //Set Toolbar
         setSupportActionBar(toolbar);
+
     }
 
     //Switching on different menu items
@@ -65,9 +71,15 @@ public class MainActivity extends AppCompatActivity {
                     Intent searchIntent = new Intent(this, SearchActivity.class);
                     startActivity(searchIntent);
                     return true;
-
-                    case R.id.menu_params:
-                   //a faire ensuite
+            case R.id.notif:
+                Toast.makeText(this, "notif", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.help :
+                Toast.makeText(this, "If you need help contact us : mynews@nyt.com",Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.about:
+                Toast.makeText(this, "NYT newspaper", Toast.LENGTH_SHORT).show();
+                return true;
                     default :
                         return super.onOptionsItemSelected(item);
                 }
