@@ -59,8 +59,8 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
     CheckBox mBoxEntrepreneurs;
     @BindView(R.id.checkbox_travel)
     CheckBox mBoxTravel;
-    @BindViews({R.id.checkbox_arts, R.id.checkbox_politics, R.id.checkbox_business, R.id.checkbox_sports, R.id.checkbox_entrepreneurs, R.id.checkbox_travel})
-    List<CheckBox> mCheckBoxList;
+//    @BindViews({R.id.checkbox_arts, R.id.checkbox_politics, R.id.checkbox_business, R.id.checkbox_sports, R.id.checkbox_entrepreneurs, R.id.checkbox_travel})
+//    List<CheckBox> mCheckBoxList;
     @BindView(R.id.search_btn)
     Button mBtnSearch;
     private String resultBox;

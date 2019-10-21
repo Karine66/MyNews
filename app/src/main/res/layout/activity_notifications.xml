@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ECE8E8"
     tools:context=".controllers.activities.NotificationsActivity">
 
     <!--Toolbar declaration -->
@@ -20,13 +21,20 @@
         layout="@layout/field_search_query"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
     <include
         layout="@layout/checkbox"
         android:layout_marginTop="-40dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <View
+        android:layout_width="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="360dp"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimary"/>
 
     <Switch
         android:id="@+id/switch_notif"
