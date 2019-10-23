@@ -94,7 +94,8 @@ public class ArticlesViewHolder extends RecyclerView.ViewHolder {
         }
     }
         return "";
-    }}
+    }
+}
 
 
 

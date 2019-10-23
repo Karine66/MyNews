@@ -2,8 +2,12 @@ package com.karine.mynews.controllers.activities;
 
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -24,12 +28,31 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 
+
+
+
 public class SearchActivity extends AppCompatActivity implements OnClickListener {
+
+
+    private static final String SHARED_PREFS_SEARCH = "";
+    private static final String SEARCH = "search";
+    private static final String PREF_BEGIN_DATE = "";
+    private static final String PREF_DATE = "";
+    private static final String PREF_BOX = "";
+    private static final String BOXARTS ="boxarts" ;
+    private static final String BOXBUSINESS = "boxBusiness";
+    private static final String BOXENTREPRENEURS = "boxEntrepreneurs";
+
+    private static final String BOXTRAVEL ="boxTravel" ;
+    private static final String BOXPOLITICS = "boxPolitics";
+    private static final String BOXSPORTS = "boxSports";
+
 
     //Date picker
     private DatePickerDialog mBeginDateDialog;
@@ -45,7 +68,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
     EditText mBeginDate;
     @BindView(R.id.et_endDate)
     EditText mEndDate;
-    @BindView(R.id.editText_Search)
+    @BindView(R.id.et_Search)
     EditText mEtSearch;
     @BindView(R.id.checkbox_arts)
     CheckBox mBoxArts;
@@ -59,17 +82,17 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
     CheckBox mBoxEntrepreneurs;
     @BindView(R.id.checkbox_travel)
     CheckBox mBoxTravel;
-//    @BindViews({R.id.checkbox_arts, R.id.checkbox_politics, R.id.checkbox_business, R.id.checkbox_sports, R.id.checkbox_entrepreneurs, R.id.checkbox_travel})
-//    List<CheckBox> mCheckBoxList;
+    @BindViews({R.id.checkbox_arts, R.id.checkbox_politics, R.id.checkbox_business, R.id.checkbox_sports, R.id.checkbox_entrepreneurs, R.id.checkbox_travel})
+    List<CheckBox> mCheckBoxList;
     @BindView(R.id.search_btn)
     Button mBtnSearch;
     private String resultBox;
-    private int m;
     private String date1;
     private String date2;
     private Date fromDate;
     private Date toDate;
-
+    private String beginDate;
+    private String endDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,25 +124,33 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
 
     // Field Search must be inquire
     private boolean validateSearch() {
+        SharedPreferences sharedPrefSearch = getSharedPreferences(SHARED_PREFS_SEARCH, MODE_PRIVATE);
+        SharedPreferences.Editor editorSearch = sharedPrefSearch.edit();
+        editorSearch.putString(SEARCH, mInputSearch.getEditText().getText().toString());
+        editorSearch.apply();
         String searchInput = mInputSearch.getEditText().getText().toString().trim();
 
         if (searchInput.isEmpty()) {
-            mInputSearch.setError("Field can't be empty");
-            Toast.makeText(getApplicationContext(), "Search Field can't be empty", Toast.LENGTH_SHORT).show();
+            mEtSearch.setError("Field can't be empty");
+//            Toast.makeText(getApplicationContext(), "Search Field can't be empty", Toast.LENGTH_SHORT).show();
             return false;
         } else {
-            mInputSearch.setError(null);
+            mEtSearch.setError(null);
             return true;
         }
     }
 
+
+
     //Verify field dates format & if begin is not after enddate
     public boolean validDate(String date1, String date2) {
 
-
-
         date1 = mBeginDate.getText().toString();
         date2 = mEndDate.getText().toString();
+
+        if (date1.isEmpty() && date2.isEmpty()) {
+            return true;
+        }
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         dateFormat.setLenient(false);
@@ -143,10 +174,21 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         }
         return true;
     }
-//        return true;
-//    }
+
+
 
     private void testCheckBox() {
+
+//        SharedPreferences prefBox = getSharedPreferences(PREF_BOX, MODE_PRIVATE);
+//        SharedPreferences.Editor editBox = prefBox.edit();
+//        editBox.putBoolean(BOXARTS, mBoxArts.isChecked() );
+//        editBox.putBoolean(BOXBUSINESS, mBoxBusiness.isChecked());
+//        editBox.putBoolean(BOXENTREPRENEURS, mBoxEntrepreneurs.isChecked());
+//        editBox.putBoolean(BOXPOLITICS, mBoxPolitics.isChecked()),
+//        editBox.putBoolean(BOXSPORTS, mBoxSports.isChecked());
+//        editBox.putBoolean(BOXTRAVEL, mBoxTravel.isChecked());
+//        editBox.apply();
+
         StringBuilder resultBox = new StringBuilder();
 
         resultBox.append("Arts check :").append(mBoxArts.isChecked());
@@ -159,12 +201,6 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         Log.d("TestCheckBox", resultBox.toString());
 
     }
-    //Trial with butterKnife checkbox
-    //@OnCheckedChanged({R.id.checkbox_arts, R.id.checkbox_travel, R.id.checkbox_business, R.id.checkbox_sports, R.id.checkbox_entrepreneurs, R.id.checkbox_politics})
-//void onChecked(boolean checked) {
-//        Log.d("TestChecked", checked ? "Checked":"Unchecked");
-////      Toast.makeText(this, checked? "Checked" :"Unchecked", Toast.LENGTH_SHORT).show();
-//}
 
     //    Verify checked box and field search
     public void addListenerButton() {
@@ -181,6 +217,8 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         });
     }
 
+
+
     //    Click on button search verify required/ toast if one checkbox is not checked
     public void confirmSearch() {
 
@@ -190,9 +228,11 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         if (!mBoxTravel.isChecked() && !mBoxPolitics.isChecked() && !mBoxSports.isChecked() &&
                 !mBoxBusiness.isChecked() && !mBoxEntrepreneurs.isChecked() && !mBoxArts.isChecked()) {
             Toast.makeText(getApplicationContext(), "A least one category must be checked", Toast.LENGTH_SHORT).show();
-        }if(!validDate(date1, date2)){
+        }
+        if (!validDate(date1, date2)) {
             return;
         } else {
+
             Intent searchResultIntent = new Intent(this, SearchResultActivity.class);
             startActivity(searchResultIntent);
         }
@@ -217,6 +257,8 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
                 mBeginDate.setText(mDateFormat.format(newDate.getTime()));
+
+
             }
 
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
@@ -230,11 +272,13 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
     }
 
+
     //Click on Calendar
     @Override
     public void onClick(View view) {
         if (view == mBeginDate) {
             mBeginDateDialog.show();
+
         } else if (view == mEndDate) {
             mEndDateDialog.show();
         }

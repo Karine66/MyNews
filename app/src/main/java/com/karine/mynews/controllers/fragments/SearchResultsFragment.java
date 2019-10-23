@@ -90,6 +90,7 @@ public class SearchResultsFragment extends Fragment {
 
     private void executeHttpRequestWithRetrofit() {
 
+
         this.mDisposable = NYTStreams.streamFetchSearch("search", "fq", "begin_date", "end_Date")
                 .subscribeWith(new DisposableObserver<Search>() {
 
@@ -97,7 +98,7 @@ public class SearchResultsFragment extends Fragment {
                     public void onNext(Search response) {
                         NYTResultsAPI nytResultsAPI = NYTResultsAPI.createResultsAPIFromSearch(response);
                         updateUI(nytResultsAPI);
-
+                        Log.d("TestOnNextSearch", response.getResponse().getDocs().toString());
                     }
 
                     @Override

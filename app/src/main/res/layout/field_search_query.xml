@@ -16,7 +16,7 @@
         app:errorEnabled="true">
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/editText_Search"
+            android:id="@+id/et_Search"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="@string/search_query_term"

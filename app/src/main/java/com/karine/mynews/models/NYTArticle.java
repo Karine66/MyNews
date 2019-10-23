@@ -36,10 +36,10 @@ public class NYTArticle {
     //For Search
     public NYTArticle(String pubDate, String sectionName, List<Multimedium> multimedia, String webUrl) {
 
-        mPubDate = pubDate;
-        mSectionName = sectionName;
+        mPublishedDate = pubDate;
+        mSection = sectionName;
         mMultimedia = multimedia;
-        mWebUrl = webUrl;
+        mUrl = webUrl;
     }
 
 
@@ -92,19 +92,19 @@ public class NYTArticle {
 
     //For Search
     public String getPubDate() {
-        return mPubDate;
+        return mPublishedDate;
     }
 
     public void setPubDate(String pubDate) {
-        mPubDate = pubDate;
+        mPublishedDate = pubDate;
     }
 
     public String getSectionName() {
-        return mSectionName;
+        return mSection;
     }
 
     public void setSectionName(String sectionName) {
-        mSectionName = sectionName;
+        mSection = sectionName;
     }
 
     public List<Multimedium> getMultimedia() {
@@ -116,11 +116,11 @@ public class NYTArticle {
     }
 
     public String getWebUrl() {
-        return mWebUrl;
+        return mUrl;
     }
 
     public void setWebUrl(String webUrl) {
-        mWebUrl = webUrl;
+        mUrl = webUrl;
     }
 
 
