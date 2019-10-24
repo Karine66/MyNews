@@ -42,16 +42,9 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
 
     private static final String SHARED_PREFS_SEARCH = "";
     private static final String SEARCH = "search";
-    private static final String PREF_BEGIN_DATE = "";
-    private static final String PREF_DATE = "";
-    private static final String PREF_BOX = "";
-    private static final String BOXARTS ="boxarts" ;
-    private static final String BOXBUSINESS = "boxBusiness";
-    private static final String BOXENTREPRENEURS = "boxEntrepreneurs";
-
-    private static final String BOXTRAVEL ="boxTravel" ;
-    private static final String BOXPOLITICS = "boxPolitics";
-    private static final String BOXSPORTS = "boxSports";
+    private static final String DATE_PREF = "";
+    private static final String BEGIN_DATE = "BEGIN_DATE";
+    private static final String END_DATE = "END_DATE";
 
 
     //Date picker
@@ -93,6 +86,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
     private Date toDate;
     private String beginDate;
     private String endDate;
+    private String inputSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,6 +138,11 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
 
     //Verify field dates format & if begin is not after enddate
     public boolean validDate(String date1, String date2) {
+        SharedPreferences sharedPref = getSharedPreferences(DATE_PREF, MODE_PRIVATE);
+        SharedPreferences.Editor editor =sharedPref.edit();
+        editor.putString(BEGIN_DATE, mBeginDate.getText().toString());
+        editor.putString(END_DATE, mEndDate.getText().toString());
+        editor.apply();
 
         date1 = mBeginDate.getText().toString();
         date2 = mEndDate.getText().toString();
@@ -179,15 +178,6 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
 
     private void testCheckBox() {
 
-//        SharedPreferences prefBox = getSharedPreferences(PREF_BOX, MODE_PRIVATE);
-//        SharedPreferences.Editor editBox = prefBox.edit();
-//        editBox.putBoolean(BOXARTS, mBoxArts.isChecked() );
-//        editBox.putBoolean(BOXBUSINESS, mBoxBusiness.isChecked());
-//        editBox.putBoolean(BOXENTREPRENEURS, mBoxEntrepreneurs.isChecked());
-//        editBox.putBoolean(BOXPOLITICS, mBoxPolitics.isChecked()),
-//        editBox.putBoolean(BOXSPORTS, mBoxSports.isChecked());
-//        editBox.putBoolean(BOXTRAVEL, mBoxTravel.isChecked());
-//        editBox.apply();
 
         StringBuilder resultBox = new StringBuilder();
 
@@ -210,9 +200,12 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
             @Override
             public void onClick(View v) {
 
+
+
                 confirmSearch();
                 validDate(date1, date2);
                 testCheckBox();
+
             }
         });
     }
@@ -231,7 +224,9 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         }
         if (!validDate(date1, date2)) {
             return;
+
         } else {
+
 
             Intent searchResultIntent = new Intent(this, SearchResultActivity.class);
             startActivity(searchResultIntent);

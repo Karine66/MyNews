@@ -32,9 +32,10 @@ public class SearchResultActivity extends AppCompatActivity {
 
     private static final String SHARED_PREFS_SEARCH = "sharedPrefsSearch";
     private static final String SEARCH ="search" ;
-    private static final String PREF_BOX ="prefbox" ;
-    private static final String BOX = "box";
-    private static final String BOXARTS = "boxArts";
+
+    private static final String DATE_PREF = "datepref";
+    private static final String BEGIN_DATE = "begindate";
+    private static final String END_DATE = "enddate";
 
 
     @BindView(R.id.search_result_toolbar)
@@ -43,8 +44,8 @@ public class SearchResultActivity extends AppCompatActivity {
     private String search;
     private String beginDate;
     private String endDate;
-    private String box;
-    private boolean boxArts;
+    private String date1;
+    private String date2;
 
 
     @Override
@@ -53,8 +54,8 @@ public class SearchResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_result);
         ButterKnife.bind(this);
         this.configureToolbar();
-       this.loadDataSearch();
-//        this.loadBox();
+        this.loadDataSearch();
+        this.loadDate();
 
 
     }
@@ -79,14 +80,14 @@ public class SearchResultActivity extends AppCompatActivity {
            search = sharedPrefSearch.getString(SEARCH,"");
             Log.d("TestSharedPrefsSearch",search );
         }
+        public void loadDate() {
+        SharedPreferences sharedPref = getSharedPreferences(DATE_PREF, MODE_PRIVATE);
+        beginDate = sharedPref.getString(BEGIN_DATE, "");
+        endDate = sharedPref.getString(END_DATE, "");
+            Log.d("Testdatepref", beginDate);
+            Log.d("TestDatePref", endDate);
 
-//        public void loadBox() {
-//
-//        SharedPreferences prefBox = getSharedPreferences(PREF_BOX, MODE_PRIVATE);
-//        boxArts = prefBox.getBoolean(BOXARTS,false);
-//        Log.d("TestBox", String.valueOf(boxArts));
-//
-//        }
+        }
 
 
 
