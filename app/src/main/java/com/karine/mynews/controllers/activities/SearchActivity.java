@@ -134,15 +134,18 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         }
     }
 
-
-
-    //Verify field dates format & if begin is not after enddate
-    public boolean validDate(String date1, String date2) {
+    public void saveDate() {
         SharedPreferences sharedPref = getSharedPreferences(DATE_PREF, MODE_PRIVATE);
         SharedPreferences.Editor editor =sharedPref.edit();
         editor.putString(BEGIN_DATE, mBeginDate.getText().toString());
         editor.putString(END_DATE, mEndDate.getText().toString());
         editor.apply();
+
+    }
+
+
+    //Verify field dates format & if begin is not after enddate
+    public boolean validDate(String date1, String date2) {
 
         date1 = mBeginDate.getText().toString();
         date2 = mEndDate.getText().toString();
@@ -150,6 +153,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         if (date1.isEmpty() && date2.isEmpty()) {
             return true;
         }
+
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         dateFormat.setLenient(false);
@@ -205,6 +209,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
                 confirmSearch();
                 validDate(date1, date2);
                 testCheckBox();
+                saveDate();
 
             }
         });
