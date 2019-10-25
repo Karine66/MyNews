@@ -7,6 +7,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <fragment
+        android:name="com.karine.mynews.controllers.fragments.SearchResultsFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragmentSearchResultsFragment" />
+
     <!--Toolbar declaration -->
     <android.support.v7.widget.Toolbar
         android:id="@+id/search_result_toolbar"

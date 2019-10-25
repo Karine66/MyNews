@@ -1,7 +1,11 @@
 package com.karine.mynews.controllers.fragments;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,22 +18,35 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.karine.mynews.R;
 import com.karine.mynews.Utils.NYTStreams;
+import com.karine.mynews.controllers.activities.SearchActivity;
 import com.karine.mynews.models.NYTArticle;
 import com.karine.mynews.models.NYTResultsAPI;
 import com.karine.mynews.models.SearchAPI.Search;
 import com.karine.mynews.views.ArticlesAdapter;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class SearchResultsFragment extends Fragment {
+    private static final Object SHARED_PREFS_SEARCH = "sharedprefssearch";
+    private static final String SEARCH ="search" ;
+    private static final String BEGIN_DATE = "begindate";
+    private static final String END_DATE = "enddate";
+
+
+
     //For Design déclare recycler view
     @BindView(R.id.fragment_rvSearchResults)
     RecyclerView mRecyclerView;
@@ -39,6 +56,11 @@ public class SearchResultsFragment extends Fragment {
     private ArrayList<NYTArticle> mArticles;
     private ArticlesAdapter mAdapter;
     private Disposable mDisposable;
+    private String search;
+    private String beginDate;
+    private String endDate;
+    private String fromDate;
+    private String toDate;
 
 
     public SearchResultsFragment() {
@@ -55,6 +77,8 @@ public class SearchResultsFragment extends Fragment {
         this.configureRecyclerView();
         this.executeHttpRequestWithRetrofit();
         this.configureSwipeRefreshLayout();
+        this.loadDataSearch();
+        this.loadDate();
         return view;
     }
 
@@ -88,6 +112,22 @@ public class SearchResultsFragment extends Fragment {
     }
 
 
+
+    public void loadDataSearch() {
+        SharedPreferences sharedPrefSearch = PreferenceManager.getDefaultSharedPreferences(getContext());
+        search = sharedPrefSearch.getString(SEARCH,"defaultsearch");
+        Log.d("TestSharedPrefsSearch",search );
+    }
+
+    public void loadDate() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+        beginDate = sharedPref.getString("begindate", "defaultdate1");
+         endDate = sharedPref.getString("enddate", "defaultdate2");
+        Log.d("Testdatepref", beginDate);
+        Log.d("TestDatePref", endDate);
+
+   }
     private void executeHttpRequestWithRetrofit() {
 
 

@@ -27,5 +27,5 @@ public interface NYTService {
     Observable<MostPopular> getMostPopular(@Path("section") String section);
 
     @GET("svc/search/v2/articlesearch.json?sort=newest&" + API_KEY)
-    Observable<Search> getSearch(@Query("q") String search, @Query("fq")String filterQuery,@Query("begin_date") String beginDate, @Query("end_date") String endDate);
+    Observable<Search> getSearch(@Query("q") String query, @Query("fq")String filterQuery,@Query("begin_date") String beginDate, @Query("end_date") String endDate);
 }

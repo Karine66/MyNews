@@ -57,7 +57,6 @@ public class NYTResultsAPI {
             nytArticles.add(nytArticle);
         }
         return new NYTResultsAPI(nytArticles);
-
     }
 
     public static NYTResultsAPI createResultsAPIFromSearch (Search response) {
@@ -65,9 +64,9 @@ public class NYTResultsAPI {
 
        for(Doc result : response.getResponse().getDocs()) {
            NYTArticle nytArticle = new NYTArticle(result.getPubDate(), result.getSectionName(),
-                   result.getMultimedia(), result.getWebUrl());
+                   result.getHeadline().getMain(), result.getWebUrl());
            if(result.getMultimedia().size()>0)
-               nytArticle.setMultimediaURL(result.getMultimedia().get(0).getUrl());
+               nytArticle.setMultimediaURL("https://static01.nyt.com/"+ result.getMultimedia().get(0).getUrl());
            nytArticles.add(nytArticle);
        }
        return new NYTResultsAPI(nytArticles);

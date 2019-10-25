@@ -3,7 +3,7 @@ package com.karine.mynews.controllers.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
+
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -54,8 +54,7 @@ public class SearchResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_result);
         ButterKnife.bind(this);
         this.configureToolbar();
-        this.loadDataSearch();
-        this.loadDate();
+
 
 
     }
@@ -72,23 +71,8 @@ public class SearchResultActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Search Results");
 
+
     }
-
-
-        public void loadDataSearch() {
-            SharedPreferences sharedPrefSearch = getSharedPreferences(SHARED_PREFS_SEARCH, MODE_PRIVATE);
-           search = sharedPrefSearch.getString(SEARCH,"defaultsearch");
-            Log.d("TestSharedPrefsSearch",search );
-        }
-        public void loadDate() {
-        SharedPreferences sharedPref = getSharedPreferences(DATE_PREF, MODE_PRIVATE);
-        beginDate = sharedPref.getString(BEGIN_DATE, "defaultdate1");
-        endDate = sharedPref.getString(END_DATE, "defaultdate2");
-            Log.d("Testdatepref", beginDate);
-            Log.d("TestDatePref", endDate);
-
-        }
-
 
 
 }

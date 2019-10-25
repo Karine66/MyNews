@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.karine.mynews.R;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -43,8 +44,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
     private static final String SHARED_PREFS_SEARCH = "";
     private static final String SEARCH = "search";
     private static final String DATE_PREF = "";
-    private static final String BEGIN_DATE = "BEGIN_DATE";
-    private static final String END_DATE = "END_DATE";
+
 
 
     //Date picker
@@ -84,9 +84,9 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
     private String date2;
     private Date fromDate;
     private Date toDate;
-    private String beginDate;
-    private String endDate;
-    private String inputSearch;
+    private static String beginDate;
+    private static String endDate;
+    private static String inputSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +118,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
 
     // Field Search must be inquire
     private boolean validateSearch() {
-        SharedPreferences sharedPrefSearch = getSharedPreferences(SHARED_PREFS_SEARCH, MODE_PRIVATE);
+        SharedPreferences sharedPrefSearch = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editorSearch = sharedPrefSearch.edit();
         editorSearch.putString(SEARCH, mInputSearch.getEditText().getText().toString());
         editorSearch.apply();
@@ -135,11 +135,17 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
     }
 
     public void saveDate() {
-        SharedPreferences sharedPref = getSharedPreferences(DATE_PREF, MODE_PRIVATE);
-        SharedPreferences.Editor editor =sharedPref.edit();
-        editor.putString(BEGIN_DATE, mBeginDate.getText().toString());
-        editor.putString(END_DATE, mEndDate.getText().toString());
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Editor editor =sharedPref.edit();
+        editor.putString("begindate", mBeginDate.getText().toString()) ;
+        editor.putString("enddate", mEndDate.getText().toString());
+
         editor.apply();
+
+
+
+        System.out.println(mBeginDate.getText().toString());
 
     }
 
@@ -153,7 +159,6 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         if (date1.isEmpty() && date2.isEmpty()) {
             return true;
         }
-
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         dateFormat.setLenient(false);
@@ -185,6 +190,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
 
         StringBuilder resultBox = new StringBuilder();
 
+
         resultBox.append("Arts check :").append(mBoxArts.isChecked());
         resultBox.append("Business check :").append(mBoxBusiness.isChecked());
         resultBox.append("Entrepreneurs check :").append(mBoxEntrepreneurs.isChecked());
@@ -203,8 +209,6 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
 
             @Override
             public void onClick(View v) {
-
-
 
                 confirmSearch();
                 validDate(date1, date2);
@@ -231,7 +235,6 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
             return;
 
         } else {
-
 
             Intent searchResultIntent = new Intent(this, SearchResultActivity.class);
             startActivity(searchResultIntent);
