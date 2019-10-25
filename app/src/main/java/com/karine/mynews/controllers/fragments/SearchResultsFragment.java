@@ -41,9 +41,7 @@ import static android.content.Context.MODE_PRIVATE;
  */
 public class SearchResultsFragment extends Fragment {
     private static final Object SHARED_PREFS_SEARCH = "sharedprefssearch";
-    private static final String SEARCH ="search" ;
-    private static final String BEGIN_DATE = "begindate";
-    private static final String END_DATE = "enddate";
+
 
 
 
@@ -59,8 +57,13 @@ public class SearchResultsFragment extends Fragment {
     private String search;
     private String beginDate;
     private String endDate;
-    private String fromDate;
-    private String toDate;
+    private boolean boxArts;
+    private boolean boxBusiness;
+    private boolean boxPolitics;
+    private boolean boxEntrepreneurs;
+    private boolean boxSports;
+    private boolean boxTravel;
+    private boolean checkboxContainer;
 
 
     public SearchResultsFragment() {
@@ -77,8 +80,8 @@ public class SearchResultsFragment extends Fragment {
         this.configureRecyclerView();
         this.executeHttpRequestWithRetrofit();
         this.configureSwipeRefreshLayout();
-        this.loadDataSearch();
-        this.loadDate();
+//        this.loadDataSearch();
+        this.loadData();
         return view;
     }
 
@@ -111,27 +114,42 @@ public class SearchResultsFragment extends Fragment {
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
-
-
-    public void loadDataSearch() {
-        SharedPreferences sharedPrefSearch = PreferenceManager.getDefaultSharedPreferences(getContext());
-        search = sharedPrefSearch.getString(SEARCH,"defaultsearch");
-        Log.d("TestSharedPrefsSearch",search );
-    }
-
-    public void loadDate() {
+//    public void loadDataSearch() {
+//        SharedPreferences sharedPrefSearch = PreferenceManager.getDefaultSharedPreferences(getContext());
+//        search = sharedPrefSearch.getString("search","defaultsearch");
+//        Log.d("TestSharedPrefsSearch",search );
+//    }
+    //Load data : dates, search and checkbox of SearchActivity
+    public void loadData() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
-
+        //For dates
         beginDate = sharedPref.getString("begindate", "defaultdate1");
-         endDate = sharedPref.getString("enddate", "defaultdate2");
+        endDate = sharedPref.getString("enddate", "defaultdate2");
+        //For search query
+        search = sharedPref.getString("search","defaultsearch");
+        //For Checkbox
+        boxArts = sharedPref.getBoolean("boxArts", false);
+        boxBusiness = sharedPref.getBoolean("boxBusiness", false);
+        boxPolitics = sharedPref.getBoolean("boxPolitics", false);
+        boxEntrepreneurs = sharedPref.getBoolean("boxEntrepreneurs", false);
+        boxSports = sharedPref.getBoolean("boxSports", false);
+        boxTravel = sharedPref.getBoolean("boxTravel", false);
+
         Log.d("Testdatepref", beginDate);
         Log.d("TestDatePref", endDate);
+        Log.d("TestSharedPrefsSearch", search );
+        Log.d("TestprefBox", String.valueOf(boxArts));
+        Log.d("TestprefBox", String.valueOf(boxBusiness));
+        Log.d("TestprefBox", String.valueOf(boxPolitics));
+        Log.d("TestprefBox", String.valueOf(boxEntrepreneurs));
+        Log.d("TestprefBox", String.valueOf(boxSports));
+        Log.d("TestprefBox", String.valueOf(boxTravel));
 
    }
     private void executeHttpRequestWithRetrofit() {
 
 
-        this.mDisposable = NYTStreams.streamFetchSearch("search", "fq", "begin_date", "end_Date")
+        this.mDisposable = NYTStreams.streamFetchSearch("query", "fq", "begin_date", "end_Date")
                 .subscribeWith(new DisposableObserver<Search>() {
 
                     @Override

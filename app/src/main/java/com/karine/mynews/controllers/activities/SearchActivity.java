@@ -20,12 +20,14 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.karine.mynews.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -75,8 +77,8 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
     CheckBox mBoxEntrepreneurs;
     @BindView(R.id.checkbox_travel)
     CheckBox mBoxTravel;
-    @BindViews({R.id.checkbox_arts, R.id.checkbox_politics, R.id.checkbox_business, R.id.checkbox_sports, R.id.checkbox_entrepreneurs, R.id.checkbox_travel})
-    List<CheckBox> mCheckBoxList;
+//    @BindViews({R.id.checkbox_arts, R.id.checkbox_politics, R.id.checkbox_business, R.id.checkbox_sports, R.id.checkbox_entrepreneurs, R.id.checkbox_travel})
+//    List<CheckBox> mCheckBoxList;
     @BindView(R.id.search_btn)
     Button mBtnSearch;
     private String resultBox;
@@ -118,10 +120,10 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
 
     // Field Search must be inquire
     private boolean validateSearch() {
-        SharedPreferences sharedPrefSearch = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor editorSearch = sharedPrefSearch.edit();
-        editorSearch.putString(SEARCH, mInputSearch.getEditText().getText().toString());
-        editorSearch.apply();
+//        SharedPreferences sharedPrefSearch = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+//        SharedPreferences.Editor editorSearch = sharedPrefSearch.edit();
+//        editorSearch.putString("search", mInputSearch.getEditText().getText().toString());
+//        editorSearch.apply();
         String searchInput = mInputSearch.getEditText().getText().toString().trim();
 
         if (searchInput.isEmpty()) {
@@ -134,21 +136,27 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         }
     }
 
-    public void saveDate() {
+    //Save data : dates, search and checkbox for SearchResultsFragment
+    public void saveData() {
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Editor editor =sharedPref.edit();
+        //For save dates
         editor.putString("begindate", mBeginDate.getText().toString()) ;
         editor.putString("enddate", mEndDate.getText().toString());
+        //For save search query
+        editor.putString("search", mInputSearch.getEditText().getText().toString());
+//        For save Checked box
+        editor.putBoolean("boxArts", mBoxArts.isChecked());
+        editor.putBoolean("boxBusiness", mBoxBusiness.isChecked());
+        editor.putBoolean("boxPolitics", mBoxPolitics.isChecked());
+        editor.putBoolean("boxSports", mBoxSports.isChecked());
+        editor.putBoolean("boxEntrepreneurs", mBoxEntrepreneurs.isChecked());
+        editor.putBoolean("boxTravel",mBoxTravel.isChecked());
 
         editor.apply();
 
-
-
-        System.out.println(mBeginDate.getText().toString());
-
     }
-
 
     //Verify field dates format & if begin is not after enddate
     public boolean validDate(String date1, String date2) {
@@ -190,7 +198,6 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
 
         StringBuilder resultBox = new StringBuilder();
 
-
         resultBox.append("Arts check :").append(mBoxArts.isChecked());
         resultBox.append("Business check :").append(mBoxBusiness.isChecked());
         resultBox.append("Entrepreneurs check :").append(mBoxEntrepreneurs.isChecked());
@@ -213,7 +220,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
                 confirmSearch();
                 validDate(date1, date2);
                 testCheckBox();
-                saveDate();
+                saveData();
 
             }
         });
@@ -229,7 +236,9 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         }
         if (!mBoxTravel.isChecked() && !mBoxPolitics.isChecked() && !mBoxSports.isChecked() &&
                 !mBoxBusiness.isChecked() && !mBoxEntrepreneurs.isChecked() && !mBoxArts.isChecked()) {
+
             Toast.makeText(getApplicationContext(), "A least one category must be checked", Toast.LENGTH_SHORT).show();
+            return;
         }
         if (!validDate(date1, date2)) {
             return;
