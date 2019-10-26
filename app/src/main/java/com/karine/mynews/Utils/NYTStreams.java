@@ -38,9 +38,9 @@ public class NYTStreams {
     }
 
     //Create stream Search
-    public static Observable<Search> streamFetchSearch(String search, String filterQuery, String beginDate, String endDate ) {
+    public static Observable<Search> streamFetchSearch(String query, String filterQuery, String beginDate, String endDate ) {
         NYTService mNYTService = NYTRetrofitObject.retrofit.create(NYTService.class);
-        return  mNYTService.getSearch(search, filterQuery, beginDate, endDate)
+        return  mNYTService.getSearch(query, filterQuery, beginDate, endDate)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .timeout(10, TimeUnit.SECONDS);

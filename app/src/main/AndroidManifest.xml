@@ -36,6 +36,8 @@
             android:name=".controllers.activities.NotificationsActivity"
             android:label="Notifications"
             android:parentActivityName=".controllers.activities.MainActivity"/>
+        <receiver android:name=".Utils.AlarmReceiver"/>
+
     </application>
 
 </manifest>
