@@ -1,14 +1,6 @@
 package com.karine.mynews.controllers.activities;
 
-import android.annotation.TargetApi;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.app.TimePickerDialog;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -30,19 +22,11 @@ import com.karine.mynews.Utils.AlarmReceiver;
 import com.karine.mynews.Utils.LocalData;
 import com.karine.mynews.Utils.NotificationScheduler;
 
-
-import java.lang.annotation.Target;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class NotificationsActivity extends AppCompatActivity  {;
 
-    TextView tvTime;
     LocalData localData;
     int hour, min;
     @BindView(R.id.notifications_toolbar)
@@ -138,7 +122,7 @@ public class NotificationsActivity extends AppCompatActivity  {;
                    // tvTime.setText(getFormatedTime(hour,min));
                     NotificationScheduler.setReminder(NotificationsActivity.this, AlarmReceiver.class, localData.getHour(), localData.getMin());
                 }
-            }, h, m, false);
+            }, h, m, true);
             builder.setCustomTitle(view);
             builder.show();
         }
