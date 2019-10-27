@@ -3,6 +3,9 @@
     package="com.karine.mynews">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <!--permission required for automatically restart a repeating alarm if
+    the user reboots the device -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:allowBackup="true"
@@ -36,8 +39,13 @@
             android:name=".controllers.activities.NotificationsActivity"
             android:label="Notifications"
             android:parentActivityName=".controllers.activities.MainActivity"/>
-        <receiver android:name=".Utils.AlarmReceiver"/>
-
+        <!--Register the Alarm Receiver-->
+        <receiver android:name=".Utils.AlarmReceiver"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name = "android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

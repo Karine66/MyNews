@@ -22,7 +22,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
                 Log.d("AlarmReceiver", "onReceive:BOOT_COMPLETED");
                 LocalData localData = new LocalData(context);
-                NotificationScheduler.setReminder(context, AlarmReceiver.class, localData.get_hour(), localData.get_min());
+                NotificationScheduler.setReminder(context, AlarmReceiver.class, localData.getHour(), localData.getMin());
                 return;
             }
         }

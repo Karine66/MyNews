@@ -33,18 +33,18 @@ public class LocalData {
         prefsEditor.apply();
     }
     //Settings Page reminder Time (Hour)
-    public int get_hour() {
+    public int getHour() {
         return appSharedPrefs.getInt(hour, 20);
     }
-    public void set_hour(int h) {
+    public void setHour(int h) {
         prefsEditor.putInt(hour,h);
         prefsEditor.apply();
     }
     //Settings Page Reminder Time (minutes)
-    public int get_min() {
+    public int getMin() {
         return appSharedPrefs.getInt(min,0);
     }
-    public void set_min (int m) {
+    public void setMin (int m) {
         prefsEditor.putInt(min, m);
         prefsEditor.apply();
     }
