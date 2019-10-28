@@ -1,10 +1,8 @@
-package com.karine.mynews.Utils;
+package com.karine.mynews.Utils.Notifications;
 
-import android.app.Notification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.karine.mynews.controllers.activities.NotificationsActivity;

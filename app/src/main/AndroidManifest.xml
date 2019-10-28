@@ -40,7 +40,7 @@
             android:label="Notifications"
             android:parentActivityName=".controllers.activities.MainActivity"/>
         <!--Register the Alarm Receiver-->
-        <receiver android:name=".Utils.AlarmReceiver"
+        <receiver android:name=".Utils.Notifications.AlarmReceiver"
             android:enabled="false">
             <intent-filter>
                 <action android:name = "android.intent.action.BOOT_COMPLETED"/>

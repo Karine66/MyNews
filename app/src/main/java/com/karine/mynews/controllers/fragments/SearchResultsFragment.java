@@ -114,11 +114,6 @@ public class SearchResultsFragment extends Fragment {
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
-//    public void loadDataSearch() {
-//        SharedPreferences sharedPrefSearch = PreferenceManager.getDefaultSharedPreferences(getContext());
-//        search = sharedPrefSearch.getString("search","defaultsearch");
-//        Log.d("TestSharedPrefsSearch",search );
-//    }
     //Load data : dates, search and checkbox of SearchActivity
     public void loadData() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
@@ -149,27 +144,48 @@ public class SearchResultsFragment extends Fragment {
     private void executeHttpRequestWithRetrofit() {
 
 
-        this.mDisposable = NYTStreams.streamFetchSearch("query", "fq", "begin_date", "end_Date")
-                .subscribeWith(new DisposableObserver<Search>() {
+        if (beginDate != null && endDate != null) {
+            this.mDisposable = NYTStreams.streamFetchSearch("search", "search", "beginDate", "endDate")
+                    .subscribeWith(new DisposableObserver<Search>() {
 
-                    @Override
-                    public void onNext(Search response) {
-                        NYTResultsAPI nytResultsAPI = NYTResultsAPI.createResultsAPIFromSearch(response);
-                        updateUI(nytResultsAPI);
-                        Log.d("TestOnNextSearch", response.getResponse().getDocs().toString());
-                    }
+                        @Override
+                        public void onNext(Search response) {
+                            NYTResultsAPI nytResultsAPI = NYTResultsAPI.createResultsAPIFromSearch(response);
+                            updateUI(nytResultsAPI);
+                            Log.d("TestOnNextSearch", response.getResponse().getDocs().toString());
 
-                    @Override
-                    public void onComplete() {
-                        Log.d("ON_Complete", "Test onComplete");
+                        }
+                        @Override
+                        public void onComplete() {
+                            Log.d("ON_Complete", "Test onComplete");
+                        }
 
-                    }
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.e("onErrorHome", Log.getStackTraceString(e));
+                        }
+                    });
+        } else {
+            this.mDisposable = NYTStreams.streamFetchSearchWithoutDates("search", "search")
+                    .subscribeWith(new DisposableObserver<Search>() {
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("onErrorHome", Log.getStackTraceString(e));
-                    }
-                });
+                        @Override
+                        public void onNext(Search response) {
+                            NYTResultsAPI nytResultsAPI = NYTResultsAPI.createResultsAPIFromSearch(response);
+                            updateUI(nytResultsAPI);
+                            Log.d("TestOnNextWithoutDates", response.getResponse().getDocs().toString());
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            Log.d("ON_CompleteWithoutDates", "Test onComplete");
+                        }
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.e("onErrorWithoutDates", Log.getStackTraceString(e));
+                        }
+                    });
+        }
     }
 
     private void disposeWhenDestroy() {
@@ -187,5 +203,4 @@ public class SearchResultsFragment extends Fragment {
         mAdapter.notifyDataSetChanged();
 
     }
-
 }

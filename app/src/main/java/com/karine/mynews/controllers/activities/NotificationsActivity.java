@@ -13,14 +13,13 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.karine.mynews.R;
-import com.karine.mynews.Utils.AlarmReceiver;
-import com.karine.mynews.Utils.LocalData;
-import com.karine.mynews.Utils.NotificationScheduler;
+import com.karine.mynews.Utils.Notifications.AlarmReceiver;
+import com.karine.mynews.Utils.Notifications.LocalData;
+import com.karine.mynews.Utils.Notifications.NotificationScheduler;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -35,6 +35,7 @@ public class NYTArticle {
     }
 
 
+
     public String getPublishedDate() {
         return mPublishedDate;
     }

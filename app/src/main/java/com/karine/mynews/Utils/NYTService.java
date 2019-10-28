@@ -20,12 +20,16 @@ public interface NYTService {
     String API_KEY = "api-key=qAZiSFmOLvMctKNYLABeqsR16AWAEz0R";
 
     //Create EndPoint
+    //TopStories API Request
     @GET("svc/topstories/v2/{section}.json?" + API_KEY)
     Observable<TopStories> getTopStories(@Path("section") String section);
-
+    //MostPopular API (last 7 days)
     @GET("svc/mostpopular/v2/{section}/7.json?" + API_KEY)
     Observable<MostPopular> getMostPopular(@Path("section") String section);
-
+    //ArticlesSearch API with dates
     @GET("svc/search/v2/articlesearch.json?sort=newest&" + API_KEY)
-    Observable<Search> getSearch(@Query("q") String query, @Query("fq")String filterQuery,@Query("begin_date") String beginDate, @Query("end_date") String endDate);
+    Observable<Search> getSearch(@Query("q") String query, @Query("fq")String filterQuery,@Query("begin_date") String begin_Date, @Query("end_date") String end_Date);
+    //ArticlesSearch API without dates
+    @GET("svc/search/v2/articlesearch.json?sort=newest&" + API_KEY)
+    Observable<Search> getSearchWithoutDates(@Query("q") String query, @Query("fq")String filterQuery);
 }

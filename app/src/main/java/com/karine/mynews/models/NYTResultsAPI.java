@@ -71,4 +71,17 @@ public class NYTResultsAPI {
        }
        return new NYTResultsAPI(nytArticles);
     }
+//    public static NYTResultsAPI createResultsAPIFromSearchWithoutDates (Search response) {
+//        List<NYTArticle> nytArticles = new ArrayList<>();
+//
+//        for(Doc result : response.getResponse().getDocs()) {
+//            NYTArticle nytArticle = new NYTArticle(result.getSectionName(),
+//                    result.getHeadline().getMain(), result.getWebUrl());
+//            if(result.getMultimedia().size()>0)
+//                nytArticle.setMultimediaURL("https://static01.nyt.com/"+ result.getMultimedia().get(0).getUrl());
+//            nytArticles.add(nytArticle);
+//        }
+//        return new NYTResultsAPI(nytArticles);
+//    }
+
 }

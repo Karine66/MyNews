@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-
+import retrofit2.http.Query;
 
 
 /**
@@ -37,10 +37,19 @@ public class NYTStreams {
                 .timeout(10, TimeUnit.SECONDS);
     }
 
-    //Create stream Search
-    public static Observable<Search> streamFetchSearch(String query, String filterQuery, String beginDate, String endDate ) {
+    //Create stream Search with dates
+    public static Observable<Search> streamFetchSearch(String query, String filterQuery, String begin_Date, String end_Date ) {
         NYTService mNYTService = NYTRetrofitObject.retrofit.create(NYTService.class);
-        return  mNYTService.getSearch(query, filterQuery, beginDate, endDate)
+        return  mNYTService.getSearch(query, filterQuery, begin_Date, end_Date)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .timeout(10, TimeUnit.SECONDS);
+    }
+
+    //Create stream Search without dates
+    public static Observable<Search> streamFetchSearchWithoutDates(String query, String filterQuery) {
+        NYTService mNYTService = NYTRetrofitObject.retrofit.create(NYTService.class);
+        return  mNYTService.getSearchWithoutDates(query, filterQuery)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .timeout(10, TimeUnit.SECONDS);

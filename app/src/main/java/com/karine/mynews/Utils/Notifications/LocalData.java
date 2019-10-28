@@ -1,4 +1,4 @@
-package com.karine.mynews.Utils;
+package com.karine.mynews.Utils.Notifications;
 
 import android.content.Context;
 import android.content.SharedPreferences;
