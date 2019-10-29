@@ -2,7 +2,6 @@ package com.karine.mynews.models;
 
 import com.karine.mynews.models.MostPopularAPI.MostPopular;
 import com.karine.mynews.models.SearchAPI.Doc;
-import com.karine.mynews.models.SearchAPI.Response;
 import com.karine.mynews.models.SearchAPI.Search;
 import com.karine.mynews.models.TopStoriesAPI.Result;
 
@@ -27,10 +26,6 @@ public class NYTResultsAPI {
    public List<NYTArticle> getNYTArticles() {
        return mNYTArticles;
    }
-
-
-
-
 
    public static NYTResultsAPI createNYTResultsApiFromTopStories(TopStories section) {
        List<NYTArticle> nytArticles = new ArrayList<>();
@@ -71,17 +66,17 @@ public class NYTResultsAPI {
        }
        return new NYTResultsAPI(nytArticles);
     }
-//    public static NYTResultsAPI createResultsAPIFromSearchWithoutDates (Search response) {
-//        List<NYTArticle> nytArticles = new ArrayList<>();
-//
-//        for(Doc result : response.getResponse().getDocs()) {
-//            NYTArticle nytArticle = new NYTArticle(result.getSectionName(),
-//                    result.getHeadline().getMain(), result.getWebUrl());
-//            if(result.getMultimedia().size()>0)
-//                nytArticle.setMultimediaURL("https://static01.nyt.com/"+ result.getMultimedia().get(0).getUrl());
-//            nytArticles.add(nytArticle);
-//        }
-//        return new NYTResultsAPI(nytArticles);
-//    }
+    public static NYTResultsAPI createResultsAPIFromSearchWithoutDates (Search response) {
+        List<NYTArticle> nytArticles = new ArrayList<>();
+
+        for(Doc result : response.getResponse().getDocs()) {
+            NYTArticle nytArticle = new NYTArticle(result.getPubDate(),result.getSectionName(),
+                    result.getHeadline().getMain(), result.getWebUrl());
+            if(result.getMultimedia().size()>0)
+                nytArticle.setMultimediaURL("https://static01.nyt.com/"+ result.getMultimedia().get(0).getUrl());
+            nytArticles.add(nytArticle);
+        }
+        return new NYTResultsAPI(nytArticles);
+    }
 
 }

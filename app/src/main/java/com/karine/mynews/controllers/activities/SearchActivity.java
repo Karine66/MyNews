@@ -77,8 +77,6 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
     CheckBox mBoxEntrepreneurs;
     @BindView(R.id.checkbox_travel)
     CheckBox mBoxTravel;
-//    @BindViews({R.id.checkbox_arts, R.id.checkbox_politics, R.id.checkbox_business, R.id.checkbox_sports, R.id.checkbox_entrepreneurs, R.id.checkbox_travel})
-//    List<CheckBox> mCheckBoxList;
     @BindView(R.id.search_btn)
     Button mBtnSearch;
     private String resultBox;
@@ -89,6 +87,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
     private static String beginDate;
     private static String endDate;
     private static String inputSearch;
+    private List listBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,10 +119,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
 
     // Field Search must be inquire
     private boolean validateSearch() {
-//        SharedPreferences sharedPrefSearch = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-//        SharedPreferences.Editor editorSearch = sharedPrefSearch.edit();
-//        editorSearch.putString("search", mInputSearch.getEditText().getText().toString());
-//        editorSearch.apply();
+
         String searchInput = mInputSearch.getEditText().getText().toString().trim();
 
         if (searchInput.isEmpty()) {
@@ -153,6 +149,8 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         editor.putBoolean("boxSports", mBoxSports.isChecked());
         editor.putBoolean("boxEntrepreneurs", mBoxEntrepreneurs.isChecked());
         editor.putBoolean("boxTravel",mBoxTravel.isChecked());
+
+
 
         editor.apply();
 
@@ -192,20 +190,45 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
     }
 
 
-
     private void testCheckBox() {
-
 
         StringBuilder resultBox = new StringBuilder();
 
-        resultBox.append("Arts check :").append(mBoxArts.isChecked());
-        resultBox.append("Business check :").append(mBoxBusiness.isChecked());
-        resultBox.append("Entrepreneurs check :").append(mBoxEntrepreneurs.isChecked());
-        resultBox.append("Politics check :").append(mBoxPolitics.isChecked());
-        resultBox.append("Sports check :").append(mBoxSports.isChecked());
-        resultBox.append("Travel check :").append(mBoxTravel.isChecked());
+            resultBox.append("Arts").append(mBoxArts.isChecked());
+            resultBox.append("Business").append(mBoxBusiness.isChecked());
+            resultBox.append("Entrepreneurs").append(mBoxEntrepreneurs.isChecked());
+            resultBox.append("Politics").append(mBoxPolitics.isChecked());
+            resultBox.append("Sports").append(mBoxSports.isChecked());
+            resultBox.append("Travel").append(mBoxTravel.isChecked());
 
         Log.d("TestCheckBox", resultBox.toString());
+
+    }
+
+    public void listBoxToString() {
+
+        List <String> listBox = new ArrayList<>();
+
+        if(mBoxArts.isChecked()) {
+            listBox.add(mBoxArts.getText().toString());
+        }
+        if (mBoxBusiness.isChecked()) {
+            listBox.add(mBoxBusiness.getText().toString());
+        }
+        if (mBoxEntrepreneurs.isChecked()) {
+            listBox.add(mBoxEntrepreneurs.getText().toString());
+        }
+        if(mBoxPolitics.isChecked()) {
+            listBox.add(mBoxPolitics.getText().toString());
+        }
+        if(mBoxSports.isChecked()) {
+            listBox.add(mBoxSports.getText().toString());
+        }
+        if(mBoxTravel.isChecked()) {
+            listBox.add(mBoxTravel.getText().toString());
+
+        }
+        Log.d("TestlistBox", listBox.toString());
 
     }
 
@@ -221,7 +244,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
                 validDate(date1, date2);
                 testCheckBox();
                 saveData();
-
+                listBoxToString();
             }
         });
     }

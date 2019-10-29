@@ -27,7 +27,9 @@ import com.karine.mynews.views.ArticlesAdapter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,6 +66,7 @@ public class SearchResultsFragment extends Fragment {
     private boolean boxSports;
     private boolean boxTravel;
     private boolean checkboxContainer;
+    private List listBox;
 
 
     public SearchResultsFragment() {
@@ -130,6 +133,8 @@ public class SearchResultsFragment extends Fragment {
         boxSports = sharedPref.getBoolean("boxSports", false);
         boxTravel = sharedPref.getBoolean("boxTravel", false);
 
+
+
         Log.d("Testdatepref", beginDate);
         Log.d("TestDatePref", endDate);
         Log.d("TestSharedPrefsSearch", search );
@@ -140,19 +145,22 @@ public class SearchResultsFragment extends Fragment {
         Log.d("TestprefBox", String.valueOf(boxSports));
         Log.d("TestprefBox", String.valueOf(boxTravel));
 
+
    }
+
+
     private void executeHttpRequestWithRetrofit() {
 
 
         if (beginDate != null && endDate != null) {
-            this.mDisposable = NYTStreams.streamFetchSearch("search", "search", "beginDate", "endDate")
+            this.mDisposable = NYTStreams.streamFetchSearch(search,search , beginDate, endDate)
                     .subscribeWith(new DisposableObserver<Search>() {
 
                         @Override
                         public void onNext(Search response) {
                             NYTResultsAPI nytResultsAPI = NYTResultsAPI.createResultsAPIFromSearch(response);
                             updateUI(nytResultsAPI);
-                            Log.d("TestOnNextSearch", response.getResponse().getDocs().toString());
+                            Log.d("TestOnNextSearch",nytResultsAPI.getNYTArticles().toString());
 
                         }
                         @Override
@@ -166,14 +174,14 @@ public class SearchResultsFragment extends Fragment {
                         }
                     });
         } else {
-            this.mDisposable = NYTStreams.streamFetchSearchWithoutDates("search", "search")
+            this.mDisposable = NYTStreams.streamFetchSearchWithoutDates(search, search)
                     .subscribeWith(new DisposableObserver<Search>() {
 
                         @Override
                         public void onNext(Search response) {
-                            NYTResultsAPI nytResultsAPI = NYTResultsAPI.createResultsAPIFromSearch(response);
+                            NYTResultsAPI nytResultsAPI = NYTResultsAPI.createResultsAPIFromSearchWithoutDates(response);
                             updateUI(nytResultsAPI);
-                            Log.d("TestOnNextWithoutDates", response.getResponse().getDocs().toString());
+                            Log.d("TestOnNextWithoutDates", nytResultsAPI.getNYTArticles().toString());
                         }
 
                         @Override

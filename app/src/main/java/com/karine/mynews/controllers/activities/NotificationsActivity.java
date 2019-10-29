@@ -91,20 +91,20 @@ public class NotificationsActivity extends AppCompatActivity  {;
                         testCheckBox();
                         if (!validateSearch())
                             return;
-                    }
-                    if (!mBoxTravel.isChecked() && !mBoxPolitics.isChecked() && !mBoxSports.isChecked() &&
-                            !mBoxBusiness.isChecked() && !mBoxEntrepreneurs.isChecked() && !mBoxArts.isChecked()) {
+                        if (!mBoxTravel.isChecked() && !mBoxPolitics.isChecked() && !mBoxSports.isChecked() &&
+                                !mBoxBusiness.isChecked() && !mBoxEntrepreneurs.isChecked() && !mBoxArts.isChecked()) {
+                            Toast.makeText(getApplicationContext(), "A least one category must be checked", Toast.LENGTH_SHORT).show();
+                            return;
+                        } else {
+                            Log.d("TestSwitch", "Switch is Off");
+                            NotificationScheduler.cancelReminder(NotificationsActivity.this, AlarmReceiver.class);
 
-                        Toast.makeText(getApplicationContext(), "A least one category must be checked", Toast.LENGTH_SHORT).show();
-                        return;
-                    } else {
-
-                        NotificationScheduler.cancelReminder(NotificationsActivity.this, AlarmReceiver.class);
-                        Log.d("TestSwitch", "Switch is Off");
+                        }
                     }
                 }
             });
         }
+
         private void showTimePickerDialog(int h, int m) {
             LayoutInflater inflater = getLayoutInflater();
             View view = inflater.inflate(R.layout.time_picker_header, null);
