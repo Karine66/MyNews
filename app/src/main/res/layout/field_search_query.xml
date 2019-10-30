@@ -21,7 +21,6 @@
             android:layout_height="wrap_content"
             android:hint="@string/search_query_term"
             android:nextFocusDown="@id/et_beginDate"
-            android:inputType="textAutoCorrect"
             android:singleLine="true" />
     </android.support.design.widget.TextInputLayout>
 

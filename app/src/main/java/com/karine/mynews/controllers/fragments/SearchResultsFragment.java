@@ -1,11 +1,13 @@
 package com.karine.mynews.controllers.fragments;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.karine.mynews.R;
 import com.karine.mynews.Utils.NYTStreams;
 import com.karine.mynews.controllers.activities.SearchActivity;
@@ -26,26 +29,27 @@ import com.karine.mynews.views.ArticlesAdapter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class SearchResultsFragment extends Fragment {
+
     private static final Object SHARED_PREFS_SEARCH = "sharedprefssearch";
-
-
-
 
     //For Design déclare recycler view
     @BindView(R.id.fragment_rvSearchResults)
@@ -59,19 +63,14 @@ public class SearchResultsFragment extends Fragment {
     private String search;
     private String beginDate;
     private String endDate;
-    private boolean boxArts;
-    private boolean boxBusiness;
-    private boolean boxPolitics;
-    private boolean boxEntrepreneurs;
-    private boolean boxSports;
-    private boolean boxTravel;
-    private boolean checkboxContainer;
-    private List listBox;
+    private String boxResult;
+    private String strDate;
 
 
     public SearchResultsFragment() {
         // Required empty public constructor
     }
+
 
 
     @Override
@@ -83,9 +82,10 @@ public class SearchResultsFragment extends Fragment {
         this.configureRecyclerView();
         this.executeHttpRequestWithRetrofit();
         this.configureSwipeRefreshLayout();
-//        this.loadDataSearch();
         this.loadData();
+
         return view;
+
     }
 
     //configure SwipeRefresh Layout
@@ -126,34 +126,18 @@ public class SearchResultsFragment extends Fragment {
         //For search query
         search = sharedPref.getString("search","defaultsearch");
         //For Checkbox
-        boxArts = sharedPref.getBoolean("boxArts", false);
-        boxBusiness = sharedPref.getBoolean("boxBusiness", false);
-        boxPolitics = sharedPref.getBoolean("boxPolitics", false);
-        boxEntrepreneurs = sharedPref.getBoolean("boxEntrepreneurs", false);
-        boxSports = sharedPref.getBoolean("boxSports", false);
-        boxTravel = sharedPref.getBoolean("boxTravel", false);
+        boxResult = sharedPref.getString("resultBox", "defaultResultBox");
 
-
-
+        Log.d("TestResultBox", boxResult);
         Log.d("Testdatepref", beginDate);
         Log.d("TestDatePref", endDate);
         Log.d("TestSharedPrefsSearch", search );
-        Log.d("TestprefBox", String.valueOf(boxArts));
-        Log.d("TestprefBox", String.valueOf(boxBusiness));
-        Log.d("TestprefBox", String.valueOf(boxPolitics));
-        Log.d("TestprefBox", String.valueOf(boxEntrepreneurs));
-        Log.d("TestprefBox", String.valueOf(boxSports));
-        Log.d("TestprefBox", String.valueOf(boxTravel));
-
-
    }
-
 
     private void executeHttpRequestWithRetrofit() {
 
-
         if (beginDate != null && endDate != null) {
-            this.mDisposable = NYTStreams.streamFetchSearch(search,search , beginDate, endDate)
+            this.mDisposable = NYTStreams.streamFetchSearch(search, boxResult , beginDate, endDate)
                     .subscribeWith(new DisposableObserver<Search>() {
 
                         @Override
@@ -174,7 +158,7 @@ public class SearchResultsFragment extends Fragment {
                         }
                     });
         } else {
-            this.mDisposable = NYTStreams.streamFetchSearchWithoutDates(search, search)
+            this.mDisposable = NYTStreams.streamFetchSearchWithoutDates(search, boxResult)
                     .subscribeWith(new DisposableObserver<Search>() {
 
                         @Override
@@ -211,4 +195,6 @@ public class SearchResultsFragment extends Fragment {
         mAdapter.notifyDataSetChanged();
 
     }
-}
+
+
+    }
