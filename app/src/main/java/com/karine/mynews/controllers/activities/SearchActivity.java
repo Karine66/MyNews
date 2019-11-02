@@ -1,5 +1,6 @@
 package com.karine.mynews.controllers.activities;
 
+import android.accessibilityservice.AccessibilityService;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
@@ -17,8 +18,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -29,8 +33,11 @@ import android.widget.Toast;
 ;
 import com.karine.mynews.R;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -64,14 +71,14 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
     RelativeLayout mRelativeLayout;
     @BindView(R.id.input_searchLayout)
     TextInputLayout mInputSearch;
-    @BindView(R.id.input_dateLayout)
-    TextInputLayout mInputDate1;
     @BindView(R.id.et_beginDate)
     EditText mBeginDate;
     @BindView(R.id.et_endDate)
     EditText mEndDate;
     @BindView(R.id.et_Search)
     EditText mEtSearch;
+    @BindView(R.id.checkbox_container)
+    RelativeLayout mCheckBox;
     @BindView(R.id.checkbox_arts)
     CheckBox mBoxArts;
     @BindView(R.id.checkbox_politics)
@@ -84,19 +91,15 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
     CheckBox mBoxEntrepreneurs;
     @BindView(R.id.checkbox_travel)
     CheckBox mBoxTravel;
-    @BindViews({R.id.checkbox_arts, R.id.checkbox_politics, R.id.checkbox_business, R.id.checkbox_sports, R.id.checkbox_entrepreneurs, R.id.checkbox_travel})
-    List<CheckBox> mCheckBoxList;
     @BindView(R.id.search_btn)
     Button mBtnSearch;
     private String resultBox;
-    private String date1;
-    private String date2;
     private Date fromDate;
     private Date toDate;
     private static String beginDate;
     private static String endDate;
     private static String inputSearch;
-    private String strDate;
+    private boolean isFocused;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -111,7 +114,11 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         this.setDateField();
         this.addListenerButton();
         this.confirmSearch();
+       this.focusSearch();
+      this.hideKeyboard();
+
 //        this.focusBeginDate();
+
 
     }
 
@@ -152,8 +159,8 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Editor editor = sharedPref.edit();
         //For save dates
-        editor.putString("begindate", mBeginDate.getText().toString());
-        editor.putString("enddate", mEndDate.getText().toString());
+        editor.putString("begindate", dateConvertForSearch( mBeginDate.getText().toString()));
+        editor.putString("enddate", dateConvertForSearch(mEndDate.getText().toString()));
         //For save search query
         editor.putString("search", mInputSearch.getEditText().getText().toString());
 
@@ -161,28 +168,11 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
 
     }
 
-    public void convertDateForSearch(String strDate) {
-        String fromDate = mBeginDate.getText().toString();
-        String toDate = mEndDate.getText().toString();
-        try {
-            SimpleDateFormat dateInput = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
-
-            SimpleDateFormat dateOutput = new SimpleDateFormat("YYYY-MM-dd", Locale.US);
-            Date date = dateInput.parse(strDate);
-            fromDate = dateOutput.format(date);
-            toDate = dateOutput.format(date);
-            Log.d("Testformatdate1", fromDate);
-            Log.d("TestformatDate2", toDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
-
     //Verify field dates format & if begin is not after enddate
-    public boolean validDate(String date1, String date2) {
+    public boolean validDate() {
 
-        date1 = mBeginDate.getText().toString();
-        date2 = mEndDate.getText().toString();
+        String date1 = mBeginDate.getText().toString();
+        String date2 = mEndDate.getText().toString();
 
         if (date1.isEmpty() && date2.isEmpty()) {
             return true;
@@ -244,50 +234,19 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         editor.apply();
     }
 
-//
-//    @RequiresApi(api = Build.VERSION_CODES.O)
-//    public void checkboxTreatment() {
-//
-//        List <String> listBox = Arrays.asList("arts", "business", "entrepreneurs", "politics","sports","travel");
-//        String listSeparated = String.join(" ", listBox);
-//
-//        if(mBoxArts.isChecked()) {
-//            listBox.add("arts");
-//        }
-//        if (mBoxBusiness.isChecked()) {
-//            listBox.add("business");
-//        }
-//        if (mBoxEntrepreneurs.isChecked()) {
-//            listBox.add("entrepreneurs");
-//        }
-//        if(mBoxPolitics.isChecked()) {
-//            listBox.add("politics");
-//        }
-//        if(mBoxSports.isChecked()) {
-//            listBox.add("sports");
-//        }
-//        if(mBoxTravel.isChecked()) {
-//            listBox.add("travel");
-//
-//        }
-//        Log.d("TestlistBox", listBox.toString());
-//
-//    }
-
     //    Verify checked box and field search
     public void addListenerButton() {
 
         mBtnSearch.setOnClickListener(new OnClickListener() {
 
-
             @Override
             public void onClick(View v) {
 
                 confirmSearch();
-                validDate(date1, date2);
+                validDate();
                 testCheckBox();
                 saveData();
-//                checkboxTreatment();
+
             }
         });
     }
@@ -304,7 +263,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
             Toast.makeText(getApplicationContext(), "A least one category must be checked", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (!validDate(date1, date2)) {
+        if (!validDate()) {
             return;
 
         } else {
@@ -325,15 +284,6 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         mBeginDate.setOnClickListener(this);
         mEndDate.setOnClickListener(this);
 
-        mBeginDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-             if (mBeginDate.hasFocus()) {
-             mBeginDate.setFocusable(true);
-             mBeginDate.requestFocus();
-             }
-            }
-          });
         //For BeginDate
         Calendar newCalendar = Calendar.getInstance();
         mBeginDateDialog = new DatePickerDialog(this, new OnDateSetListener() {
@@ -342,8 +292,6 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
                 mBeginDate.setText(mDateFormat.format(newDate.getTime()));
-
-
             }
 
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
@@ -357,7 +305,6 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
     }
 
-
     //Click on Calendar
     @Override
     public void onClick(View view) {
@@ -368,6 +315,60 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
             mEndDateDialog.show();
         }
     }
+    //Convert date for search
+    public String  dateConvertForSearch(String dateToFormat) {
+
+            try {
+                if (dateToFormat != null && !dateToFormat.isEmpty()) {
+                    SimpleDateFormat sdf = null;
+                    Date date = new SimpleDateFormat("dd/MM/yyyy").parse(dateToFormat);
+                    sdf = new SimpleDateFormat("yyyyMMdd");
+                    return sdf.format(date);
+                }
+            }
+            catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        return "";
+    }
+
+
+    //Hide keyboard on click in layout
+    public void hideKeyboard() {
+        mRelativeLayout.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                    InputMethodManager inputMethodManager = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
+            }
+        });
+    }
+    //Hide keyboard when searchfield is not focused
+    public void focusSearch() {
+        mEtSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(v==mEtSearch) {
+                    if(hasFocus) {
+                        ((InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE)).showSoftInput(mEtSearch, InputMethodManager.SHOW_FORCED);
+
+                    }else{
+                        ((InputMethodManager)getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(mEtSearch.getWindowToken(),0);
+                    }
+
+
+                }
+            }
+        });
+    }
+
+
+
 
 
 

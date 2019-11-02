@@ -12,31 +12,25 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
+import com.bumptech.glide.Glide;;
 import com.karine.mynews.R;
 import com.karine.mynews.Utils.NYTStreams;
-import com.karine.mynews.controllers.activities.SearchActivity;
 import com.karine.mynews.models.NYTArticle;
 import com.karine.mynews.models.NYTResultsAPI;
 import com.karine.mynews.models.SearchAPI.Search;
 import com.karine.mynews.views.ArticlesAdapter;
 
-import java.text.ParseException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -80,9 +74,10 @@ public class SearchResultsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search_results, container, false);
         ButterKnife.bind(this, view);
         this.configureRecyclerView();
+        this.loadData();
         this.executeHttpRequestWithRetrofit();
         this.configureSwipeRefreshLayout();
-        this.loadData();
+
 
         return view;
 
@@ -136,7 +131,7 @@ public class SearchResultsFragment extends Fragment {
 
     private void executeHttpRequestWithRetrofit() {
 
-        if (beginDate != null && endDate != null) {
+        if (!beginDate.isEmpty() && !endDate.isEmpty()) {
             this.mDisposable = NYTStreams.streamFetchSearch(search, boxResult , beginDate, endDate)
                     .subscribeWith(new DisposableObserver<Search>() {
 
@@ -195,6 +190,5 @@ public class SearchResultsFragment extends Fragment {
         mAdapter.notifyDataSetChanged();
 
     }
-
 
     }
