@@ -1,6 +1,9 @@
 package com.karine.mynews.controllers.activities;
 
+import android.app.AlertDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -20,11 +23,16 @@ import com.karine.mynews.R;
 import com.karine.mynews.Utils.Notifications.AlarmReceiver;
 import com.karine.mynews.Utils.Notifications.LocalData;
 import com.karine.mynews.Utils.Notifications.NotificationScheduler;
+import com.karine.mynews.Utils.PopupNotifications;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NotificationsActivity extends AppCompatActivity  {;
+public class NotificationsActivity extends AppCompatActivity  {
 
     LocalData localData;
     int hour, min;
@@ -49,6 +57,7 @@ public class NotificationsActivity extends AppCompatActivity  {;
     @BindView(R.id.et_Search)
     EditText mEtSearch;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,11 +69,16 @@ public class NotificationsActivity extends AppCompatActivity  {;
         mSwitch.setChecked((localData.getReminderStatus()));
 
         this.configureToolbar();
-       // this.testCheckBox();
+        // this.testCheckBox();
         this.addSwitchButtonListener();
+        this.formatTime(hour, min);
 
+        PopupNotifications popupNotifications = new PopupNotifications();
+        popupNotifications.show(getSupportFragmentManager(), "example");
 
     }
+
+
         //create toolbar
         private void configureToolbar() {
 
@@ -155,6 +169,26 @@ public class NotificationsActivity extends AppCompatActivity  {;
             mEtSearch.setError(null);
             return true;
         }
+    }
+
+    public String formatTime(int h, int m) {
+
+        final String OLD_FORMAT = "HH:mm";
+        final String NEW_FORMAT = "HH 'heures' mm 'minutes'";
+
+        String olDateString = h + ":" + m;
+        String newDateString = "";
+
+        try{
+            SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
+            Date d = sdf.parse(olDateString);
+            sdf.applyPattern(NEW_FORMAT);
+            newDateString = sdf.format(d);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Log.d("TestTime", newDateString);
+        return newDateString;
     }
 
     }

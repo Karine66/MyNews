@@ -1,7 +1,5 @@
 package com.karine.mynews.controllers.activities;
 
-import android.accessibilityservice.AccessibilityService;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Context;
@@ -18,11 +16,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -30,25 +25,16 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-;
+
 import com.karine.mynews.R;
 
-import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
 
 import butterknife.BindView;
-import butterknife.BindViews;
 import butterknife.ButterKnife;
-
-
 
 
 public class SearchActivity extends AppCompatActivity implements OnClickListener {
@@ -57,14 +43,9 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
     private static final String SHARED_PREFS_SEARCH = "";
     private static final String SEARCH = "search";
     private static final String DATE_PREF = "";
-
-
-    //Date picker
-    private DatePickerDialog mBeginDateDialog;
-    private DatePickerDialog mEndDateDialog;
-    //For date
-    private SimpleDateFormat mDateFormat;
-
+    private static String beginDate;
+    private static String endDate;
+    private static String inputSearch;
     @BindView(R.id.search_toolbar)
     Toolbar mToolbar;
     @BindView(R.id.search)
@@ -93,15 +74,16 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
     CheckBox mBoxTravel;
     @BindView(R.id.search_btn)
     Button mBtnSearch;
+    //Date picker
+    private DatePickerDialog mBeginDateDialog;
+    private DatePickerDialog mEndDateDialog;
+    //For date
+    private SimpleDateFormat mDateFormat;
     private String resultBox;
     private Date fromDate;
     private Date toDate;
-    private static String beginDate;
-    private static String endDate;
-    private static String inputSearch;
-    private boolean isFocused;
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,11 +96,8 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         this.setDateField();
         this.addListenerButton();
         this.confirmSearch();
-       this.focusSearch();
-      this.hideKeyboard();
-
-//        this.focusBeginDate();
-
+        this.focusSearch();
+        this.hideKeyboard();
 
     }
 
@@ -159,7 +138,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Editor editor = sharedPref.edit();
         //For save dates
-        editor.putString("begindate", dateConvertForSearch( mBeginDate.getText().toString()));
+        editor.putString("begindate", dateConvertForSearch(mBeginDate.getText().toString()));
         editor.putString("enddate", dateConvertForSearch(mEndDate.getText().toString()));
         //For save search query
         editor.putString("search", mInputSearch.getEditText().getText().toString());
@@ -315,50 +294,48 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
             mEndDateDialog.show();
         }
     }
-    //Convert date for search
-    public String  dateConvertForSearch(String dateToFormat) {
 
-            try {
-                if (dateToFormat != null && !dateToFormat.isEmpty()) {
-                    SimpleDateFormat sdf = null;
-                    Date date = new SimpleDateFormat("dd/MM/yyyy").parse(dateToFormat);
-                    sdf = new SimpleDateFormat("yyyyMMdd");
-                    return sdf.format(date);
-                }
+    //Convert date for search
+    public String dateConvertForSearch(String dateToFormat) {
+
+        try {
+            if (dateToFormat != null && !dateToFormat.isEmpty()) {
+                SimpleDateFormat sdf = null;
+                Date date = new SimpleDateFormat("dd/MM/yyyy").parse(dateToFormat);
+                sdf = new SimpleDateFormat("yyyyMMdd");
+                return sdf.format(date);
             }
-            catch (ParseException e) {
-                e.printStackTrace();
-            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         return "";
     }
 
-
-    //Hide keyboard on click in layout
+    /**
+     * Hide keyboard on click in layout
+     */
     public void hideKeyboard() {
-        mRelativeLayout.setOnClickListener(new View.OnClickListener() {
+        mRelativeLayout.setOnClickListener(v -> {
 
-            @Override
-            public void onClick(View v) {
+            InputMethodManager inputMethodManager = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
-                    InputMethodManager inputMethodManager = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
-
-            }
         });
     }
+
     //Hide keyboard when searchfield is not focused
     public void focusSearch() {
         mEtSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(v==mEtSearch) {
-                    if(hasFocus) {
+                if (v == mEtSearch) {
+                    if (hasFocus) {
                         ((InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE)).showSoftInput(mEtSearch, InputMethodManager.SHOW_FORCED);
 
-                    }else{
-                        ((InputMethodManager)getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(mEtSearch.getWindowToken(),0);
+                    } else {
+                        ((InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(mEtSearch.getWindowToken(), 0);
                     }
 
 
@@ -366,24 +343,6 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
             }
         });
     }
-
-
-
-
-
-
-//    public void focusBeginDate () {
-//        mBeginDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                if(hasFocus) {
-//                    mBeginDate.isFocused();
-//                    mBeginDate.requestFocus();
-//                }
-//            }
-//        });
-//    }
-
 }
 
 
