@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -187,9 +189,15 @@ public class NotificationsActivity extends AppCompatActivity  {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor edit = preferences.edit();
+        edit.putString("dateNotif",newDateString );
+        edit.apply();
         Log.d("TestTime", newDateString);
         return newDateString;
     }
+
+
 
     }
 
