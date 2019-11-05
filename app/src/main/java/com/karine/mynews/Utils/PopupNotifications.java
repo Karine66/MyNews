@@ -16,7 +16,7 @@ import com.karine.mynews.Utils.Notifications.LocalData;
  */
 public class PopupNotifications extends AppCompatDialogFragment {
 
-    LocalData localData;
+
     private String dateNotif;
 
     @Override
@@ -37,7 +37,6 @@ public class PopupNotifications extends AppCompatDialogFragment {
 
     public void loadData() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        //For dates
        dateNotif = preferences.getString("dateNotif", "defaultdateNotif");
         Log.d("TestDateNotif", dateNotif);
     }
