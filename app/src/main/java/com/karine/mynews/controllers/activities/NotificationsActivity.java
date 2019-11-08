@@ -1,19 +1,21 @@
 package com.karine.mynews.controllers.activities;
 
-import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -25,11 +27,12 @@ import com.karine.mynews.R;
 import com.karine.mynews.Utils.Notifications.AlarmReceiver;
 import com.karine.mynews.Utils.Notifications.LocalData;
 import com.karine.mynews.Utils.Notifications.NotificationScheduler;
-import com.karine.mynews.Utils.PopupNotifications;
+
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,6 +61,11 @@ public class NotificationsActivity extends AppCompatActivity  {
     TextInputLayout mInputSearch;
     @BindView(R.id.et_Search)
     EditText mEtSearch;
+    @BindView(R.id.alarm_on)
+    EditText mAlarmOn;
+    private String search;
+    private String alarm;
+    private String boxResult;
 
 
     @Override
@@ -74,9 +82,18 @@ public class NotificationsActivity extends AppCompatActivity  {
         // this.testCheckBox();
         this.addSwitchButtonListener();
         this.formatTime(hour, min);
+        this.disableSwitchBtn();
+        //For return input Search
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        search = preferences.getString("searchNotif", "defaultValueSearchNotif");
+        mEtSearch.setText(search);
+        alarm = preferences.getString("dateNotif", "defaultValueAlarm");
+        mAlarmOn.setText(alarm);
+        boxResult = preferences.getString("boxNotif", "defaultValuebox");
 
-        PopupNotifications popupNotifications = new PopupNotifications();
-        popupNotifications.show(getSupportFragmentManager(), "example");
+        Log.d("TestSaveSearch", search);
+        Log.d("TestHourAlarm", alarm);
+        Log.d("TestBoxNotif", boxResult);
 
     }
 
@@ -102,15 +119,18 @@ public class NotificationsActivity extends AppCompatActivity  {
                     localData.setReminderStatus(isChecked);
                     if (isChecked) {
                         Log.d("TestSwitchOn", "Switch is On");
+                        saveData();
+                        testCheckBox();
                         showTimePickerDialog(localData.getHour(), localData.getMin());
                         NotificationScheduler.setReminder(NotificationsActivity.this, AlarmReceiver.class, localData.getHour(), localData.getMin());
-                        testCheckBox();
+
                         if (!validateSearch())
                             return;
                         if (!mBoxTravel.isChecked() && !mBoxPolitics.isChecked() && !mBoxSports.isChecked() &&
                                 !mBoxBusiness.isChecked() && !mBoxEntrepreneurs.isChecked() && !mBoxArts.isChecked()) {
                             Toast.makeText(getApplicationContext(), "A least one category must be checked", Toast.LENGTH_SHORT).show();
                             return;
+
                         } else {
                             Log.d("TestSwitch", "Switch is Off");
                             NotificationScheduler.cancelReminder(NotificationsActivity.this, AlarmReceiver.class);
@@ -120,6 +140,27 @@ public class NotificationsActivity extends AppCompatActivity  {
                 }
             });
         }
+        //for disable switch button for modification
+    public void disableSwitchBtn() {
+        mEtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mSwitch.setChecked(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+
+            }
+        });
+    }
+
 
         private void showTimePickerDialog(int h, int m) {
             LayoutInflater inflater = getLayoutInflater();
@@ -141,6 +182,16 @@ public class NotificationsActivity extends AppCompatActivity  {
             builder.setCustomTitle(view);
             builder.show();
         }
+        //For save search
+        public void saveData() {
+
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            Editor edit = preferences.edit();
+            edit.putString("searchNotif", mInputSearch.getEditText().getText().toString());
+            edit.apply();
+
+            Log.d("TestSearchNotif", mInputSearch.getEditText().getText().toString());
+        }
 
 
 
@@ -148,16 +199,34 @@ public class NotificationsActivity extends AppCompatActivity  {
     private void testCheckBox() {
         StringBuilder resultBox = new StringBuilder();
 
-        resultBox.append("Arts check :").append(mBoxArts.isChecked());
-        resultBox.append("Business check :").append(mBoxBusiness.isChecked());
-        resultBox.append("Entrepreneurs check :").append(mBoxEntrepreneurs.isChecked());
-        resultBox.append("Politics check :").append(mBoxPolitics.isChecked());
-        resultBox.append("Sports check :").append(mBoxSports.isChecked());
-        resultBox.append("Travel check :").append(mBoxTravel.isChecked());
+        if (mBoxArts.isChecked()) {
+            resultBox.append("arts").append(" ");
+        }
+        if (mBoxBusiness.isChecked()) {
+            resultBox.append("business").append(" ");
+        }
+        if (mBoxEntrepreneurs.isChecked()) {
+            resultBox.append("entrepreneurs").append(" ");
+        }
+        if (mBoxPolitics.isChecked()) {
+            resultBox.append("politics").append(" ");
+        }
+        if (mBoxSports.isChecked()) {
+            resultBox.append("sports").append(" ");
+        }
+        if (mBoxTravel.isChecked()) {
+            resultBox.append("travel").append(" ");
+        }
+        Log.d("TestCheckBox", resultBox.toString());
 
-        Log.d("TestCheckBoxNotif", resultBox.toString());
-
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Editor edit = preferences.edit();
+        edit.putString("boxNotif", resultBox.toString());
+        edit.apply();
     }
+
+
+
 
     private boolean validateSearch() {
 
@@ -173,10 +242,12 @@ public class NotificationsActivity extends AppCompatActivity  {
         }
     }
 
+
+
     public String formatTime(int h, int m) {
 
         final String OLD_FORMAT = "HH:mm";
-        final String NEW_FORMAT = "HH 'heures' mm 'minutes'";
+        final String NEW_FORMAT = "HH 'heures' mm 'mn'";
 
         String olDateString = h + ":" + m;
         String newDateString = "";

@@ -271,7 +271,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
                 mBeginDate.setText(mDateFormat.format(newDate.getTime()));
-            }
+                          }
 
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
         mEndDateDialog = new DatePickerDialog(this, new OnDateSetListener() {
@@ -289,9 +289,11 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
     public void onClick(View view) {
         if (view == mBeginDate) {
             mBeginDateDialog.show();
+            mBeginDateDialog.getDatePicker().setMaxDate((Calendar.getInstance().getTimeInMillis()));
 
         } else if (view == mEndDate) {
             mEndDateDialog.show();
+            mEndDateDialog.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis());
         }
     }
 

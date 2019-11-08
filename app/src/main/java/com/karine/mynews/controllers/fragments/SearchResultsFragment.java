@@ -129,7 +129,7 @@ public class SearchResultsFragment extends Fragment {
         Log.d("TestSharedPrefsSearch", search );
    }
 
-    private void executeHttpRequestWithRetrofit() {
+       private void executeHttpRequestWithRetrofit() {
 
         if (!beginDate.isEmpty() && !endDate.isEmpty()) {
             this.mDisposable = NYTStreams.streamFetchSearch(search, boxResult , beginDate, endDate)
