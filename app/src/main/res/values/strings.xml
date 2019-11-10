@@ -20,4 +20,8 @@
     <string name="about">About</string>
     <string name="switch_notif">Switch</string>
     <string name="boxArts">boxArts</string>
+    <string name="nyt_image">NYT_Image</string>
+    <!--Used in NavigationDrawer-->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

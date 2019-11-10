@@ -66,6 +66,7 @@ public class NotificationsActivity extends AppCompatActivity  {
     private String search;
     private String alarm;
     private String boxResult;
+    private boolean box;
 
 
     @Override
@@ -82,7 +83,7 @@ public class NotificationsActivity extends AppCompatActivity  {
         // this.testCheckBox();
         this.addSwitchButtonListener();
         this.formatTime(hour, min);
-        this.disableSwitchBtn();
+//       this.disableSwitchBtn();
         //For return input Search
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         search = preferences.getString("searchNotif", "defaultValueSearchNotif");
@@ -123,9 +124,10 @@ public class NotificationsActivity extends AppCompatActivity  {
                         testCheckBox();
                         showTimePickerDialog(localData.getHour(), localData.getMin());
                         NotificationScheduler.setReminder(NotificationsActivity.this, AlarmReceiver.class, localData.getHour(), localData.getMin());
-
-                        if (!validateSearch())
+                    }
+                        if (!validateSearch()) {
                             return;
+                        }
                         if (!mBoxTravel.isChecked() && !mBoxPolitics.isChecked() && !mBoxSports.isChecked() &&
                                 !mBoxBusiness.isChecked() && !mBoxEntrepreneurs.isChecked() && !mBoxArts.isChecked()) {
                             Toast.makeText(getApplicationContext(), "A least one category must be checked", Toast.LENGTH_SHORT).show();
@@ -137,29 +139,29 @@ public class NotificationsActivity extends AppCompatActivity  {
 
                         }
                     }
-                }
+
             });
         }
         //for disable switch button for modification
-    public void disableSwitchBtn() {
-        mEtSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mSwitch.setChecked(false);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-
-            }
-        });
-    }
+//    public void disableSwitchBtn() {
+//        mEtSearch.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//                mSwitch.setEnabled(true);
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                mSwitch.setEnabled(true);
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+////                mSwitch.setEnabled(true);
+//
+//            }
+//        });
+//    }
 
 
         private void showTimePickerDialog(int h, int m) {
@@ -177,6 +179,7 @@ public class NotificationsActivity extends AppCompatActivity  {
                     localData.setMin(min);
                    // tvTime.setText(getFormatedTime(hour,min));
                     NotificationScheduler.setReminder(NotificationsActivity.this, AlarmReceiver.class, localData.getHour(), localData.getMin());
+
                 }
             }, h, m, true);
             builder.setCustomTitle(view);
@@ -201,27 +204,34 @@ public class NotificationsActivity extends AppCompatActivity  {
 
         if (mBoxArts.isChecked()) {
             resultBox.append("arts").append(" ");
+
         }
         if (mBoxBusiness.isChecked()) {
             resultBox.append("business").append(" ");
+
         }
         if (mBoxEntrepreneurs.isChecked()) {
             resultBox.append("entrepreneurs").append(" ");
+
         }
         if (mBoxPolitics.isChecked()) {
             resultBox.append("politics").append(" ");
+
         }
         if (mBoxSports.isChecked()) {
             resultBox.append("sports").append(" ");
+
         }
         if (mBoxTravel.isChecked()) {
             resultBox.append("travel").append(" ");
+
         }
         Log.d("TestCheckBox", resultBox.toString());
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Editor edit = preferences.edit();
         edit.putString("boxNotif", resultBox.toString());
+
         edit.apply();
     }
 
