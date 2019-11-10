@@ -11,7 +11,8 @@
         android:id="@+id/nytImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/nyt"
+        android:background="@color/colorPrimary"
+        app:srcCompat="@drawable/nyt2"
         android:contentDescription="@string/nyt_image" />
 
 </LinearLayout>

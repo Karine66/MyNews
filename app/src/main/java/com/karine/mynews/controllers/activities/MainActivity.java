@@ -66,10 +66,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         switch (id) {
             case R.id.activity_main_drawer_TP :
+                pager.setCurrentItem(0);
                 break;
             case R.id.activity_main_drawer_MP :
+                pager.setCurrentItem(1);
                 break;
             case R.id.actitivy_main_drawer_Business :
+                pager.setCurrentItem(3);
                 break;
             case R.id.activity_main_drawer_search :
                 Intent searchIntent = new Intent(this, SearchActivity.class);
@@ -109,7 +112,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void configureNavigationView() {
         mNavigationView.setNavigationItemSelectedListener(this);
     }
-
 
     //Switching on different menu items
     @Override
