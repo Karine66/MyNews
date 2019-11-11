@@ -6,10 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -46,6 +44,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
     private static String beginDate;
     private static String endDate;
     private static String inputSearch;
+
     @BindView(R.id.search_toolbar)
     Toolbar mToolbar;
     @BindView(R.id.search)
@@ -101,9 +100,10 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
 
     }
 
-    //create toolbar
+    /**
+     * Create Toolbar
+     */
     private void configureToolbar() {
-
         //Set the toolbar
         setSupportActionBar(mToolbar);
         //Get a support Action Bar corresponding to this Toolbar
@@ -112,27 +112,29 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Search Articles");
-
     }
 
-    // Field Search must be inquire
+    /**
+     * Error message if search field is empty
+     *
+     * @return
+     */
     private boolean validateSearch() {
 
         String searchInput = mInputSearch.getEditText().getText().toString().trim();
 
-
         if (searchInput.isEmpty()) {
             mEtSearch.setError("Field can't be empty");
-//            Toast.makeText(getApplicationContext(), "Search Field can't be empty", Toast.LENGTH_SHORT).show();
             return false;
-
         } else {
             mEtSearch.setError(null);
             return true;
         }
     }
 
-    //Save data : dates, search for SearchResultsFragment
+    /**
+     * Save data dates and search for SearchResultsFragment
+     */
     public void saveData() {
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -142,12 +144,14 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         editor.putString("enddate", dateConvertForSearch(mEndDate.getText().toString()));
         //For save search query
         editor.putString("search", mInputSearch.getEditText().getText().toString());
-
         editor.apply();
-
     }
 
-    //Verify field dates format & if begin is not after enddate
+    /**
+     * Verify field dates format & if begin is not after enddate
+     *
+     * @return
+     */
     public boolean validDate() {
 
         String date1 = mBeginDate.getText().toString();
@@ -156,7 +160,6 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         if (date1.isEmpty() && date2.isEmpty()) {
             return true;
         }
-
         //Verify dates format
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         dateFormat.setLenient(false);
@@ -179,9 +182,11 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
             return false;
         }
         return true;
-
     }
 
+    /**
+     * For test if checkbox is checked and save it
+     */
     private void testCheckBox() {
 
         StringBuilder resultBox = new StringBuilder();
@@ -213,11 +218,12 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         editor.apply();
     }
 
-    //    Verify checked box and field search
+    /**
+     * Listener on search button
+     */
     public void addListenerButton() {
 
         mBtnSearch.setOnClickListener(new OnClickListener() {
-
             @Override
             public void onClick(View v) {
 
@@ -225,12 +231,13 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
                 validDate();
                 testCheckBox();
                 saveData();
-
             }
         });
     }
 
-    //    Click on button search verify required/ toast if one checkbox is not checked
+    /**
+     * On button search verify required with field search, one checkbox is checked and dates
+     */
     public void confirmSearch() {
 
         if (!validateSearch()) {
@@ -244,25 +251,26 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         }
         if (!validDate()) {
             return;
-
         } else {
-
             Intent searchResultIntent = new Intent(this, SearchResultActivity.class);
             startActivity(searchResultIntent);
         }
     }
 
-    //for input
+    /**
+     * For input fields dates
+     */
     private void focusDates() {
         mBeginDate.setInputType(InputType.TYPE_NULL);
         mEndDate.setInputType(InputType.TYPE_NULL);
     }
 
-    //For clickListeners Edittext and datePicker
+    /**
+     * For clickListeners EditText and datePicker
+     */
     private void setDateField() {
         mBeginDate.setOnClickListener(this);
         mEndDate.setOnClickListener(this);
-
         //For BeginDate
         Calendar newCalendar = Calendar.getInstance();
         mBeginDateDialog = new DatePickerDialog(this, new OnDateSetListener() {
@@ -271,7 +279,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
                 mBeginDate.setText(mDateFormat.format(newDate.getTime()));
-                          }
+            }
 
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
         mEndDateDialog = new DatePickerDialog(this, new OnDateSetListener() {
@@ -284,7 +292,11 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
     }
 
-    //Click on Calendar
+    /**
+     * For click on calendar
+     *
+     * @param view
+     */
     @Override
     public void onClick(View view) {
         if (view == mBeginDate) {
@@ -297,7 +309,12 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         }
     }
 
-    //Convert date for search
+    /**
+     * Convert dates for search (nyt requires)
+     *
+     * @param dateToFormat
+     * @return
+     */
     public String dateConvertForSearch(String dateToFormat) {
 
         try {
@@ -310,7 +327,6 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
         return "";
     }
 
@@ -319,14 +335,14 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
      */
     public void hideKeyboard() {
         mRelativeLayout.setOnClickListener(v -> {
-
             InputMethodManager inputMethodManager = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
-
         });
     }
 
-    //Hide keyboard when searchfield is not focused
+    /**
+     * Hide keyboard when searchfield is not focused
+     */
     public void focusSearch() {
         mEtSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
@@ -335,12 +351,9 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
                 if (v == mEtSearch) {
                     if (hasFocus) {
                         ((InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE)).showSoftInput(mEtSearch, InputMethodManager.SHOW_FORCED);
-
                     } else {
                         ((InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(mEtSearch.getWindowToken(), 0);
                     }
-
-
                 }
             }
         });

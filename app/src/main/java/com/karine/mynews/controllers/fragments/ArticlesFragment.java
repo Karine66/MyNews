@@ -2,9 +2,7 @@ package com.karine.mynews.controllers.fragments;
 
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,12 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 import com.bumptech.glide.Glide;
 import com.karine.mynews.R;
-
 
 import com.karine.mynews.Utils.ItemClickSupport;
 import com.karine.mynews.Utils.NYTStreams;
@@ -29,23 +24,16 @@ import com.karine.mynews.models.MostPopularAPI.MostPopular;
 import com.karine.mynews.models.NYTArticle;
 import com.karine.mynews.models.NYTResultsAPI;
 
-import com.karine.mynews.models.TopStoriesAPI.Result;
 import com.karine.mynews.models.TopStoriesAPI.TopStories;
 import com.karine.mynews.views.ArticlesAdapter;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
-
-
 
 /**
  * A simple {@link Fragment} subclass.

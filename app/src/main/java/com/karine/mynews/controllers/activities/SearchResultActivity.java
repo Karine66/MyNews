@@ -17,7 +17,6 @@ public class SearchResultActivity extends AppCompatActivity {
     @BindView(R.id.search_result_toolbar)
     Toolbar mSearchResultToolbar;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,9 +26,10 @@ public class SearchResultActivity extends AppCompatActivity {
 
     }
 
-    //create toolbar
+    /**
+     * Create Toolbar
+     */
     private void configureToolbar() {
-
         //Set the toolbar
         setSupportActionBar(mSearchResultToolbar);
         //Get a support Action Bar corresponding to this Toolbar

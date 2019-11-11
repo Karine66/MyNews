@@ -1,11 +1,8 @@
 package com.karine.mynews.controllers.activities;
 
 import android.annotation.SuppressLint;
-
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
-
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -40,7 +37,7 @@ public class WebViewActivity extends AppCompatActivity {
 
         MyWebViewClient myWebViewClient = new MyWebViewClient();
         myWebViewClient.shouldOverrideUrlLoading(mWebView, url);
-
+        //for progressBar
         mWebView.setWebChromeClient(new WebChromeClient() {
 
             public void onProgressChanged(WebView view, int progress) {
@@ -54,6 +51,9 @@ public class WebViewActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * For return with arrow endPage
+     */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
