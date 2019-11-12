@@ -60,7 +60,6 @@ public class WebViewActivity extends AppCompatActivity {
         this.mWebView.destroy();
     }
 
-
     private class MyWebViewClient extends WebViewClient {
         @SuppressLint("SetJavaScriptEnabled")
         @Override

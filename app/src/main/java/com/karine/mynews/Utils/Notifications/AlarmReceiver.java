@@ -26,7 +26,9 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        this.context = context;
         loadData();
+        executeHttpRequestWithRetrofit();
         if (intent.getAction() != null && context != null) {
             if (intent.getAction().equalsIgnoreCase(Intent.ACTION_BOOT_COMPLETED)) {
 
@@ -37,15 +39,16 @@ public class AlarmReceiver extends BroadcastReceiver {
             }
         }
         //Trigger the nofitication
-        NotificationScheduler.showNotification(context, NotificationsActivity.class, "You have some notifications","show now ?");
-        executeHttpRequestWithRetrofit();
+      //  NotificationScheduler.showNotification(context, NotificationsActivity.class, "You have some notifications","show now ?");
+
     }
     public void loadData() {
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);//je ne sais pas quoi mettre dans le getDefaultSharedPreferences
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         search = preferences.getString("searchNotif", "defaultValueSearchNotif");
         boxResult = preferences.getString("boxNotif", "defaultValuebox");
         Log.d("searchreceiver", search);
+        Log.d("TestNotifBox", boxResult);
    }
     private void executeHttpRequestWithRetrofit() {
 //        loadData();
@@ -56,7 +59,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                         @Override
                         public void onNext(Search response) {
                             NYTResultsAPI nytResultsAPI = NYTResultsAPI.createResultsAPIFromSearchWithoutDates(response);
-                            nytResultsAPI.getNYTArticles().size();
+                            NotificationScheduler.showNotification(context,NotificationsActivity.class, "You have"+ nytResultsAPI.getNYTArticles().size()+ " "+"notifications", "show now ?");
                             Log.d("TestOnNextWithoutDates", nytResultsAPI.getNYTArticles().toString());
                         }
 

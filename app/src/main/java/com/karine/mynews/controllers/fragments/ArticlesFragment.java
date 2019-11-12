@@ -96,7 +96,6 @@ public class ArticlesFragment extends Fragment {
         this.disposeWhenDestroy();
     }
 
-
     //Configuration Recycler View
     //Configure RecyclerView, Adapter, LayoutManager & glue it
     private void configureRecyclerView() {

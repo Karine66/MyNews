@@ -89,7 +89,6 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
         mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
         this.configureToolbar();
         this.focusDates();
         this.setDateField();
@@ -349,10 +348,9 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (v == mEtSearch) {
-                    if (hasFocus) {
-                        ((InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE)).showSoftInput(mEtSearch, InputMethodManager.SHOW_FORCED);
-                    } else {
-                        ((InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(mEtSearch.getWindowToken(), 0);
+                    if (!hasFocus) {
+                        InputMethodManager inputMethodManager = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
                     }
                 }
             }
