@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.inputmethodservice.Keyboard;
+import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
@@ -94,7 +96,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         this.setDateField();
         this.addListenerButton();
         this.confirmSearch();
-        this.focusSearch();
+//        this.focusSearch();
         this.hideKeyboard();
 
     }
@@ -301,6 +303,8 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         if (view == mBeginDate) {
             mBeginDateDialog.show();
             mBeginDateDialog.getDatePicker().setMaxDate((Calendar.getInstance().getTimeInMillis()));
+            InputMethodManager inputMethodManager = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
         } else if (view == mEndDate) {
             mEndDateDialog.show();
@@ -339,23 +343,24 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         });
     }
 
-    /**
-     * Hide keyboard when searchfield is not focused
-     */
-    public void focusSearch() {
-        mEtSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (v == mEtSearch) {
-                    if (!hasFocus) {
-                        InputMethodManager inputMethodManager = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                        inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                    }
-                }
-            }
-        });
-    }
+//    /**
+//     * Hide keyboard when searchfield is not focused
+//     */
+//    public void focusSearch() {
+//        mEtSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (v == mEtSearch) {
+//                    if (!hasFocus) {
+//                        InputMethodManager inputMethodManager = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+//                        inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+//                    }
+//                }
+//            }
+//        });
+//    }
 }
 
 

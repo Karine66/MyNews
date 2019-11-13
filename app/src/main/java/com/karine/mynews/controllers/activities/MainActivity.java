@@ -1,6 +1,9 @@
 package com.karine.mynews.controllers.activities;
 
+import android.annotation.SuppressLint;
+import android.content.ClipData;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -32,13 +35,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout mDrawerLayout;
     @BindView(R.id.activity_main_nav_view)
     NavigationView mNavigationView;
-
+    @SuppressLint("ResourceType")
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
         //Configure all views
         this.configureViewPagerAndTabs();
         this.configureToolbar();

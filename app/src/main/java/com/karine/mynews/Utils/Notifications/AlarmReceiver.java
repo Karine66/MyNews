@@ -24,9 +24,12 @@ public class AlarmReceiver extends BroadcastReceiver {
     private String boxResult;
     private Context context;
 
+
+
     @Override
     public void onReceive(Context context, Intent intent) {
         this.context = context;
+
         loadData();
         executeHttpRequestWithRetrofit();
         if (intent.getAction() != null && context != null) {
@@ -39,7 +42,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             }
         }
         //Trigger the nofitication
-      //  NotificationScheduler.showNotification(context, NotificationsActivity.class, "You have some notifications","show now ?");
+//       NotificationScheduler.showNotification(context, NotificationsActivity.class, "You have some notifications","show now ?");
 
     }
     public void loadData() {
@@ -49,24 +52,29 @@ public class AlarmReceiver extends BroadcastReceiver {
         boxResult = preferences.getString("boxNotif", "defaultValuebox");
         Log.d("searchreceiver", search);
         Log.d("TestNotifBox", boxResult);
+
    }
     private void executeHttpRequestWithRetrofit() {
-//        loadData();
 
             this.mDisposable = NYTStreams.streamFetchSearchWithoutDates(search, boxResult)
                     .subscribeWith(new DisposableObserver<Search>() {
 
+                        private int requestNotif;
+
                         @Override
                         public void onNext(Search response) {
                             NYTResultsAPI nytResultsAPI = NYTResultsAPI.createResultsAPIFromSearchWithoutDates(response);
-                            NotificationScheduler.showNotification(context,NotificationsActivity.class, "You have"+ nytResultsAPI.getNYTArticles().size()+ " "+"notifications", "show now ?");
-                            Log.d("TestOnNextWithoutDates", nytResultsAPI.getNYTArticles().toString());
+
+                            requestNotif = nytResultsAPI.getNYTArticles().size();
+             //              NotificationScheduler.showNotification(context,NotificationsActivity.class, "You have"+ nytResultsAPI.getNYTArticles().size()+ " "+"notifications", "show now ?");
+                            Log.d("TestOnNextNotif", String.valueOf(nytResultsAPI.getNYTArticles().size()));
+
                         }
 
                         @Override
                         public void onComplete() {
-
-                            Log.d("ON_CompleteWithoutDates", "Test onComplete");
+                            NotificationScheduler.showNotification(context,NotificationsActivity.class, "You have"+ requestNotif + " "+"notifications", "show now ?");
+                            Log.d("ON_CompleteNotif", String.valueOf(requestNotif));
                         }
                         @Override
                         public void onError(Throwable e) {

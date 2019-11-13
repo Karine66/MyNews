@@ -1,8 +1,10 @@
 package com.karine.mynews.controllers.activities;
 
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
@@ -14,9 +16,12 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -60,6 +65,8 @@ public class NotificationsActivity extends AppCompatActivity {
     EditText mEtSearch;
     @BindView(R.id.alarm_on)
     EditText mAlarmOn;
+    @BindView(R.id.notifications)
+    RelativeLayout mRelativeLayout;
 
     private String search;
     private String alarm;
@@ -81,7 +88,7 @@ public class NotificationsActivity extends AppCompatActivity {
         this.formatTime(hour, min);
         this.addSwitchButtonListener();
         this.disableSwitchBtn();
-
+        this.hideKeyboard();
     }
 
     /**
@@ -350,6 +357,16 @@ public class NotificationsActivity extends AppCompatActivity {
 
             Log.d("TestBoxNotif", boxResult);
         }
+
+    /**
+     * Hide keyboard on click in layout
+     */
+    public void hideKeyboard() {
+        mRelativeLayout.setOnClickListener(v -> {
+            InputMethodManager inputMethodManager = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        });
+    }
     }
 
 
