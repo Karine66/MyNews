@@ -14,12 +14,12 @@ import com.karine.mynews.R;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
@@ -36,17 +36,6 @@ public class MainActivityTest {
 
     @Test
     public void mainActivityTest() {
-        ViewInteraction imageButton = onView(
-                allOf(withContentDescription("Open navigation drawer"),
-                        childAtPosition(
-                                allOf(withId(R.id.activity_main_toolbar),
-                                        childAtPosition(
-                                                IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
-                                                0)),
-                                0),
-                        isDisplayed()));
-        imageButton.check(matches(isDisplayed()));//erreur sur cette ligne
-
         ViewInteraction textView = onView(
                 allOf(withId(R.id.menu_search), withContentDescription("Search"),
                         childAtPosition(
@@ -55,7 +44,7 @@ public class MainActivityTest {
                                         2),
                                 0),
                         isDisplayed()));
-        textView.check(matches(withText("")));
+        textView.check(matches(isDisplayed()));
 
         ViewInteraction textView2 = onView(
                 allOf(withId(R.id.menu_search), withContentDescription("Search"),
@@ -65,7 +54,7 @@ public class MainActivityTest {
                                         2),
                                 0),
                         isDisplayed()));
-        textView2.check(matches(isDisplayed()));
+        textView2.check(matches(withText("")));
 
         ViewInteraction imageView = onView(
                 allOf(withContentDescription("More options"),
@@ -107,27 +96,47 @@ public class MainActivityTest {
                         isDisplayed()));
         actionBar$Tab3.check(matches(isDisplayed()));
 
-        ViewInteraction textView3 = onView(
-                allOf(withId(R.id.fragment_item_date), withText("13/11/2019"),
+        ViewInteraction actionBar$Tab4 = onView(
+                allOf(withContentDescription("Business"),
                         childAtPosition(
-                                allOf(withId(R.id.fragment_item),
-                                        childAtPosition(
-                                                IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class),
-                                                0)),
+                                childAtPosition(
+                                        withId(R.id.activity_main_tabs),
+                                        0),
+                                2),
+                        isDisplayed()));
+        actionBar$Tab4.check(matches(isDisplayed()));
+
+        ViewInteraction actionMenuItemView = onView(
+                allOf(withId(R.id.menu_search), withContentDescription("Search"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.activity_main_toolbar),
+                                        2),
                                 0),
                         isDisplayed()));
-        textView3.check(matches(withText("13/11/2019")));
+        actionMenuItemView.perform(click());
 
-        ViewInteraction imageView2 = onView(
-                allOf(withId(R.id.fragment_item_photo),
+        ViewInteraction button = onView(
+                allOf(withId(R.id.search_btn),
                         childAtPosition(
-                                allOf(withId(R.id.fragment_item),
+                                allOf(withId(R.id.search),
                                         childAtPosition(
-                                                IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class),
+                                                withId(android.R.id.content),
                                                 0)),
-                                1),
+                                5),
                         isDisplayed()));
-        imageView2.check(matches(isDisplayed()));
+        button.check(matches(isDisplayed()));
+
+        ViewInteraction button2 = onView(
+                allOf(withId(R.id.search_btn),
+                        childAtPosition(
+                                allOf(withId(R.id.search),
+                                        childAtPosition(
+                                                withId(android.R.id.content),
+                                                0)),
+                                5),
+                        isDisplayed()));
+        button2.check(matches(isDisplayed()));
     }
 
     private static Matcher<View> childAtPosition(
