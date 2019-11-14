@@ -47,10 +47,11 @@ public class AlarmReceiver extends BroadcastReceiver {
                 return;
             }
         }
-        //Trigger the nofitication
-//       NotificationScheduler.showNotification(context, NotificationsActivity.class, "You have some notifications","show now ?");
-
     }
+
+    /**
+     * Retrieve data for httpRequest
+     */
     public void loadData() {
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -71,14 +72,14 @@ public class AlarmReceiver extends BroadcastReceiver {
 
                         @Override
                         public void onNext(Search response) {
-                            NYTResultsAPI nytResultsAPI = NYTResultsAPI.createResultsAPIFromSearch(response);
+                            NYTResultsAPI nytResultsAPI = NYTResultsAPI.createResultsAPIFromSearchWithoutDates(response);
                             requestNotif = nytResultsAPI.getNYTArticles().size();
                             Log.d("TestOnNextNotif", String.valueOf(nytResultsAPI.getNYTArticles().size()));
                         }
 
                         @Override
                         public void onComplete() {
-                            NotificationScheduler.showNotification(context,NotificationsActivity.class, "You have"+ requestNotif + " "+"notifications", "show now ?");
+                            NotificationScheduler.showNotification(context, NotificationsActivity.class,"You have"+ requestNotif + " "+"notifications", "show now ?");
                             Log.d("ON_CompleteNotif", String.valueOf(requestNotif));
                         }
                         @Override
@@ -88,7 +89,11 @@ public class AlarmReceiver extends BroadcastReceiver {
                     });
         }
 
-        public void datesForNotif() {
+    /**
+     * dates for search in notifications from yesterday to today
+     */
+    public void datesForNotif() {
+
             Date yesterday = new Date(System.currentTimeMillis() - (1000 * 60 * 60 * 24));
             Date today = new Date(System.currentTimeMillis());
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
