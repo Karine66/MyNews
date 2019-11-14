@@ -12,6 +12,9 @@ import com.karine.mynews.controllers.activities.NotificationsActivity;
 import com.karine.mynews.models.NYTResultsAPI;
 import com.karine.mynews.models.SearchAPI.Search;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import io.reactivex.observers.DisposableObserver;
 
 /**
@@ -23,7 +26,8 @@ public class AlarmReceiver extends BroadcastReceiver {
     private String search;
     private String boxResult;
     private Context context;
-
+    private String dateBegin;
+    private String dateEnd;
 
 
     @Override
@@ -32,6 +36,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         loadData();
         executeHttpRequestWithRetrofit();
+        datesForNotif();
+
         if (intent.getAction() != null && context != null) {
             if (intent.getAction().equalsIgnoreCase(Intent.ACTION_BOOT_COMPLETED)) {
 
@@ -50,25 +56,24 @@ public class AlarmReceiver extends BroadcastReceiver {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         search = preferences.getString("searchNotif", "defaultValueSearchNotif");
         boxResult = preferences.getString("boxNotif", "defaultValuebox");
+        dateBegin = preferences.getString("dateBegin", "defaultdateBeginNotif");
+        dateEnd = preferences.getString("dateEnd","defaultValuedateEndNotif");
         Log.d("searchreceiver", search);
         Log.d("TestNotifBox", boxResult);
 
    }
     private void executeHttpRequestWithRetrofit() {
 
-            this.mDisposable = NYTStreams.streamFetchSearchWithoutDates(search, boxResult)
-                    .subscribeWith(new DisposableObserver<Search>() {
+        this.mDisposable = NYTStreams.streamFetchSearch(search, boxResult , dateBegin, dateEnd)
+                .subscribeWith(new DisposableObserver<Search>() {
 
                         private int requestNotif;
 
                         @Override
                         public void onNext(Search response) {
-                            NYTResultsAPI nytResultsAPI = NYTResultsAPI.createResultsAPIFromSearchWithoutDates(response);
-
+                            NYTResultsAPI nytResultsAPI = NYTResultsAPI.createResultsAPIFromSearch(response);
                             requestNotif = nytResultsAPI.getNYTArticles().size();
-             //              NotificationScheduler.showNotification(context,NotificationsActivity.class, "You have"+ nytResultsAPI.getNYTArticles().size()+ " "+"notifications", "show now ?");
                             Log.d("TestOnNextNotif", String.valueOf(nytResultsAPI.getNYTArticles().size()));
-
                         }
 
                         @Override
@@ -78,9 +83,25 @@ public class AlarmReceiver extends BroadcastReceiver {
                         }
                         @Override
                         public void onError(Throwable e) {
-                            Log.e("onErrorWithoutDates", Log.getStackTraceString(e));
+                            Log.e("onErrorNotif", Log.getStackTraceString(e));
                         }
                     });
+        }
+
+        public void datesForNotif() {
+            Date yesterday = new Date(System.currentTimeMillis() - (1000 * 60 * 60 * 24));
+            Date today = new Date(System.currentTimeMillis());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+            String dateBegin = dateFormat.format(yesterday);
+            String dateEnd = dateFormat.format(today);
+            Log.d("TestdateBeginForNotif", dateBegin);
+            Log.d("TestdateEndForNotif", dateEnd);
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+            SharedPreferences.Editor edit = preferences.edit();
+            edit.putString("dateBegin", dateBegin);
+            edit.putString("dateEnd", dateEnd);
+            edit.apply();
+
         }
     }
 

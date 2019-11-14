@@ -139,7 +139,7 @@ public class SearchResultsFragment extends Fragment {
                         public void onNext(Search response) {
                             NYTResultsAPI nytResultsAPI = NYTResultsAPI.createResultsAPIFromSearch(response);
                             updateUI(nytResultsAPI);
-                            Log.d("TestOnNextSearch",nytResultsAPI.getNYTArticles().toString());
+                            Log.d("TestOnNextSearch", String.valueOf(nytResultsAPI.getNYTArticles().size()));
 
                         }
                         @Override
