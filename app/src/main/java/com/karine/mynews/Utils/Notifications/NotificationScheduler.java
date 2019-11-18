@@ -21,11 +21,10 @@ import java.util.Calendar;
 
 import static android.content.Context.ALARM_SERVICE;
 
-/**
- * Created by <Karine> on <DATE-DU-JOUR>.
- */
 public class NotificationScheduler {
-
+    /**
+     * Declarations
+     */
     public static final int DAILY_REMINDER_REQUEST_CODE = 100;
     private static final String NOTIFICATION_TAG = "MyNews";
     private static final int NOTIF_ID = 200;
@@ -92,7 +91,7 @@ public class NotificationScheduler {
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        //For API26 and more
+        //For API 26 and more
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence channelName = "Notif channel";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;

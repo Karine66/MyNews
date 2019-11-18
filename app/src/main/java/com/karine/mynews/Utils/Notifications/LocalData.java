@@ -3,13 +3,13 @@ package com.karine.mynews.Utils.Notifications;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-/**
- * Created by <Karine> on <DATE-DU-JOUR>.
- */
+
 public class LocalData {
 
     private static  String APP_SHARED_PREFS = "notifPref";
-
+    /**
+     * Declarations
+     */
     private SharedPreferences appSharedPrefs;
     private SharedPreferences.Editor prefsEditor;
 
@@ -22,8 +22,11 @@ public class LocalData {
         this.appSharedPrefs = context.getSharedPreferences(APP_SHARED_PREFS, context.MODE_PRIVATE);
         this.prefsEditor = appSharedPrefs.edit();
     }
-    //Settings Page set reminder
 
+    /**
+     * Settings Page set reminder
+     * @return
+     */
     public boolean getReminderStatus() {
         return appSharedPrefs.getBoolean(reminderStatus, false);
     }
@@ -32,7 +35,11 @@ public class LocalData {
         prefsEditor.putBoolean(reminderStatus, status);
         prefsEditor.apply();
     }
-    //Settings Page reminder Time (Hour)
+
+    /**
+     * Settings Page reminder Time (Hour)
+     * @return
+     */
     public int getHour() {
         return appSharedPrefs.getInt(hour, 20);
     }
@@ -40,7 +47,11 @@ public class LocalData {
         prefsEditor.putInt(hour,h);
         prefsEditor.apply();
     }
-    //Settings Page Reminder Time (minutes)
+
+    /**
+     * Settings Page Reminder Time (minutes)
+     * @return
+     */
     public int getMin() {
         return appSharedPrefs.getInt(min,0);
     }

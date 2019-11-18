@@ -10,31 +10,37 @@ import com.bumptech.glide.RequestManager;
 import com.karine.mynews.R;
 import com.karine.mynews.models.NYTArticle;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
-
-/**
- * Created by <Karine> on <DATE-DU-JOUR>.
- */
-public  class ArticlesAdapter extends RecyclerView.Adapter<ArticlesViewHolder> {
-
+public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesViewHolder> {
+    /**
+     * Declarations
+     */
     //For Data
-    private ArrayList <NYTArticle>mArticles;
-
+    private ArrayList<NYTArticle> mArticles;
     //Declaring a Glide object
     private RequestManager glide;
 
-
-
-    //Constructor
-    public ArticlesAdapter(ArrayList <NYTArticle> mArticles, RequestManager glide) {
+    /**
+     * Constructor
+     *
+     * @param mArticles
+     * @param glide
+     */
+    public ArticlesAdapter(ArrayList<NYTArticle> mArticles, RequestManager glide) {
 
         this.mArticles = mArticles;
         this.glide = glide;
     }
-    //Create viewholder
+
+    /**
+     * Create viewHolder
+     *
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @Override
     public ArticlesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
@@ -44,24 +50,35 @@ public  class ArticlesAdapter extends RecyclerView.Adapter<ArticlesViewHolder> {
         return new ArticlesViewHolder(view);
     }
 
-    //Update view holder
+    /**
+     * Update viewHolder
+     *
+     * @param viewHolder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(ArticlesViewHolder viewHolder, int position) {
-        viewHolder.updateWithArticles((NYTArticle) this.mArticles.get(position), this.glide);
-
+        viewHolder.updateWithArticles(this.mArticles.get(position), this.glide);
     }
 
-
+    /**
+     * For return articles
+     *
+     * @return
+     */
     @Override
     public int getItemCount() {
         return this.mArticles.size();
     }
 
-    public NYTArticle getUrlArticles (int position) {
+    /**
+     * For return article in webview
+     *
+     * @param position
+     * @return
+     */
+    public NYTArticle getUrlArticles(int position) {
         List<NYTArticle> articles = mArticles;
         return articles.get(position);
-
     }
-
-
 }

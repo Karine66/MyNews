@@ -17,11 +17,7 @@ public class NYTArticle {
     private String mTitle;
     private String mUrl;
     private String mMultimediaURL;
-    //For search
-    private String mPubDate;
-    private String mSectionName;
-    private List mMultimedia;
-    private String mWebUrl;
+
 
 
 

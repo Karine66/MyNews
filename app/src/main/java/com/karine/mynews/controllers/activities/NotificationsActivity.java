@@ -4,7 +4,6 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
@@ -20,7 +19,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TimePicker;
@@ -83,9 +81,9 @@ public class NotificationsActivity extends AppCompatActivity {
         mSwitch.setChecked((localData.getReminderStatus()));
 
         this.configureToolbar();
+        this.formatTime(hour, min);
         this.retrieveData();
         this.checkboxChecked();
-        this.formatTime(hour, min);
         this.addSwitchButtonListener();
         this.disableSwitchBtn();
         this.hideKeyboard();
@@ -146,19 +144,22 @@ public class NotificationsActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 saveDataSearch();
                 testCheckBox();
-                if (isChecked) {
-                 if (validateSearch() && (noCheckboxChecked())) {
+
+                 if ((isChecked) &&(!validateSearch()) && (noCheckboxChecked())) {
                      showTimePickerDialog(localData.getHour(), localData.getMin());
                      localData.setReminderStatus(true);
                     NotificationScheduler.setReminder(NotificationsActivity.this, AlarmReceiver.class, localData.getHour(), localData.getMin());
+
                 } else {
+
                     localData.setReminderStatus(false);
                     NotificationScheduler.cancelReminder(NotificationsActivity.this, AlarmReceiver.class);
 
+
                 }
             }
-        }
-    });
+        });
+
     }
 
     /**
@@ -175,7 +176,10 @@ public class NotificationsActivity extends AppCompatActivity {
 
         }
     }
-        //for disable switch button for modification
+
+    /**
+     * for disable switch button for modifications
+     */
         public void disableSwitchBtn () {
             mEtSearch.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -212,7 +216,6 @@ public class NotificationsActivity extends AppCompatActivity {
                     Log.d("TestHour", "onTimeSet: hour" + hour);
                     Log.d("TestMinute", "onTimeSet: min" + min);
 
-                    Toast.makeText(getApplicationContext(), "Alarm is on :" + hour + "h" + min + "mn", Toast.LENGTH_SHORT).show();
                     localData.setHour(hour);
                     localData.setMin(min);
                     formatTime(localData.getHour(), localData.getMin());

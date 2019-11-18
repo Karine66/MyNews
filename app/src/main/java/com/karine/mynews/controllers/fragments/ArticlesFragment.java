@@ -15,15 +15,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.karine.mynews.R;
-
 import com.karine.mynews.Utils.ItemClickSupport;
 import com.karine.mynews.Utils.NYTStreams;
-
 import com.karine.mynews.controllers.activities.WebViewActivity;
 import com.karine.mynews.models.MostPopularAPI.MostPopular;
 import com.karine.mynews.models.NYTArticle;
 import com.karine.mynews.models.NYTResultsAPI;
-
 import com.karine.mynews.models.TopStoriesAPI.TopStories;
 import com.karine.mynews.views.ArticlesAdapter;
 
@@ -40,33 +37,39 @@ import io.reactivex.observers.DisposableObserver;
  */
 public class ArticlesFragment extends Fragment {
 
-    //declarations
+    public static final String URL = "url";
+    /**
+     * Declarations
+     */
     @BindView(R.id.fragment_rvArticles)
     RecyclerView mRecyclerView;
-
     @BindView(R.id.fragment_tvArticles)
     TextView mTextView;
-
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout mSwipeRefreshLayout;
-
-    public static final String URL = "url";
-
-    //Declare top stories et Adapter
-    private ArrayList <NYTArticle>mArticles;
-
+    /**
+     * Declare List NYTArticles et Adapter
+     */
+    private ArrayList<NYTArticle> mArticles;
     private ArticlesAdapter mAdapter;
 
-    //For Data
+    /**
+     * For Data
+     */
     private Disposable mDisposable;
     private int position;
 
 
-
     public ArticlesFragment() {
+        // Required empty public constructor
     }
 
-    //viewPager position and display informations
+    /**
+     * viewPager position and display informations
+     *
+     * @param position
+     * @return
+     */
     public static ArticlesFragment newInstance(int position) {
         ArticlesFragment fragment = new ArticlesFragment();
         Bundle bundle = new Bundle();
@@ -89,15 +92,19 @@ public class ArticlesFragment extends Fragment {
         return view;
     }
 
-    //Dispose subscription
+    /**
+     * Dispose subscription
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();
         this.disposeWhenDestroy();
     }
 
-    //Configuration Recycler View
-    //Configure RecyclerView, Adapter, LayoutManager & glue it
+    /**
+     * Configuration RecyclerView
+     * Configure RecyclerView, Adapter, LayoutManager & glue it
+     */
     private void configureRecyclerView() {
         //Reset List
         this.mArticles = new ArrayList<>();
@@ -109,28 +116,34 @@ public class ArticlesFragment extends Fragment {
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
-    //Configure item click on RecyclerView
+    /**
+     * Configure item click on RecyclerView
+     */
     private void configureOnClickRecyclerView() {
-       ItemClickSupport.addTo(mRecyclerView, R.layout.fragment_item)
-            .setOnItemClickListener((recyclerView, position, v) -> {
+        ItemClickSupport.addTo(mRecyclerView, R.layout.fragment_item)
+                .setOnItemClickListener((recyclerView, position, v) -> {
 
-            Log.d("Item", "Position : " + position);
+                    Log.d("Item", "Position : " + position);
 
-             NYTArticle mAdapterUrlArticles= mAdapter.getUrlArticles(position);
-             Intent intent = new Intent(getActivity(),WebViewActivity.class);
-             intent.putExtra(URL, mAdapterUrlArticles.getUrl());
-             startActivity(intent);
+                    NYTArticle mAdapterUrlArticles = mAdapter.getUrlArticles(position);
+                    Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                    intent.putExtra(URL, mAdapterUrlArticles.getUrl());
+                    startActivity(intent);
 
-            });
-        }
+                });
+    }
 
-
+    /**
+     * Configurer SwipeRefresh
+     */
     private void configureSwipeRefreshLayout() {
         mSwipeRefreshLayout.setOnRefreshListener(this::executeHttpRequestWithRetrofit);
     }
 
-    //    HTTP RX Java
-//     Execute Stream
+    /**
+     * HTTP RX JAVA
+     * Execute stream
+     */
     private void executeHttpRequestWithRetrofit() {
 
         switch (position) {
@@ -140,13 +153,16 @@ public class ArticlesFragment extends Fragment {
                 break;
             case 1:
                 mostPopular();
-               break;
+                break;
             case 2:
                 business();
                 break;
         }
     }
 
+    /**
+     * Execute stream by category
+     */
     private void topstoriesHome() {
         this.mDisposable = NYTStreams.streamFetchTopStories("home")
                 .subscribeWith(new DisposableObserver<TopStories>() {
@@ -170,27 +186,27 @@ public class ArticlesFragment extends Fragment {
                 });
     }
 
-        private void mostPopular () {
-            this.mDisposable = NYTStreams.streamFetchMostPopular("viewed")
-                    .subscribeWith(new DisposableObserver<MostPopular>() {
-                        @Override
-                        public void onNext(MostPopular section) {
-                            NYTResultsAPI nytResultsAPI = NYTResultsAPI.createResultsApiFromMostPopular(section);
-                            updateUI(nytResultsAPI);
-                        }
+    private void mostPopular() {
+        this.mDisposable = NYTStreams.streamFetchMostPopular("viewed")
+                .subscribeWith(new DisposableObserver<MostPopular>() {
+                    @Override
+                    public void onNext(MostPopular section) {
+                        NYTResultsAPI nytResultsAPI = NYTResultsAPI.createResultsApiFromMostPopular(section);
+                        updateUI(nytResultsAPI);
+                    }
 
-                        @Override
-                        public void onComplete() {
+                    @Override
+                    public void onComplete() {
 
-                            Log.e("ON_Complete", "Test onComplete");
-                        }
+                        Log.e("ON_Complete", "Test onComplete");
+                    }
 
-                        @Override
-                        public void onError(Throwable e) {
-                            Log.e("onErrorMP", Log.getStackTraceString(e));
-                        }
-                    });
-        }
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("onErrorMP", Log.getStackTraceString(e));
+                    }
+                });
+    }
 
     private void business() {
 
@@ -215,29 +231,41 @@ public class ArticlesFragment extends Fragment {
                 });
     }
 
+    /**
+     * updte UI with articles list
+     *
+     * @param nytResultsAPI
+     */
     public void updateUI(NYTResultsAPI nytResultsAPI) {
 
         mSwipeRefreshLayout.setRefreshing(false);
 
-                mArticles.clear();
-                mArticles.addAll(nytResultsAPI.getNYTArticles());
-
-               sortArticles(mArticles);
+        mArticles.clear();
+        mArticles.addAll(nytResultsAPI.getNYTArticles());
+        sortArticles(mArticles);
 
         mAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Dispose subscription
+     */
     private void disposeWhenDestroy() {
         if (this.mDisposable != null && !this.mDisposable.isDisposed())
             this.mDisposable.dispose();
     }
-//    Sort Articles in RecyclerView
-    public void sortArticles(ArrayList <NYTArticle> mArticles) {
+
+    /**
+     * Sort Articles in RecyclerView by descending order
+     *
+     * @param mArticles
+     */
+    public void sortArticles(ArrayList<NYTArticle> mArticles) {
         Collections.sort(mArticles, (o1, o2) -> o2.getPublishedDate().compareTo(o1.getPublishedDate()));
     }
 
 
-    }
+}
 
 
 
