@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.karine.mynews.R;
@@ -127,16 +128,22 @@ public class SearchResultsFragment extends Fragment {
             this.mDisposable = NYTStreams.streamFetchSearch(search, boxResult, beginDate, endDate)
                     .subscribeWith(new DisposableObserver<Search>() {
 
+                        private int noSearchResult;
+
                         @Override
                         public void onNext(Search response) {
                             NYTResultsAPI nytResultsAPI = NYTResultsAPI.createResultsAPIFromSearch(response);
                             updateUI(nytResultsAPI);
+                            noSearchResult = nytResultsAPI.getNYTArticles().size();
                             Log.d("TestOnNextSearch", String.valueOf(nytResultsAPI.getNYTArticles().size()));
 
                         }
 
                         @Override
                         public void onComplete() {
+                         if(noSearchResult == 0) {
+                             Toast.makeText(getContext(),"No result found, please retry with another search",Toast.LENGTH_SHORT).show();
+                         }
                             Log.d("ON_Complete", "Test onComplete");
                         }
 
@@ -149,15 +156,22 @@ public class SearchResultsFragment extends Fragment {
             this.mDisposable = NYTStreams.streamFetchSearchWithoutDates(search, boxResult)
                     .subscribeWith(new DisposableObserver<Search>() {
 
+                        private int noSearchResultWithoutDates;
+
                         @Override
                         public void onNext(Search response) {
                             NYTResultsAPI nytResultsAPI = NYTResultsAPI.createResultsAPIFromSearchWithoutDates(response);
                             updateUI(nytResultsAPI);
+                            noSearchResultWithoutDates = nytResultsAPI.getNYTArticles().size();
+
                             Log.d("TestOnNextWithoutDates", nytResultsAPI.getNYTArticles().toString());
                         }
 
                         @Override
                         public void onComplete() {
+                            if(noSearchResultWithoutDates == 0) {
+                                Toast.makeText(getContext(),"No result found, please retry with another search",Toast.LENGTH_SHORT).show();
+                            }
                             Log.d("ON_CompleteWithoutDates", "Test onComplete");
                         }
 

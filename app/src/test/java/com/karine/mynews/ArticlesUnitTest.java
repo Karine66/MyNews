@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class ArticlesTest {
+public class ArticlesUnitTest {
 
     private String section;
     private String title;
@@ -37,22 +37,22 @@ public class ArticlesTest {
     }
 
     @Test
-    public void setSection() {
-        nytArticle.setSection(section);
+    public void testSection() {
+       nytArticle.setSection(section);
         assertEquals(section,nytArticle.getSection());
     }
     @Test
-    public void setTitle() {
+    public void testTitle() {
         nytArticle.setTitle(title);
         assertEquals(title, nytArticle.getTitle());
     }
     @Test
-    public void setDate() {
+    public void testDate() {
         nytArticle.setPublishedDate(date);
         assertEquals(date, nytArticle.getPublishedDate());
     }
     @Test
-    public void setUrl() {
+    public void testUrl() {
         nytArticle.setUrl(url);
         assertEquals(url, nytArticle.getUrl());
     }
@@ -61,25 +61,4 @@ public class ArticlesTest {
         nytArticle.setMultimediaURL(multimediaUrl);
         assertEquals(multimediaUrl, nytArticle.getMultimediaURL());
     }
-
-//    @Test
-//    public void getSection() {
-//        assertEquals(section,nytArticle.getSection());
-//    }
-//    @Test
-//    public void getTitle() {
-//        assertEquals(title, nytArticle.getTitle());
-//    }
-//    @Test
-//    public void getDate() {
-//        assertEquals(date, nytArticle.getPublishedDate());
-//    }
-//    @Test
-//    public void getUrl() {
-//        assertEquals(url, nytArticle.getUrl());
-//    }
-//    @Test
-//    public void getMultimediaUrl() {
-//        assertEquals(date, nytArticle.getMultimediaURL());
-//    }
 }
