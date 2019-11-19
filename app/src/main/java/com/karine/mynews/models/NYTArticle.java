@@ -1,9 +1,5 @@
 package com.karine.mynews.models;
 
-import com.karine.mynews.models.SearchAPI.Multimedium;
-import com.karine.mynews.models.SearchAPI.Response;
-
-import java.util.List;
 
 /**
  * Created by <Karine> on <DATE-DU-JOUR>.

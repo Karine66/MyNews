@@ -145,13 +145,14 @@ public class NotificationsActivity extends AppCompatActivity {
                 saveDataSearch();
                 testCheckBox();
 
-                 if ((isChecked) &&(!validateSearch()) && (noCheckboxChecked())) {
+                 if ((isChecked) &&(validateSearch()) && (noCheckboxChecked())) {
+                     mSwitch.setChecked(true);
                      showTimePickerDialog(localData.getHour(), localData.getMin());
                      localData.setReminderStatus(true);
                     NotificationScheduler.setReminder(NotificationsActivity.this, AlarmReceiver.class, localData.getHour(), localData.getMin());
 
                 } else {
-
+                    mSwitch.setChecked(false);
                     localData.setReminderStatus(false);
                     NotificationScheduler.cancelReminder(NotificationsActivity.this, AlarmReceiver.class);
 
