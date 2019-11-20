@@ -1,10 +1,14 @@
 package com.karine.mynews;
 
 import com.karine.mynews.models.NYTArticle;
+import com.karine.mynews.models.NYTResultsAPI;
+import com.karine.mynews.models.TopStoriesAPI.Result;
+import com.karine.mynews.models.TopStoriesAPI.TopStories;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.karine.mynews.models.NYTResultsAPI.createNYTResultsApiFromTopStories;
 import static org.junit.Assert.*;
 
 /**
@@ -20,7 +24,7 @@ public class ArticlesUnitTest {
     private String url;
     private String multimediaUrl;
     private NYTArticle nytArticle;
-
+    private TopStories topStories;
 
 
     @Before
@@ -61,4 +65,30 @@ public class ArticlesUnitTest {
         nytArticle.setMultimediaURL(multimediaUrl);
         assertEquals(multimediaUrl, nytArticle.getMultimediaURL());
     }
+
+    @Test
+    public void  createNYTResultsApiFromTopStoriesForTest() {
+
+        nytArticle.setSection(section);
+        nytArticle.setTitle(title);
+        nytArticle.setPublishedDate(date);
+        nytArticle.setUrl(url);
+
+        Result articlesTopStories= new Result();
+
+        // articlesTopStories.setMultimedia(multimediaUrl);
+        articlesTopStories.setPublishedDate( "2019-11-19");
+        articlesTopStories.setSection( "Business");
+        articlesTopStories.setTitle("Trump is still here");
+        articlesTopStories.setUrl("https://api.nytimes.com/2019/11/19/business/Trump-is-still-here.html ");
+
+         NYTArticle articlesFromTopStories =createNYTResultsApiFromTopStories(topStories);
+
+        assertEquals(nytArticle.getSection(), articlesFromTopStories.getSection());
+        assertEquals(nytArticle.getTitle(), articlesFromTopStories.getTitle());
+        assertEquals(nytArticle.getPublishedDate(), articlesFromTopStories.getPublishedDate());
+        assertEquals(nytArticle.getUrl(), articlesFromTopStories.getUrl());
+
+    }
+
 }
