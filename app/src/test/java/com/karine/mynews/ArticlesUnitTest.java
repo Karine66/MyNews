@@ -82,7 +82,7 @@ public class ArticlesUnitTest {
         articlesTopStories.setTitle("Trump is still here");
         articlesTopStories.setUrl("https://api.nytimes.com/2019/11/19/business/Trump-is-still-here.html ");
 
-//        // NYTArticle articlesFromTopStories =createNYTResultsApiFromTopStories(topStories);
+        // NYTArticle articlesFromTopStories =createNYTResultsApiFromTopStories(topStories);
 //
 //        assertEquals(nytArticle.getSection(), articlesFromTopStories.getSection());
 //        assertEquals(nytArticle.getTitle(), articlesFromTopStories.getTitle());
