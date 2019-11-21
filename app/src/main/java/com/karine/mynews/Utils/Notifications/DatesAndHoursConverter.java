@@ -1,11 +1,7 @@
 package com.karine.mynews.Utils.Notifications;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.util.Log;
 
-import com.karine.mynews.controllers.activities.NotificationsActivity;
+import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -63,10 +59,9 @@ public class DatesAndHoursConverter {
             e.printStackTrace();
         }
 
-
         alarm = newHourString;
 
-        Log.d("TestTime", newHourString);
+
         return newHourString;
     }
 
