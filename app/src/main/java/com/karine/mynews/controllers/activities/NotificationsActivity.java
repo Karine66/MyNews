@@ -26,12 +26,9 @@ import android.widget.Toast;
 
 import com.karine.mynews.R;
 import com.karine.mynews.Utils.Notifications.AlarmReceiver;
+import com.karine.mynews.Utils.Notifications.DatesAndHoursConverter;
 import com.karine.mynews.Utils.Notifications.LocalData;
 import com.karine.mynews.Utils.Notifications.NotificationScheduler;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -81,7 +78,7 @@ public class NotificationsActivity extends AppCompatActivity {
         mSwitch.setChecked((localData.getReminderStatus()));
 
         this.configureToolbar();
-        this.formatTime(hour, min);
+        DatesAndHoursConverter.formatTime(hour,min);
         this.retrieveData();
         this.checkboxChecked();
         this.addSwitchButtonListener();
@@ -219,8 +216,8 @@ public class NotificationsActivity extends AppCompatActivity {
 
                     localData.setHour(hour);
                     localData.setMin(min);
-                    formatTime(localData.getHour(), localData.getMin());
-                     mAlarmOn.setText(alarm);
+                    DatesAndHoursConverter.formatTime(localData.getHour(), localData.getMin());
+                     mAlarmOn.setText(DatesAndHoursConverter.formatTime(h, m));
                     NotificationScheduler.setReminder(NotificationsActivity.this, AlarmReceiver.class, localData.getHour(), localData.getMin());
                 }
             }, h, m, true);
@@ -316,33 +313,33 @@ public class NotificationsActivity extends AppCompatActivity {
             }
         }
 
-        /**
-         * For format Time in date field
-         * @param h
-         * @param m
-         * @return
-         */
-        public String formatTime ( int h, int m){
-
-            final String OLD_FORMAT = "HH:mm";
-            final String NEW_FORMAT = "HH 'heures' mm 'mn'";
-
-            String oldHourString = h + ":" + m;
-            String newHourString = "";
-
-            try {
-                SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
-                Date d = sdf.parse(oldHourString);
-                sdf.applyPattern(NEW_FORMAT);
-                newHourString = sdf.format(d);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            alarm = newHourString;
-
-            Log.d("TestTime", newHourString);
-            return newHourString;
-        }
+//        /**
+//         * For format Time in date field
+//         * @param h
+//         * @param m
+//         * @return
+//         */
+//        public String formatTime ( int h, int m){
+//
+//            final String OLD_FORMAT = "HH:mm";
+//            final String NEW_FORMAT = "HH 'heures' mm 'mn'";
+//
+//            String oldHourString = h + ":" + m;
+//            String newHourString = "";
+//
+//            try {
+//                SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
+//                Date d = sdf.parse(oldHourString);
+//                sdf.applyPattern(NEW_FORMAT);
+//                newHourString = sdf.format(d);
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+//            alarm = newHourString;
+//
+//            Log.d("TestTime", newHourString);
+//            return newHourString;
+//        }
 
         /**
          * For retrieve sharePreferences when open notifications page
@@ -353,7 +350,7 @@ public class NotificationsActivity extends AppCompatActivity {
             search = preferences.getString("searchNotif", "defaultValueSearchNotif");
             mEtSearch.setText(search);
             //For return date alarm
-            mAlarmOn.setText(alarm);
+            mAlarmOn.setText(DatesAndHoursConverter.formatTime(hour, min));
             //For return checkbox
             boxResult = preferences.getString("boxNotif", "defaultValuebox");
 

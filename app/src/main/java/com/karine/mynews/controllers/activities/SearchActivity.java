@@ -27,6 +27,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.karine.mynews.R;
+import com.karine.mynews.Utils.Notifications.DatesAndHoursConverter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -83,6 +84,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
     private String resultBox;
     private Date fromDate;
     private Date toDate;
+    private String dateToFormat;
 
 
     @Override
@@ -141,8 +143,8 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Editor editor = sharedPref.edit();
         //For save dates
-        editor.putString("begindate", dateConvertForSearch(mBeginDate.getText().toString()));
-        editor.putString("enddate", dateConvertForSearch(mEndDate.getText().toString()));
+        editor.putString("begindate", DatesAndHoursConverter.dateConvertForSearch(mBeginDate.getText().toString()));
+        editor.putString("enddate", DatesAndHoursConverter.dateConvertForSearch(mEndDate.getText().toString()));
         //For save search query
         editor.putString("search", mInputSearch.getEditText().getText().toString());
         editor.apply();
@@ -312,26 +314,26 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         }
     }
 
-    /**
-     * Convert dates for search (nyt requires)
-     *
-     * @param dateToFormat
-     * @return
-     */
-    public String dateConvertForSearch(String dateToFormat) {
-
-        try {
-            if (dateToFormat != null && !dateToFormat.isEmpty()) {
-                SimpleDateFormat sdf = null;
-                Date date = new SimpleDateFormat("dd/MM/yyyy").parse(dateToFormat);
-                sdf = new SimpleDateFormat("yyyyMMdd");
-                return sdf.format(date);
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
+//    /**
+//     * Convert dates for search (nyt requires)
+//     *
+//     * @param dateToFormat
+//     * @return
+//     */
+//    public String dateConvertForSearch(String dateToFormat) {
+//
+//        try {
+//            if (dateToFormat != null && !dateToFormat.isEmpty()) {
+//                SimpleDateFormat sdf = null;
+//                Date date = new SimpleDateFormat("dd/MM/yyyy").parse(dateToFormat);
+//                sdf = new SimpleDateFormat("yyyyMMdd");
+//                return sdf.format(date);
+//            }
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        return "";
+//    }
 
     /**
      * Hide keyboard on click in layout
