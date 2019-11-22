@@ -26,14 +26,18 @@ import android.widget.Toast;
 
 import com.karine.mynews.R;
 import com.karine.mynews.Utils.Notifications.AlarmReceiver;
-import com.karine.mynews.Utils.Notifications.DatesAndHoursConverter;
 import com.karine.mynews.Utils.Notifications.LocalData;
 import com.karine.mynews.Utils.Notifications.NotificationScheduler;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.karine.mynews.Utils.Notifications.DatesAndHoursConverter.formatTime;
+
+
+
 public class NotificationsActivity extends AppCompatActivity {
+
 
     LocalData localData;
     int hour, min;
@@ -64,8 +68,10 @@ public class NotificationsActivity extends AppCompatActivity {
     RelativeLayout mRelativeLayout;
 
     private String search;
-    private String alarm;
+    public static String alarm;
     private String boxResult;
+    public String date;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +83,9 @@ public class NotificationsActivity extends AppCompatActivity {
         min = localData.getMin();
         mSwitch.setChecked((localData.getReminderStatus()));
 
+
         this.configureToolbar();
-        DatesAndHoursConverter.formatTime(hour,min);
+        formatTime(hour,min);
         this.retrieveData();
         this.checkboxChecked();
         this.addSwitchButtonListener();
@@ -204,7 +211,7 @@ public class NotificationsActivity extends AppCompatActivity {
          * @param h
          * @param m
          */
-        private void showTimePickerDialog ( int h, int m){
+        public void showTimePickerDialog ( int h, int m){
             LayoutInflater inflater = getLayoutInflater();
             View view = inflater.inflate(R.layout.time_picker_header, null);
 
@@ -216,8 +223,8 @@ public class NotificationsActivity extends AppCompatActivity {
 
                     localData.setHour(hour);
                     localData.setMin(min);
-                    DatesAndHoursConverter.formatTime(localData.getHour(), localData.getMin());
-                     mAlarmOn.setText(DatesAndHoursConverter.formatTime(h, m));
+                    formatTime(localData.getHour(), localData.getMin());
+                     mAlarmOn.setText(alarm);
                     NotificationScheduler.setReminder(NotificationsActivity.this, AlarmReceiver.class, localData.getHour(), localData.getMin());
                 }
             }, h, m, true);
@@ -350,7 +357,7 @@ public class NotificationsActivity extends AppCompatActivity {
             search = preferences.getString("searchNotif", "defaultValueSearchNotif");
             mEtSearch.setText(search);
             //For return date alarm
-            mAlarmOn.setText(DatesAndHoursConverter.formatTime(hour, min));
+            mAlarmOn.setText(alarm);
             //For return checkbox
             boxResult = preferences.getString("boxNotif", "defaultValuebox");
 

@@ -76,18 +76,22 @@ public class ArticlesUnitTest {
 
         Result articlesTopStories= new Result();
 
+
         // articlesTopStories.setMultimedia(multimediaUrl);
         articlesTopStories.setPublishedDate( "2019-11-19");
         articlesTopStories.setSection( "Business");
         articlesTopStories.setTitle("Trump is still here");
         articlesTopStories.setUrl("https://api.nytimes.com/2019/11/19/business/Trump-is-still-here.html ");
 
-        // NYTArticle articlesFromTopStories =createNYTResultsApiFromTopStories(topStories);
-//
-//        assertEquals(nytArticle.getSection(), articlesFromTopStories.getSection());
-//        assertEquals(nytArticle.getTitle(), articlesFromTopStories.getTitle());
-//        assertEquals(nytArticle.getPublishedDate(), articlesFromTopStories.getPublishedDate());
-//        assertEquals(nytArticle.getUrl(), articlesFromTopStories.getUrl());
+       NYTResultsAPI articlesFromTopStories = createNYTResultsApiFromTopStories(topStories);
+
+       topStories.getResults().add(articlesTopStories);
+
+
+        assertEquals(nytArticle.getSection(), articlesFromTopStories.getNYTArticles().get(0));
+        assertEquals(nytArticle.getTitle(), articlesFromTopStories.getNYTArticles().get(0));
+        assertEquals(nytArticle.getPublishedDate(), articlesFromTopStories.getNYTArticles().get(0));
+        assertEquals(nytArticle.getUrl(), articlesFromTopStories.getNYTArticles().get(0));
 
     }
 

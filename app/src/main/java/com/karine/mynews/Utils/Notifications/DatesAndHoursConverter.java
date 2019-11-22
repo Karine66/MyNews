@@ -3,6 +3,8 @@ package com.karine.mynews.Utils.Notifications;
 
 import android.util.Log;
 
+import com.karine.mynews.controllers.activities.NotificationsActivity;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,7 +15,7 @@ import java.util.Date;
 public class DatesAndHoursConverter {
 
 
-    private static String alarm;
+
 
     /**
      * Convert dates for search (nyt requires)
@@ -35,6 +37,9 @@ public class DatesAndHoursConverter {
         }
         return "";
     }
+
+
+
 
     /**
      * For format Time in date field
@@ -59,7 +64,7 @@ public class DatesAndHoursConverter {
             e.printStackTrace();
         }
 
-        alarm = newHourString;
+//            NotificationsActivity.alarm = newHourString;
 
 
         return newHourString;

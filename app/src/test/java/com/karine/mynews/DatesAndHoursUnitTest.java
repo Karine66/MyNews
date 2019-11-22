@@ -18,10 +18,6 @@ import static org.junit.Assert.assertEquals;
  */
 public class DatesAndHoursUnitTest {
 
-
-    private int h;
-    private int m;
-
     @Test
     public void testDateConvertForSearch() {
         String date = "21/11/2019";
