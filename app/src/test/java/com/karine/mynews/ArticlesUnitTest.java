@@ -2,11 +2,15 @@ package com.karine.mynews;
 
 import com.karine.mynews.models.NYTArticle;
 import com.karine.mynews.models.NYTResultsAPI;
+import com.karine.mynews.models.TopStoriesAPI.Multimedium;
 import com.karine.mynews.models.TopStoriesAPI.Result;
 import com.karine.mynews.models.TopStoriesAPI.TopStories;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.karine.mynews.models.NYTResultsAPI.createNYTResultsApiFromTopStories;
 import static org.junit.Assert.*;
@@ -25,6 +29,7 @@ public class ArticlesUnitTest {
     private String multimediaUrl;
     private NYTArticle nytArticle;
     private TopStories topStories;
+    private List<Multimedium> multimediaList;
 
 
     @Before
@@ -66,33 +71,45 @@ public class ArticlesUnitTest {
         assertEquals(multimediaUrl, nytArticle.getMultimediaURL());
     }
 
-//    @Test
-//    public void  createNYTResultsApiFromTopStoriesForTest() {
-//
-//        nytArticle.setSection(section);
-//        nytArticle.setTitle(title);
-//        nytArticle.setPublishedDate(date);
-//        nytArticle.setUrl(url);
-//
-//        Result articlesTopStories= new Result();
-//
-//
-//        // articlesTopStories.setMultimedia(multimediaUrl);
-//        articlesTopStories.setPublishedDate( "2019-11-19");
-//        articlesTopStories.setSection( "Business");
-//        articlesTopStories.setTitle("Trump is still here");
-//        articlesTopStories.setUrl("https://api.nytimes.com/2019/11/19/business/Trump-is-still-here.html ");
+    @Test
+    public void  createNYTResultsApiFromTopStoriesForTest() {
 
-//       NYTResultsAPI articlesFromTopStories = createNYTResultsApiFromTopStories(topStories);
+        nytArticle.setSection(section);
+        nytArticle.setTitle(title);
+        nytArticle.setPublishedDate(date);
+        nytArticle.setUrl(url);
+        nytArticle.setMultimediaURL(multimediaUrl);
 
-//       topStories.getResults().add(articlesTopStories);
-//
-//
-//        assertEquals(nytArticle.getSection(), articlesFromTopStories.getNYTArticles().get(0));
-//        assertEquals(nytArticle.getTitle(), articlesFromTopStories.getNYTArticles().get(0));
-//        assertEquals(nytArticle.getPublishedDate(), articlesFromTopStories.getNYTArticles().get(0));
-//        assertEquals(nytArticle.getUrl(), articlesFromTopStories.getNYTArticles().get(0));
 
-//    }
+        Result articlesTopStories = new Result();
+
+        articlesTopStories.setPublishedDate( "2019-11-19");
+        articlesTopStories.setSection( "Business");
+        articlesTopStories.setTitle("Trump is still here");
+        articlesTopStories.setUrl("https://api.nytimes.com/2019/11/19/business/Trump-is-still-here.html ");
+
+
+
+
+
+
+        List<Multimedium> multimediaList = new ArrayList<>();
+
+
+        List<Result> resultList = new ArrayList<>();
+        resultList.add(articlesTopStories);
+        topStories = new TopStories();
+        topStories.setResults(resultList);
+
+       NYTResultsAPI articlesFromTopStories = createNYTResultsApiFromTopStories(topStories);
+
+
+
+        assertEquals(nytArticle.getSection(), articlesFromTopStories.getNYTArticles().get(0).getSection());
+        assertEquals(nytArticle.getTitle(), articlesFromTopStories.getNYTArticles().get(0).getTitle());
+        assertEquals(nytArticle.getPublishedDate(), articlesFromTopStories.getNYTArticles().get(0).getPublishedDate());
+        assertEquals(nytArticle.getUrl(), articlesFromTopStories.getNYTArticles().get(0).getUrl());
+
+    }
 
 }
