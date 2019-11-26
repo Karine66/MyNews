@@ -13,14 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.karine.mynews.models.NYTResultsAPI.createNYTResultsApiFromTopStories;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class ArticlesUnitTest {
+public class TopStoriesUnitTest {
 
     private String section;
     private String title;
@@ -46,32 +46,7 @@ public class ArticlesUnitTest {
         nytArticle = new NYTArticle(section, title,date,url);
     }
 
-    @Test
-    public void testSection() {
-       nytArticle.setSection(section);
-        assertEquals(section,nytArticle.getSection());
-    }
-    @Test
-    public void testTitle() {
-        nytArticle.setTitle(title);
-        assertEquals(title, nytArticle.getTitle());
-    }
-    @Test
-    public void testDate() {
-        nytArticle.setPublishedDate(date);
-        assertEquals(date, nytArticle.getPublishedDate());
-    }
-    @Test
-    public void testUrl() {
-        nytArticle.setUrl(url);
-        assertEquals(url, nytArticle.getUrl());
-    }
-    @Test
-    public void setMultimediaUrl() {
-        nytArticle.setMultimediaURL(multimediaUrl);
-        assertEquals(multimediaUrl, nytArticle.getMultimediaURL());
-    }
-
+   
     @Test
     public void  createNYTResultsApiFromTopStoriesForTest() {
 

@@ -77,7 +77,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
                     @Override
                     public void onNext(Search response) {
-                        NYTResultsAPI nytResultsAPI = NYTResultsAPI.createResultsAPIFromSearchWithoutDates(response);
+                        NYTResultsAPI nytResultsAPI = NYTResultsAPI.createResultsAPIFromSearch(response);
                         requestNotif = nytResultsAPI.getNYTArticles().size();
                         Log.d("TestOnNextNotif", String.valueOf(nytResultsAPI.getNYTArticles().size()));
                     }
