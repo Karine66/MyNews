@@ -46,7 +46,7 @@ public class TopStoriesUnitTest {
         nytArticle = new NYTArticle(section, title,date,url);
     }
 
-   
+
     @Test
     public void  createNYTResultsApiFromTopStoriesForTest() {
 

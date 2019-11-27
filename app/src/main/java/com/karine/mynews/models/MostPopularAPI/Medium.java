@@ -70,4 +70,5 @@ public class Medium {
         mType = type;
     }
 
+
 }
