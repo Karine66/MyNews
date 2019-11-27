@@ -68,7 +68,7 @@ public class NotificationsActivity extends AppCompatActivity {
     RelativeLayout mRelativeLayout;
 
     private String search;
-    public static String alarm;
+    public String alarm;
     private String boxResult;
     public String date;
 
@@ -83,9 +83,9 @@ public class NotificationsActivity extends AppCompatActivity {
         min = localData.getMin();
         mSwitch.setChecked((localData.getReminderStatus()));
 
-
         this.configureToolbar();
         formatTime(hour,min);
+        alarm = formatTime(hour,min);
         this.retrieveData();
         this.checkboxChecked();
         this.addSwitchButtonListener();

@@ -64,9 +64,6 @@ public class DatesAndHoursConverter {
             e.printStackTrace();
         }
 
-           NotificationsActivity.alarm = newHourString;
-
-
         return newHourString;
     }
 
