@@ -223,7 +223,7 @@ public class NotificationsActivity extends AppCompatActivity {
 
                     localData.setHour(hour);
                     localData.setMin(min);
-                    formatTime(localData.getHour(), localData.getMin());
+                    alarm = formatTime(localData.getHour(), localData.getMin());
                      mAlarmOn.setText(alarm);
                     NotificationScheduler.setReminder(NotificationsActivity.this, AlarmReceiver.class, localData.getHour(), localData.getMin());
                 }

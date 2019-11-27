@@ -51,47 +51,47 @@ public class MostPopularUnitTest {
         nytArticle = new NYTArticle(section, title,date,url);
     }
 
-    //Method test
-//    @Test
-//    public void  createNYTResultsApiFromMostPopularForTest() {
-//
-//        nytArticle.setSection(section);
-//        nytArticle.setTitle(title);
-//        nytArticle.setPublishedDate(date);
-//        nytArticle.setUrl(url);
-//        nytArticle.setMultimediaURL(multimediaUrl);
-//
-//
-//        Result articlesMostPopular = new Result();
-//        List<MediaMetadatum> mediaMetadata = new ArrayList<>();
-////        List <Medium> mediumList = new ArrayList<>();
-//        articlesMostPopular.setPublishedDate( "2019-11-19");
-//        articlesMostPopular.setSection( "Business");
-//        articlesMostPopular.setTitle("Trump is still here");
-//        articlesMostPopular.setUrl("https://api.nytimes.com/2019/11/19/business/Trump-is-still-here.html ");
-//        articlesMostPopular.setMedia(mediaMetadata);
-//
-////        mMedium = new Medium();
-////        mMedium.setMediaMetadata("https://static01.nyt.com/images/2019/11/19/business/trump-thumbStandard.jpg");
-////        mediumList.add(mMedium);
-//
-//        mMediaMetadatum = new MediaMetadatum();
-//        mMediaMetadatum.setUrl("https://static01.nyt.com/images/2019/11/19/business/trump-thumbStandard.jpg");
-//        mediaMetadata.add(mMediaMetadatum);
-//
-//        List<Result> resultListMP = new ArrayList<>();
-//        resultListMP.add(articlesMostPopular);
-//        mMostPopular = new MostPopular();
-//        mMostPopular.setResults(resultListMP);
-//
-//        NYTResultsAPI articlesFromMostPopular = createResultsApiFromMostPopular(mMostPopular);
-//
-//        assertEquals(nytArticle.getSection(), articlesFromMostPopular.getNYTArticles().get(0).getSection());
-//        assertEquals(nytArticle.getTitle(), articlesFromMostPopular.getNYTArticles().get(0).getTitle());
-//        assertEquals(nytArticle.getPublishedDate(), articlesFromMostPopular.getNYTArticles().get(0).getPublishedDate());
-//        assertEquals(nytArticle.getUrl(), articlesFromMostPopular.getNYTArticles().get(0).getUrl());
-//        assertEquals(nytArticle.getMultimediaURL(),articlesFromMostPopular.getNYTArticles().get(0).getMultimediaURL());
-//
-//    }
+
+    @Test
+    public void  createNYTResultsApiFromMostPopularForTest() {
+
+        nytArticle.setSection(section);
+        nytArticle.setTitle(title);
+        nytArticle.setPublishedDate(date);
+        nytArticle.setUrl(url);
+        nytArticle.setMultimediaURL(multimediaUrl);
+
+
+        Result articlesMostPopular = new Result();
+        List<MediaMetadatum> mediaMetadata = new ArrayList<>();
+        List <Medium> mediumList = new ArrayList<>();
+        articlesMostPopular.setPublishedDate( "2019-11-19");
+        articlesMostPopular.setSection( "Business");
+        articlesMostPopular.setTitle("Trump is still here");
+        articlesMostPopular.setUrl("https://api.nytimes.com/2019/11/19/business/Trump-is-still-here.html ");
+        articlesMostPopular.setMedia(mediumList);
+
+        mMedium = new Medium();
+        mMedium.setMediaMetadata(mediaMetadata);
+        mediumList.add(mMedium);
+
+        mMediaMetadatum = new MediaMetadatum();
+        mMediaMetadatum.setUrl("https://static01.nyt.com/images/2019/11/19/business/trump-thumbStandard.jpg");
+        mediaMetadata.add(mMediaMetadatum);
+
+        List<Result> resultListMP = new ArrayList<>();
+        resultListMP.add(articlesMostPopular);
+        mMostPopular = new MostPopular();
+        mMostPopular.setResults(resultListMP);
+
+        NYTResultsAPI articlesFromMostPopular = createResultsApiFromMostPopular(mMostPopular);
+
+        assertEquals(nytArticle.getSection(), articlesFromMostPopular.getNYTArticles().get(0).getSection());
+        assertEquals(nytArticle.getTitle(), articlesFromMostPopular.getNYTArticles().get(0).getTitle());
+        assertEquals(nytArticle.getPublishedDate(), articlesFromMostPopular.getNYTArticles().get(0).getPublishedDate());
+        assertEquals(nytArticle.getUrl(), articlesFromMostPopular.getNYTArticles().get(0).getUrl());
+        assertEquals(nytArticle.getMultimediaURL(),articlesFromMostPopular.getNYTArticles().get(0).getMultimediaURL());
+
+    }
 
 }
