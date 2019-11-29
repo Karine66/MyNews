@@ -1,4 +1,4 @@
-package com.karine.mynews.Utils.Notifications;
+package com.karine.mynews.Utils;
 
 
 import android.util.Log;

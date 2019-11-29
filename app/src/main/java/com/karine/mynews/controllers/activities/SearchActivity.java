@@ -6,8 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.inputmethodservice.Keyboard;
-import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
@@ -27,9 +25,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.karine.mynews.R;
-import com.karine.mynews.Utils.Notifications.DatesAndHoursConverter;
+import com.karine.mynews.Utils.DatesAndHoursConverter;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;

@@ -1,13 +1,8 @@
 package com.karine.mynews;
 
-import com.karine.mynews.Utils.Notifications.DatesAndHoursConverter;
-import com.karine.mynews.controllers.activities.SearchActivity;
-import com.karine.mynews.controllers.fragments.SearchResultsFragment;
+import com.karine.mynews.Utils.DatesAndHoursConverter;
 
-import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 

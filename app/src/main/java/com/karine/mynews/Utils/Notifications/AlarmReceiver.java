@@ -84,7 +84,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
                     @Override
                     public void onComplete() {
-                        NotificationScheduler.showNotification(context, NotificationsActivity.class, "You have" + " " + requestNotif + " " + "notifications", "Show now ?");
+                        NotificationScheduler.showNotification(context, NotificationsActivity.class, "You have" + " " + requestNotif + " " + "new articles", "Show now ?");
                         Log.d("ON_CompleteNotif", String.valueOf(requestNotif));
                     }
 

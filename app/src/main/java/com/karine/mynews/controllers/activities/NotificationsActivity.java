@@ -32,7 +32,7 @@ import com.karine.mynews.Utils.Notifications.NotificationScheduler;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.karine.mynews.Utils.Notifications.DatesAndHoursConverter.formatTime;
+import static com.karine.mynews.Utils.DatesAndHoursConverter.formatTime;
 
 
 
