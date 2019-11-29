@@ -64,8 +64,6 @@ public class ArticlesViewHolder extends RecyclerView.ViewHolder {
         } else {
             mImageView.setImageResource(R.drawable.nyt);
         }
-
-
     }
 
     /**

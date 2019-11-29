@@ -1,9 +1,7 @@
 package com.karine.mynews.controllers.activities;
 
 import android.annotation.SuppressLint;
-import android.content.ClipData;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;

@@ -1,9 +1,6 @@
 package com.karine.mynews.models;
 
 
-/**
- * Created by <Karine> on <DATE-DU-JOUR>.
- */
 public class NYTArticle {
 
 
@@ -15,8 +12,6 @@ public class NYTArticle {
     private String mMultimediaURL;
 
 
-
-
     public NYTArticle (String publishedDate, String section, String title, String url) {
         mPublishedDate = publishedDate;
         mSection = section;
@@ -25,8 +20,6 @@ public class NYTArticle {
         mMultimediaURL = null;
 
     }
-
-
 
     public String getPublishedDate() {
         return mPublishedDate;

@@ -1,21 +1,12 @@
 package com.karine.mynews.Utils;
 
 
-import android.util.Log;
-
-import com.karine.mynews.controllers.activities.NotificationsActivity;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by <Karine> on <DATE-DU-JOUR>.
- */
+
 public class DatesAndHoursConverter {
-
-
-
 
     /**
      * Convert dates for search (nyt requires)
@@ -23,7 +14,7 @@ public class DatesAndHoursConverter {
      * @param dateToFormat
      * @return
      */
-    public static String dateConvertForSearch (String dateToFormat) {
+    public static String dateConvertForSearch(String dateToFormat) {
 
         try {
             if (dateToFormat != null && !dateToFormat.isEmpty()) {
@@ -38,16 +29,14 @@ public class DatesAndHoursConverter {
         return "";
     }
 
-
-
-
     /**
      * For format Time in date field
+     *
      * @param h
      * @param m
      * @return
      */
-    public static String formatTime ( int h, int m){
+    public static String formatTime(int h, int m) {
 
         final String OLD_FORMAT = "HH:mm";
         final String NEW_FORMAT = "HH 'heures' mm 'mn'";
@@ -63,8 +52,6 @@ public class DatesAndHoursConverter {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
         return newHourString;
     }
-
 }

@@ -10,9 +10,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-/**
- * Created by <Karine> on <DATE-DU-JOUR>.
- */
+
 public interface NYTService {
 
     String API_KEY = "api-key=qAZiSFmOLvMctKNYLABeqsR16AWAEz0R";

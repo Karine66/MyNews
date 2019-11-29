@@ -63,5 +63,4 @@ public class LocalData {
         prefsEditor.clear();
         prefsEditor.apply();
     }
-
 }

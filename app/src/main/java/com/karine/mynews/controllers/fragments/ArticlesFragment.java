@@ -263,8 +263,6 @@ public class ArticlesFragment extends Fragment {
     public void sortArticles(ArrayList<NYTArticle> mArticles) {
         Collections.sort(mArticles, (o1, o2) -> o2.getPublishedDate().compareTo(o1.getPublishedDate()));
     }
-
-
 }
 
 

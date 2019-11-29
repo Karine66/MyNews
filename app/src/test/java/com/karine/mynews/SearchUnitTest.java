@@ -36,20 +36,20 @@ public class SearchUnitTest {
 
 
 
-//    @Before
-//    public void NytArticle() {
-//
-//
-//        section = "Business";
-//        title = "Trump is still here";
-//        date = "2019-11-19";
-//        url ="https://api.nytimes.com/2019/11/19/business/Trump-is-still-here.html ";
-//        multimediaUrl = "https://static01.nyt.com/images/2019/11/19/business/trump-thumbStandard.jpg";
-//
-//        nytArticle = new NYTArticle(section, title,date,url);
-//    }
-//
-//
+    @Before
+    public void NytArticle() {
+
+
+        section = "Business";
+        title = "Trump is still here";
+        date = "2019-11-19";
+        url ="https://api.nytimes.com/2019/11/19/business/Trump-is-still-here.html ";
+        multimediaUrl = "https://static01.nyt.com/images/2019/11/19/business/trump-thumbStandard.jpg";
+
+        nytArticle = new NYTArticle(section, title,date,url);
+    }
+
+
 //    @Test
 //    public void  createNYTResultsApiFromSearchForTest() {
 //
@@ -59,7 +59,7 @@ public class SearchUnitTest {
 //        nytArticle.setUrl(url);
 //        nytArticle.setMultimediaURL(multimediaUrl);
 //
-//
+
 //        Doc articlesSearch = new Doc();
 //        Headline headline = new Headline();
 //

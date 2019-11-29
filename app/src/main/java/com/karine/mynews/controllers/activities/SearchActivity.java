@@ -95,9 +95,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         this.setDateField();
         this.addListenerButton();
         this.confirmSearch();
-//        this.focusSearch();
         this.hideKeyboard();
-
     }
 
     /**
@@ -273,22 +271,16 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         mEndDate.setOnClickListener(this);
         //For BeginDate
         Calendar newCalendar = Calendar.getInstance();
-        mBeginDateDialog = new DatePickerDialog(this, new OnDateSetListener() {
-
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Calendar newDate = Calendar.getInstance();
-                newDate.set(year, monthOfYear, dayOfMonth);
-                mBeginDate.setText(mDateFormat.format(newDate.getTime()));
-            }
-
+        mBeginDateDialog = new DatePickerDialog(this, (view, year, monthOfYear, dayOfMonth) -> {
+            Calendar newDate = Calendar.getInstance();
+            newDate.set(year, monthOfYear, dayOfMonth);
+            mBeginDate.setText(mDateFormat.format(newDate.getTime()));
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-        mEndDateDialog = new DatePickerDialog(this, new OnDateSetListener() {
-            //For EndDate
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Calendar newDate = Calendar.getInstance();
-                newDate.set(year, monthOfYear, dayOfMonth);
-                mEndDate.setText(mDateFormat.format(newDate.getTime()));
-            }
+        //For EndDate
+        mEndDateDialog = new DatePickerDialog(this, (view, year, monthOfYear, dayOfMonth) -> {
+            Calendar newDate = Calendar.getInstance();
+            newDate.set(year, monthOfYear, dayOfMonth);
+            mEndDate.setText(mDateFormat.format(newDate.getTime()));
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
     }
 
@@ -311,27 +303,6 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         }
     }
 
-//    /**
-//     * Convert dates for search (nyt requires)
-//     *
-//     * @param dateToFormat
-//     * @return
-//     */
-//    public String dateConvertForSearch(String dateToFormat) {
-//
-//        try {
-//            if (dateToFormat != null && !dateToFormat.isEmpty()) {
-//                SimpleDateFormat sdf = null;
-//                Date date = new SimpleDateFormat("dd/MM/yyyy").parse(dateToFormat);
-//                sdf = new SimpleDateFormat("yyyyMMdd");
-//                return sdf.format(date);
-//            }
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        return "";
-//    }
-
     /**
      * Hide keyboard on click in layout
      */
@@ -341,25 +312,6 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
             inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
         });
     }
-
-
-//    /**
-//     * Hide keyboard when searchfield is not focused
-//     */
-//    public void focusSearch() {
-//        mEtSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                if (v == mEtSearch) {
-//                    if (!hasFocus) {
-//                        InputMethodManager inputMethodManager = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-//                        inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
-//                    }
-//                }
-//            }
-//        });
-//    }
 }
 
 
