@@ -1,5 +1,6 @@
 package com.karine.mynews.controllers.fragments;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -141,6 +142,7 @@ public class SearchResultsFragment extends Fragment {
 
                         @Override
                         public void onComplete() {
+
                          if(noSearchResult == 0) {
                              Toast.makeText(getContext(),"No result found, please retry with another search",Toast.LENGTH_SHORT).show();
                          }
@@ -149,7 +151,7 @@ public class SearchResultsFragment extends Fragment {
 
                         @Override
                         public void onError(Throwable e) {
-                            Log.e("onErrorHome", Log.getStackTraceString(e));
+                            Log.d("onErrorHome", Log.getStackTraceString(e));
                         }
                     });
         } else {
@@ -177,7 +179,7 @@ public class SearchResultsFragment extends Fragment {
 
                         @Override
                         public void onError(Throwable e) {
-                            Log.e("onErrorWithoutDates", Log.getStackTraceString(e));
+                            Log.d("onErrorWithoutDates", Log.getStackTraceString(e));
                         }
                     });
         }

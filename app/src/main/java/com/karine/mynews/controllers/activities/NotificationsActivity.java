@@ -281,7 +281,8 @@ public class NotificationsActivity extends AppCompatActivity {
     public void retrieveData() {
         //For return input Search
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        search = preferences.getString("searchNotif", "defaultValueSearchNotif");
+
+        search = preferences.getString("searchNotif", "defaultValueNotif");
         mEtSearch.setText(search);
         //For return date alarm
         mAlarmOn.setText(alarm);

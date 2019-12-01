@@ -229,6 +229,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
                 validDate();
                 testCheckBox();
                 saveData();
+
             }
         });
     }
@@ -250,10 +251,22 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         if (!validDate()) {
             return;
         } else {
+
             Intent searchResultIntent = new Intent(this, SearchResultActivity.class);
+          //  startActivityForResult(searchResultIntent, RESULT_OK);
             startActivity(searchResultIntent);
         }
     }
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if(requestCode==RESULT_OK) {
+//            Intent searchResultIntent = new Intent(this, SearchResultActivity.class);
+//            startActivityForResult(searchResultIntent, RESULT_OK);
+//        }if (resultCode==RESULT_CANCELED){
+//            Toast.makeText(getApplicationContext(),"No result found, please retry with another search",Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
     /**
      * For input fields dates
