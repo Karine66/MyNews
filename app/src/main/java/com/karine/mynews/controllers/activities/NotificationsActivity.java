@@ -109,16 +109,25 @@ public class NotificationsActivity extends AppCompatActivity {
         mSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             saveDataSearch();
             testCheckBox();
-
+            //checked reminder status if true for display or not  hours in field
+            if(localData.getReminderStatus()){
+                mSwitch.setChecked(true);
+                mAlarmOn.setText(alarm);
+            }else{
+                mAlarmOn.setText("");
+            }
+            //on click switch display or not hour in terms of if or else
             if ((isChecked) && (validateSearch()) && (noCheckboxChecked())) {
                 mSwitch.setChecked(true);
                 showTimePickerDialog(localData.getHour(), localData.getMin());
                 localData.setReminderStatus(true);
+                mAlarmOn.setText(alarm);
                 NotificationScheduler.setReminder(NotificationsActivity.this, AlarmReceiver.class, localData.getHour(), localData.getMin());
 
             } else {
                 mSwitch.setChecked(false);
                 localData.setReminderStatus(false);
+                mAlarmOn.setText("");
                 NotificationScheduler.cancelReminder(NotificationsActivity.this, AlarmReceiver.class);
             }
         });
