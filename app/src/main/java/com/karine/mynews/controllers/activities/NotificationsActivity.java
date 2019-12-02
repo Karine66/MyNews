@@ -106,16 +106,18 @@ public class NotificationsActivity extends AppCompatActivity {
      * Listener on Switch Button
      */
     public void addSwitchButtonListener() {
+        //checked reminder status if true for display or not  hours in field
+        if(localData.getReminderStatus()){
+            mSwitch.setChecked(true);
+            mAlarmOn.setText(alarm);
+        }else{
+            mAlarmOn.setText("");
+        }
         mSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             saveDataSearch();
             testCheckBox();
-            //checked reminder status if true for display or not  hours in field
-            if(localData.getReminderStatus()){
-                mSwitch.setChecked(true);
-                mAlarmOn.setText(alarm);
-            }else{
-                mAlarmOn.setText("");
-            }
+
+
             //on click switch display or not hour in terms of if or else
             if ((isChecked) && (validateSearch()) && (noCheckboxChecked())) {
                 mSwitch.setChecked(true);
@@ -292,12 +294,12 @@ public class NotificationsActivity extends AppCompatActivity {
         //For return input Search
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-        search = preferences.getString("searchNotif", "defaultValueNotif");
+        search = preferences.getString("searchNotif", "");
         mEtSearch.setText(search);
         //For return date alarm
         mAlarmOn.setText(alarm);
         //For return checkbox
-        boxResult = preferences.getString("boxNotif", "defaultValuebox");
+        boxResult = preferences.getString("boxNotif", "");
 
         Log.d("TestSaveSearch", search);
 

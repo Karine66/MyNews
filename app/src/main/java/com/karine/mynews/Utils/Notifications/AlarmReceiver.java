@@ -17,7 +17,6 @@ import java.util.Date;
 
 import io.reactivex.observers.DisposableObserver;
 
-import static com.karine.mynews.Utils.DatesAndHoursConverter.dateConvertForSearch;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
@@ -61,8 +60,8 @@ public class AlarmReceiver extends BroadcastReceiver {
     public void loadData() {
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        search = preferences.getString("searchNotif", "defaultValueSearchNotif");
-        boxResult = preferences.getString("boxNotif", "defaultValuebox");
+        search = preferences.getString("searchNotif", "");
+        boxResult = preferences.getString("boxNotif", "");
         dateBegin = preferences.getString("dateBegin", "");
         dateEnd = preferences.getString("dateEnd", "");
         Log.d("searchreceiver", search);

@@ -1,7 +1,6 @@
 package com.karine.mynews.controllers.activities;
 
 import android.app.DatePickerDialog;
-import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,7 +18,6 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -253,21 +251,24 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         } else {
 
             Intent searchResultIntent = new Intent(this, SearchResultActivity.class);
-          //  startActivityForResult(searchResultIntent, RESULT_OK);
-            startActivity(searchResultIntent);
+            startActivityForResult(searchResultIntent, 1);
         }
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if(requestCode==RESULT_OK) {
-//            Intent searchResultIntent = new Intent(this, SearchResultActivity.class);
-//            startActivityForResult(searchResultIntent, RESULT_OK);
-//        }if (resultCode==RESULT_CANCELED){
-//            Toast.makeText(getApplicationContext(),"No result found, please retry with another search",Toast.LENGTH_SHORT).show();
-//        }
-//    }
-
+    /**
+     * for no result search
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(getApplicationContext(), "No result found, please retry with another search", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
     /**
      * For input fields dates
      */

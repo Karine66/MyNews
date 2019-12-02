@@ -175,12 +175,12 @@ public class ArticlesFragment extends Fragment {
 
                     @Override
                     public void onComplete() {
-                        Log.e("ON_Complete", "Test onComplete");
+                        Log.d("ON_Complete", "Test onComplete");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("onErrorHome", Log.getStackTraceString(e));
+                        Log.d("onErrorHome", Log.getStackTraceString(e));
                     }
 
                 });
@@ -198,12 +198,12 @@ public class ArticlesFragment extends Fragment {
                     @Override
                     public void onComplete() {
 
-                        Log.e("ON_Complete", "Test onComplete");
+                        Log.d("ON_Complete", "Test onComplete");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("onErrorMP", Log.getStackTraceString(e));
+                        Log.d("onErrorMP", Log.getStackTraceString(e));
                     }
                 });
     }
@@ -226,7 +226,7 @@ public class ArticlesFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("onErrorBusiness", Log.getStackTraceString(e));
+                        Log.d("onErrorBusiness", Log.getStackTraceString(e));
                     }
                 });
     }

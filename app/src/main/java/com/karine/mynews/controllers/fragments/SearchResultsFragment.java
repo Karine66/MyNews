@@ -1,6 +1,6 @@
 package com.karine.mynews.controllers.fragments;
 
-import android.content.Intent;
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.karine.mynews.R;
@@ -107,12 +106,12 @@ public class SearchResultsFragment extends Fragment {
     public void loadData() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
         //For dates
-        beginDate = sharedPref.getString("begindate", "defaultdate1");
-        endDate = sharedPref.getString("enddate", "defaultdate2");
+        beginDate = sharedPref.getString("begindate", "");
+        endDate = sharedPref.getString("enddate", "");
         //For search query
-        search = sharedPref.getString("search", "defaultsearch");
+        search = sharedPref.getString("search", "");
         //For Checkbox
-        boxResult = sharedPref.getString("resultBox", "defaultResultBox");
+        boxResult = sharedPref.getString("resultBox", "");
 
         Log.d("TestResultBox", boxResult);
         Log.d("Testdatepref", beginDate);
@@ -144,7 +143,8 @@ public class SearchResultsFragment extends Fragment {
                         public void onComplete() {
 
                          if(noSearchResult == 0) {
-                             Toast.makeText(getContext(),"No result found, please retry with another search",Toast.LENGTH_SHORT).show();
+                             getActivity().setResult(Activity.RESULT_CANCELED);
+                             getActivity().finish();
                          }
                             Log.d("ON_Complete", "Test onComplete");
                         }
@@ -172,7 +172,8 @@ public class SearchResultsFragment extends Fragment {
                         @Override
                         public void onComplete() {
                             if(noSearchResultWithoutDates == 0) {
-                                Toast.makeText(getContext(),"No result found, please retry with another search",Toast.LENGTH_SHORT).show();
+                                getActivity().setResult(Activity.RESULT_CANCELED);
+                                getActivity().finish();
                             }
                             Log.d("ON_CompleteWithoutDates", "Test onComplete");
                         }
