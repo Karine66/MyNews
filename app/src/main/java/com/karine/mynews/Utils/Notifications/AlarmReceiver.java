@@ -29,6 +29,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     private String dateEnd;
 
 
+
     /**
      * Handling the broadcast
      *
@@ -39,9 +40,10 @@ public class AlarmReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         this.context = context;
 
+        datesForNotif();
         loadData();
         executeHttpRequestWithRetrofit();
-        datesForNotif();
+
 
         if (intent.getAction() != null && context != null) {
             if (intent.getAction().equalsIgnoreCase(Intent.ACTION_BOOT_COMPLETED)) {

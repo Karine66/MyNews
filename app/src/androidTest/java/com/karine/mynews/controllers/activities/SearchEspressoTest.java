@@ -109,6 +109,11 @@ public class SearchEspressoTest {
                                 5),
                         isDisplayed()));
         materialButton.perform(click());
+    //verify if seachResult is display
+        onView(withId(R.id.search_result_toolbar))
+                .check(matches(isDisplayed()));
+        onView(withText("Search Results"))
+                .check(matches(isDisplayed()));
     }
 
     private static Matcher<View> childAtPosition(
@@ -128,5 +133,7 @@ public class SearchEspressoTest {
                         && view.equals(((ViewGroup) parent).getChildAt(position));
             }
         };
+
     }
+
 }

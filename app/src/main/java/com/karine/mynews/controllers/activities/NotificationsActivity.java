@@ -180,6 +180,7 @@ public class NotificationsActivity extends AppCompatActivity {
             localData.setMin(min);
             alarm = formatTime(localData.getHour(), localData.getMin());
             mAlarmOn.setText(alarm);
+
             NotificationScheduler.setReminder(NotificationsActivity.this, AlarmReceiver.class, localData.getHour(), localData.getMin());
         }, h, m, true);
         builder.setCustomTitle(view);
