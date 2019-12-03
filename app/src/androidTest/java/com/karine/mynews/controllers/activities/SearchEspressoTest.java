@@ -109,6 +109,7 @@ public class SearchEspressoTest {
                                 5),
                         isDisplayed()));
         materialButton.perform(click());
+
     //verify if seachResult is display
         onView(withId(R.id.search_result_toolbar))
                 .check(matches(isDisplayed()));
