@@ -16,7 +16,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.karine.mynews.R;
-import com.karine.mynews.adapters.PageAdapter;
+import com.karine.mynews.views.PageAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

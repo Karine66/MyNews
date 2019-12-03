@@ -1,4 +1,4 @@
-package com.karine.mynews.adapters;
+package com.karine.mynews.views;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
