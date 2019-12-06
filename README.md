@@ -17,4 +17,5 @@ My news est une application basées sur les news du New York Times et qui permet
 - BitRise (Tests d'intégration)
 
 **Présentation de l'application**
+
 <https://docs.google.com/document/d/1h-n3dIQP-Q-jeKizvxSjpszZedcVg2YkR2v2FJWrh0s/edit?usp=sharing>
