@@ -1,5 +1,5 @@
 # MyNews
-My news est une application basées sur les news du New York Times et qui permet d'accéder aux articles publiés par ce journal
+MyNews est une application basées sur les news du New York Times et qui permet d'accéder aux articles publiés par ce journal
 
 **Compétences utilisées**
 - Butterknife
