@@ -12,6 +12,6 @@ My news est une application basées sur les news du New York Times et qui permet
 - WebView
 - Shared Preferences
 - Notifications
-- Espresso (Test instrumentés)
+- Espresso (Tests instrumentés)
 - Tests Unitaires
-- BitRise (Test d'intégration)
+- BitRise (Tests d'intégration)
