@@ -13,9 +13,6 @@ import io.reactivex.schedulers.Schedulers;
 
 
 
-/**
- * Created by <Karine> on <DATE-DU-JOUR>.
- */
 public class NYTStreams {
 
     //Create stream TopStories

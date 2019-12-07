@@ -116,8 +116,6 @@ public class NotificationsActivity extends AppCompatActivity {
         mSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             saveDataSearch();
             testCheckBox();
-
-
             //on click switch display or not hour in terms of if or else
             if ((isChecked) && (validateSearch()) && (noCheckboxChecked())) {
                 mSwitch.setChecked(true);

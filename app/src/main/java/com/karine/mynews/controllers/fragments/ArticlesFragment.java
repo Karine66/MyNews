@@ -88,7 +88,7 @@ public class ArticlesFragment extends Fragment {
         this.configureSwipeRefreshLayout();
         this.executeHttpRequestWithRetrofit();
         this.configureOnClickRecyclerView();
-
+        this.setContentDescription(view);
         return view;
     }
 
@@ -262,6 +262,22 @@ public class ArticlesFragment extends Fragment {
      */
     public void sortArticles(ArrayList<NYTArticle> mArticles) {
         Collections.sort(mArticles, (o1, o2) -> o2.getPublishedDate().compareTo(o1.getPublishedDate()));
+    }
+    /**
+     * For test swipeEspresso
+     */
+    private void setContentDescription(View view) {
+        switch(position) {
+            case 0:
+                view.setContentDescription("TOP STORIES");
+                break;
+            case 1:
+                view.setContentDescription("MOST POPULAR");
+                break;
+            case 2:
+                view.setContentDescription("BUSINESS");
+                break;
+        }
     }
 }
 
