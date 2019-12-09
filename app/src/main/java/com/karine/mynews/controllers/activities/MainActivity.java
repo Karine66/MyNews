@@ -11,10 +11,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.security.ProviderInstaller;
 import com.karine.mynews.R;
 import com.karine.mynews.views.PageAdapter;
 
@@ -40,6 +45,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        //For compatibility api16 to api22
+        try{
+            ProviderInstaller.installIfNeeded(getApplicationContext());
+        }catch (GooglePlayServicesRepairableException e) {
+            //Indicates that Google Play services is out of date, disabled, etc
+            Log.e("api", Log.getStackTraceString(e));
+            //Prompt the user to install/update/enable Google play services
+            GoogleApiAvailability.getInstance()
+                    .showErrorNotification(getApplicationContext(), e.getConnectionStatusCode());
+
+        }catch (GooglePlayServicesNotAvailableException e) {
+            //Indicates a non recoverable error; the ProviderInstaller is not able to install an up to date Provide
+            Log.e("api", Log.getStackTraceString(e));
+
+        }
 
         //Configure all views
         this.configureViewPagerAndTabs();

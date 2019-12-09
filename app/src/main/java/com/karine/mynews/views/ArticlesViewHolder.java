@@ -11,14 +11,10 @@ import com.bumptech.glide.request.RequestOptions;
 import com.karine.mynews.R;
 import com.karine.mynews.models.NYTArticle;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.karine.mynews.Utils.DatesAndHoursConverter.dateFormat;
 
 public class ArticlesViewHolder extends RecyclerView.ViewHolder {
 
@@ -64,28 +60,6 @@ public class ArticlesViewHolder extends RecyclerView.ViewHolder {
         } else {
             mImageView.setImageResource(R.drawable.nyt);
         }
-    }
-
-    /**
-     * Convert dates in dd/MM/yyyy for display
-     *
-     * @param dateString
-     * @return
-     */
-    private String dateFormat(String dateString) {
-        List<String> strings = Arrays.asList("yyyy-MM-dd", "yyyy-MM-dd'T'HH:mm:ssZ");
-
-        for (String string : strings) {
-            try {
-                SimpleDateFormat sdf = null;
-                Date date = new SimpleDateFormat(string).parse(dateString);
-                sdf = new SimpleDateFormat("dd/MM/yyyy");
-                return sdf.format(date);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        return "";
     }
 }
 

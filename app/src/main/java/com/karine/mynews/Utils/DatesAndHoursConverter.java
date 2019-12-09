@@ -3,7 +3,9 @@ package com.karine.mynews.Utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 
 public class DatesAndHoursConverter {
@@ -53,5 +55,27 @@ public class DatesAndHoursConverter {
             e.printStackTrace();
         }
         return newHourString;
+    }
+
+    /**
+     * Convert dates in dd/MM/yyyy for display
+     *
+     * @param dateString
+     * @return
+     */
+    public static String dateFormat(String dateString) {
+        List<String> strings = Arrays.asList("yyyy-MM-dd", "yyyy-MM-dd'T'HH:mm:ssZ");
+
+        for (String string : strings) {
+            try {
+                SimpleDateFormat sdf = null;
+                Date date = new SimpleDateFormat(string).parse(dateString);
+                sdf = new SimpleDateFormat("dd/MM/yyyy");
+                return sdf.format(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return "";
     }
 }

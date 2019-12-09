@@ -71,43 +71,4 @@ public class ArticlesUnitTest {
         nytArticle.setMultimediaURL(multimediaUrl);
         assertEquals(multimediaUrl, nytArticle.getMultimediaURL());
     }
-
-    @Test
-    public void  createNYTResultsApiFromTopStoriesForTest() {
-
-        nytArticle.setSection(section);
-        nytArticle.setTitle(title);
-        nytArticle.setPublishedDate(date);
-        nytArticle.setUrl(url);
-        nytArticle.setMultimediaURL(multimediaUrl);
-
-
-        Result articlesTopStories = new Result();
-        List<Multimedium> multimedia = new ArrayList<>();
-
-        articlesTopStories.setPublishedDate( "2019-11-19");
-        articlesTopStories.setSection( "Business");
-        articlesTopStories.setTitle("Trump is still here");
-        articlesTopStories.setUrl("https://api.nytimes.com/2019/11/19/business/Trump-is-still-here.html ");
-        articlesTopStories.setMultimedia(multimedia);
-
-        mMultimedium = new Multimedium();
-        mMultimedium.setUrl("https://static01.nyt.com/images/2019/11/19/business/trump-thumbStandard.jpg");
-        multimedia.add(mMultimedium);
-
-        List<Result> resultList = new ArrayList<>();
-        resultList.add(articlesTopStories);
-        topStories = new TopStories();
-        topStories.setResults(resultList);
-
-        NYTResultsAPI articlesFromTopStories = createNYTResultsApiFromTopStories(topStories);
-
-        assertEquals(nytArticle.getSection(), articlesFromTopStories.getNYTArticles().get(0).getSection());
-        assertEquals(nytArticle.getTitle(), articlesFromTopStories.getNYTArticles().get(0).getTitle());
-        assertEquals(nytArticle.getPublishedDate(), articlesFromTopStories.getNYTArticles().get(0).getPublishedDate());
-        assertEquals(nytArticle.getUrl(), articlesFromTopStories.getNYTArticles().get(0).getUrl());
-        assertEquals(nytArticle.getMultimediaURL(),articlesFromTopStories.getNYTArticles().get(0).getMultimediaURL());
-
-    }
-
 }
