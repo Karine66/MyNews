@@ -14,7 +14,7 @@ MyNews est une application basées sur les news du New York Times et qui permet 
 - Notifications
 - Espresso (Tests instrumentés)
 - Tests Unitaires
-- BitRise (Tests d'intégration)
+- BitRise (Logiciel d'intégration continue)
 
 **Présentation de l'application**
 
