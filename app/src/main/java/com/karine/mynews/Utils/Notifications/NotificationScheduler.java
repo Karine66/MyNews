@@ -29,6 +29,13 @@ public class NotificationScheduler {
     private static final String NOTIFICATION_TAG = "MyNews";
     private static final int NOTIF_ID = 200;
 
+    /**
+     * For set repeating alarm
+     * @param context
+     * @param cls
+     * @param hour
+     * @param min
+     */
     public static void setReminder(Context context, Class<?> cls, int hour, int min) {
         Calendar calendar = Calendar.getInstance();
         Calendar setcalendar = Calendar.getInstance();
@@ -64,6 +71,13 @@ public class NotificationScheduler {
         pendingIntent.cancel();
     }
 
+    /**
+     * notification initialization
+     * @param context
+     * @param cls
+     * @param title
+     * @param content
+     */
     public static void showNotification(Context context, Class<?> cls, String title, String content) {
 
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);

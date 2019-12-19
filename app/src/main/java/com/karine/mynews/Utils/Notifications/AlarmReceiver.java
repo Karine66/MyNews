@@ -46,7 +46,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         if (intent.getAction() != null && context != null) {
             if (intent.getAction().equalsIgnoreCase(Intent.ACTION_BOOT_COMPLETED)) {
-
+                //Set the alarm
                 LocalData localData = new LocalData(context);
                 NotificationScheduler.setReminder(context, AlarmReceiver.class, localData.getHour(), localData.getMin());
                 return;
